@@ -1,44 +1,76 @@
 /**
  * Unit tests for the action's main functionality, src/main.ts
- *
- * These should be run as if the action was called from a workflow.
- * Specifically, the inputs listed in `action.yml` should be set as environment
- * variables following the pattern `INPUT_<INPUT_NAME>`.
  */
 
 import * as core from '@actions/core'
+
+// @ts-nocheck
+
 import * as main from '../src/main'
+import { diff, upsertGitHubComment, SummaryComment } from '../src/diff'
+import { Branch } from '@neondatabase/api-client'
 
 // Mock the action's main function
 const runMock = jest.spyOn(main, 'run')
 
-// Other utilities
-const timeRegex = /^\d{2}:\d{2}:\d{2}/
-
 // Mock the GitHub Actions core library
-let debugMock: jest.SpiedFunction<typeof core.debug>
+let infoMock: jest.SpiedFunction<typeof core.info>
 let errorMock: jest.SpiedFunction<typeof core.error>
 let getInputMock: jest.SpiedFunction<typeof core.getInput>
 let setFailedMock: jest.SpiedFunction<typeof core.setFailed>
 let setOutputMock: jest.SpiedFunction<typeof core.setOutput>
 
+// Mock diff functions
+jest.mock('../src/diff')
+
+let diffMock: jest.SpiedFunction<typeof diff>
+let upsertGitHubCommentMock: jest.SpiedFunction<typeof upsertGitHubComment>
+
+const mockedUpsertGitHubCommentResult: SummaryComment = {
+  url: 'https://github.com/refactored-giggle/stunning-tribble/pull/2#issuecomment-2450615121',
+  operation: 'created'
+}
+
+const mockedDiffResult = {
+  sql: 'CREATE TABLE test_table (id INT PRIMARY KEY);',
+  hash: 'e5b4c8d3b5b6',
+  compareBranch: {
+    id: '1',
+    name: 'dev',
+    parent_id: '2'
+  } as Branch,
+  baseBranch: {
+    id: '2',
+    name: 'main'
+  } as Branch,
+  role: 'neondb_owner',
+  database: 'neondb'
+}
+
 describe('action', () => {
   beforeEach(() => {
     jest.clearAllMocks()
 
-    debugMock = jest.spyOn(core, 'debug').mockImplementation()
+    infoMock = jest.spyOn(core, 'info').mockImplementation()
     errorMock = jest.spyOn(core, 'error').mockImplementation()
     getInputMock = jest.spyOn(core, 'getInput').mockImplementation()
     setFailedMock = jest.spyOn(core, 'setFailed').mockImplementation()
     setOutputMock = jest.spyOn(core, 'setOutput').mockImplementation()
+
+    diffMock = jest
+      .mocked(diff)
+      .mockReturnValue(Promise.resolve(mockedDiffResult))
+
+    upsertGitHubCommentMock = jest
+      .mocked(upsertGitHubComment)
+      .mockReturnValue(Promise.resolve(mockedUpsertGitHubCommentResult))
   })
 
-  it('sets the time output', async () => {
-    // Set the action's inputs as return values from core.getInput()
-    getInputMock.mockImplementation(name => {
+  it('invalid api host', async () => {
+    getInputMock.mockImplementation((name: string) => {
       switch (name) {
-        case 'milliseconds':
-          return '500'
+        case 'api_host':
+          return 'not a url'
         default:
           return ''
       }
@@ -46,44 +78,141 @@ describe('action', () => {
 
     await main.run()
     expect(runMock).toHaveReturned()
-
-    // Verify that all of the core library functions were called correctly
-    expect(debugMock).toHaveBeenNthCalledWith(1, 'Waiting 500 milliseconds ...')
-    expect(debugMock).toHaveBeenNthCalledWith(
-      2,
-      expect.stringMatching(timeRegex)
-    )
-    expect(debugMock).toHaveBeenNthCalledWith(
-      3,
-      expect.stringMatching(timeRegex)
-    )
-    expect(setOutputMock).toHaveBeenNthCalledWith(
-      1,
-      'time',
-      expect.stringMatching(timeRegex)
-    )
-    expect(errorMock).not.toHaveBeenCalled()
-  })
-
-  it('sets a failed status', async () => {
-    // Set the action's inputs as return values from core.getInput()
-    getInputMock.mockImplementation(name => {
-      switch (name) {
-        case 'milliseconds':
-          return 'this is not a number'
-        default:
-          return ''
-      }
-    })
-
-    await main.run()
-    expect(runMock).toHaveReturned()
-
-    // Verify that all of the core library functions were called correctly
     expect(setFailedMock).toHaveBeenNthCalledWith(
       1,
-      'milliseconds not a number'
+      'API host must be a valid URL'
     )
     expect(errorMock).not.toHaveBeenCalled()
+  })
+
+  it('invalid database input', async () => {
+    getInputMock.mockImplementation((name: string) => {
+      switch (name) {
+        case 'api_host':
+          return 'https://console.neon.tech/api/v2'
+        case 'database':
+          return ''
+        default:
+          return name
+      }
+    })
+
+    await main.run()
+    expect(runMock).toHaveReturned()
+    expect(setFailedMock).toHaveBeenNthCalledWith(
+      1,
+      'Database name cannot be empty'
+    )
+    expect(errorMock).not.toHaveBeenCalled()
+  })
+
+  it('invalid username input', async () => {
+    getInputMock.mockImplementation((name: string) => {
+      switch (name) {
+        case 'api_host':
+          return 'https://console.neon.tech/api/v2'
+        case 'username':
+          return ''
+        default:
+          return name
+      }
+    })
+
+    await main.run()
+    expect(runMock).toHaveReturned()
+    expect(setFailedMock).toHaveBeenNthCalledWith(
+      1,
+      'Database username/role cannot be empty'
+    )
+    expect(errorMock).not.toHaveBeenCalled()
+  })
+
+  it('valid inputs', async () => {
+    getInputMock.mockImplementation((name: string) => {
+      switch (name) {
+        case 'api_host':
+          return 'https://console.neon.tech/api/v2'
+        case 'database':
+          return 'neondb'
+        case 'username':
+          return 'neondb_owner'
+        case 'timestamp':
+        case 'lsn':
+          return ''
+        default:
+          return name
+      }
+    })
+
+    await main.run()
+    expect(runMock).toHaveReturned()
+    expect(diffMock).toHaveBeenCalled()
+    expect(upsertGitHubCommentMock).toHaveBeenCalled()
+    expect(setFailedMock).not.toHaveBeenCalled()
+    expect(errorMock).not.toHaveBeenCalled()
+    expect(setOutputMock).toHaveBeenCalledTimes(2)
+    expect(setOutputMock).toHaveBeenNthCalledWith(1, 'diff', expect.any(String))
+    expect(setOutputMock).toHaveBeenNthCalledWith(
+      2,
+      'comment_url',
+      expect.any(String)
+    )
+    expect(infoMock).toHaveBeenCalledTimes(2)
+    expect(infoMock).toHaveBeenNthCalledWith(
+      1,
+      `Comment ${mockedUpsertGitHubCommentResult.operation} successfully`
+    )
+    expect(infoMock).toHaveBeenNthCalledWith(
+      2,
+      `Comment URL: ${mockedUpsertGitHubCommentResult.url}`
+    )
+  })
+
+  it('valid inputs, noop operation', async () => {
+    getInputMock.mockImplementation((name: string) => {
+      switch (name) {
+        case 'api_host':
+          return 'https://console.neon.tech/api/v2'
+        case 'database':
+          return 'neondb'
+        case 'username':
+          return 'neondb_owner'
+        case 'timestamp':
+        case 'lsn':
+          return ''
+        default:
+          return name
+      }
+    })
+
+    upsertGitHubCommentMock.mockReturnValue(
+      Promise.resolve({
+        ...mockedUpsertGitHubCommentResult,
+        operation: 'noop'
+      })
+    )
+
+    await main.run()
+    expect(runMock).toHaveReturned()
+    expect(diffMock).toHaveBeenCalled()
+    expect(upsertGitHubCommentMock).toHaveBeenCalled()
+    expect(setFailedMock).not.toHaveBeenCalled()
+    expect(errorMock).not.toHaveBeenCalled()
+    expect(setOutputMock).toHaveBeenCalledTimes(2)
+    expect(setOutputMock).toHaveBeenNthCalledWith(1, 'diff', expect.any(String))
+    expect(setOutputMock).toHaveBeenNthCalledWith(
+      2,
+      'comment_url',
+      expect.any(String)
+    )
+    expect(infoMock).toHaveBeenCalledTimes(2)
+    expect(infoMock).toHaveBeenNthCalledWith(
+      1,
+      `No changes detected in the schema diff`
+    )
+    expect(infoMock).toHaveBeenNthCalledWith(
+      2,
+      `Comment URL: ${mockedUpsertGitHubCommentResult.url}`
+    )
   })
 })
