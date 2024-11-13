@@ -1,263 +1,151 @@
-# Create a GitHub Action Using TypeScript
+# 🔍 Neon Schema Diff Action
 
-[![GitHub Super-Linter](https://github.com/actions/typescript-action/actions/workflows/linter.yml/badge.svg)](https://github.com/super-linter/super-linter)
-![CI](https://github.com/actions/typescript-action/actions/workflows/ci.yml/badge.svg)
-[![Check dist/](https://github.com/actions/typescript-action/actions/workflows/check-dist.yml/badge.svg)](https://github.com/actions/typescript-action/actions/workflows/check-dist.yml)
-[![CodeQL](https://github.com/actions/typescript-action/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/actions/typescript-action/actions/workflows/codeql-analysis.yml)
-[![Coverage](./badges/coverage.svg)](./badges/coverage.svg)
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./docs/neon-logo-dark-color.svg">
+    <img alt="Neon logo" src="./docs/neon-logo-light-color.svg">
+  </picture>
+</p>
 
-Use this template to bootstrap the creation of a TypeScript action. :rocket:
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/luist18/refactored-giggle/.github%2Fworkflows%2Flinter.yml?label=%F0%9F%94%8D%20Lint)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/luist18/refactored-giggle/.github%2Fworkflows%2Fci.yml?label=%F0%9F%8F%97%EF%B8%8F%20Build)
+[![coverage](./docs/coverage.svg)](./docs/coverage.svg)
 
-This template includes compilation support, tests, a validation workflow,
-publishing, and versioning guidance.
+This action makes it easy to have automated schema changes in your GitHub Pull
+Requests.
 
-If you are new, there's also a simpler introduction in the
-[Hello world JavaScript action repository](https://github.com/actions/hello-world-javascript-action).
+Use this action to get GitHub Pull Request comments with the changes in the
+database schema in your Neon branches. These are the requirements to use this
+action:
 
-## Create Your Own Action
+- Neon project
+- Neon GitHub integration installed or an API key
 
-To create your own action, you can use this repository as a template! Just
-follow the below instructions:
+---
 
-1. Click the **Use this template** button at the top of the repository
-1. Select **Create a new repository**
-1. Select an owner and name for your new repository
-1. Click **Create repository**
-1. Clone your new repository
+## Develop
 
-> [!IMPORTANT]
->
-> Make sure to remove or update the [`CODEOWNERS`](./CODEOWNERS) file! For
-> details on how to use this file, see
-> [About code owners](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners).
+See [docs/development.md](docs/development.md)
 
-## Initial Setup
+## How to set up the NEON_API_KEY
 
-After you've cloned the repository to your local machine or codespace, you'll
-need to perform some initial setup steps before you can develop your action.
+**(👍 Recommended)** Neon has a GitHub integration that allows you to quickly
+link your GitHub repositories with your Neon projects, enabling these kinds of
+features like this action. Please
+[follow the guide](https://neon.tech/docs/guides/neon-github-integration) to
+install the GitHub integration on your repository.
 
-> [!NOTE]
->
-> You'll need to have a reasonably modern version of
-> [Node.js](https://nodejs.org) handy (20.x or later should work!). If you are
-> using a version manager like [`nodenv`](https://github.com/nodenv/nodenv) or
-> [`fnm`](https://github.com/Schniz/fnm), this template has a `.node-version`
-> file at the root of the repository that can be used to automatically switch to
-> the correct version when you `cd` into the repository. Additionally, this
-> `.node-version` file is used by GitHub Actions in any `actions/setup-node`
-> actions.
-
-1. :hammer_and_wrench: Install the dependencies
-
-   ```bash
-   npm install
-   ```
-
-1. :building_construction: Package the TypeScript for distribution
-
-   ```bash
-   npm run bundle
-   ```
-
-1. :white_check_mark: Run the tests
-
-   ```bash
-   $ npm test
-
-   PASS  ./index.test.js
-     ✓ throws invalid number (3ms)
-     ✓ wait 500 ms (504ms)
-     ✓ test runs (95ms)
-
-   ...
-   ```
-
-## Update the Action Metadata
-
-The [`action.yml`](action.yml) file defines metadata about your action, such as
-input(s) and output(s). For details about this file, see
-[Metadata syntax for GitHub Actions](https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions).
-
-When you copy this repository, update `action.yml` with the name, description,
-inputs, and outputs for your action.
-
-## Update the Action Code
-
-The [`src/`](./src/) directory is the heart of your action! This contains the
-source code that will be run when your action is invoked. You can replace the
-contents of this directory with your own code.
-
-There are a few things to keep in mind when writing your action code:
-
-- Most GitHub Actions toolkit and CI/CD operations are processed asynchronously.
-  In `main.ts`, you will see that the action is run in an `async` function.
-
-  ```javascript
-  import * as core from '@actions/core'
-  //...
-
-  async function run() {
-    try {
-      //...
-    } catch (error) {
-      core.setFailed(error.message)
-    }
-  }
-  ```
-
-  For more information about the GitHub Actions toolkit, see the
-  [documentation](https://github.com/actions/toolkit/blob/master/README.md).
-
-So, what are you waiting for? Go ahead and start customizing your action!
-
-1. Create a new branch
-
-   ```bash
-   git checkout -b releases/v1
-   ```
-
-1. Replace the contents of `src/` with your action code
-1. Add tests to `__tests__/` for your source code
-1. Format, test, and build the action
-
-   ```bash
-   npm run all
-   ```
-
-   > This step is important! It will run [`ncc`](https://github.com/vercel/ncc)
-   > to build the final JavaScript action code with all dependencies included.
-   > If you do not run this step, your action will not work correctly when it is
-   > used in a workflow. This step also includes the `--license` option for
-   > `ncc`, which will create a license file for all of the production node
-   > modules used in your project.
-
-1. (Optional) Test your action locally
-
-   The [`@github/local-action`](https://github.com/github/local-action) utility
-   can be used to test your action locally. It is a simple command-line tool
-   that "stubs" (or simulates) the GitHub Actions Toolkit. This way, you can run
-   your TypeScript action locally without having to commit and push your changes
-   to a repository.
-
-   The `local-action` utility can be run in the following ways:
-
-   - Visual Studio Code Debugger
-
-     Make sure to review and, if needed, update
-     [`.vscode/launch.json`](./.vscode/launch.json)
-
-   - Terminal/Command Prompt
-
-     ```bash
-     # npx local action <action-yaml-path> <entrypoint> <dotenv-file>
-     npx local-action . src/main.ts .env
-     ```
-
-   You can provide a `.env` file to the `local-action` CLI to set environment
-   variables used by the GitHub Actions Toolkit. For example, setting inputs and
-   event payload data used by your action. For more information, see the example
-   file, [`.env.example`](./.env.example), and the
-   [GitHub Actions Documentation](https://docs.github.com/en/actions/learn-github-actions/variables#default-environment-variables).
-
-1. Commit your changes
-
-   ```bash
-   git add .
-   git commit -m "My first action is ready!"
-   ```
-
-1. Push them to your repository
-
-   ```bash
-   git push -u origin releases/v1
-   ```
-
-1. Create a pull request and get feedback on your action
-1. Merge the pull request into the `main` branch
-
-Your action is now published! :rocket:
-
-For information about versioning your action, see
-[Versioning](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md)
-in the GitHub Actions toolkit.
-
-## Validate the Action
-
-You can now validate the action by referencing it in a workflow file. For
-example, [`ci.yml`](./.github/workflows/ci.yml) demonstrates how to reference an
-action in the same repository.
-
-```yaml
-steps:
-  - name: Checkout
-    id: checkout
-    uses: actions/checkout@v4
-
-  - name: Test Local Action
-    id: test-action
-    uses: ./
-    with:
-      milliseconds: 1000
-
-  - name: Print Output
-    id: output
-    run: echo "${{ steps.test-action.outputs.time }}"
-```
-
-For example workflow runs, check out the
-[Actions tab](https://github.com/actions/typescript-action/actions)! :rocket:
+Alternatively, you can navigate to account settings on the Neon console
+(top-right corner). Select the API keys tab on your account page and generate an
+API key. Store it secretly and add it to your GitHub repository secrets
+(Settings -> Secrets and Variables -> Actions -> Secrets tab). Set it under the
+name `NEON_API_KEY`. button.
 
 ## Usage
 
-After testing, you can create version tag(s) that developers can use to
-reference different stable versions of your action. For more information, see
-[Versioning](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md)
-in the GitHub Actions toolkit.
+Setup the action:
 
-To include the action in a workflow in another repository, you can use the
-`uses` syntax with the `@` symbol to reference a specific branch, tag, or commit
-hash.
-
-```yaml
+```yml
 steps:
-  - name: Checkout
-    id: checkout
-    uses: actions/checkout@v4
-
-  - name: Test Local Action
-    id: test-action
-    uses: actions/typescript-action@v1 # Commit with the `v1` tag
+  - uses: neondatabase/schema-diff-action@v1
     with:
-      milliseconds: 1000
-
-  - name: Print Output
-    id: output
-    run: echo "${{ steps.test-action.outputs.time }}"
+      project_id: rapid-haze-373089
+      compare_branch:
+        preview/pr-${{ github.event.number }}-${{ needs.setup.outputs.branch }}
+      api_key: ${{ secrets.NEON_API_KEY }}
 ```
 
-## Publishing a New Release
+Alternatively, you can also use `${{ vars.NEON_PROJECT_ID }}` to get your
+`project_id`. If you have set up the Neon GitHub integration correctly, the
+`NEON_PROJECT_ID` variable will be defined.
 
-This project includes a helper script, [`script/release`](./script/release)
-designed to streamline the process of tagging and pushing new releases for
-GitHub Actions.
+By default, the schema diff will be calculated between the `compare_branch` and
+its parent. If it has no parent, then it will fail. If you want to define the
+base branch add the `base_branch` field. Both `compare_branch` and `base_branch`
+accept either the name or the ID of the branch, you can even mix the types
+between the fields (_i.e._, `compare_branch` uses the branch name and
+`base_branch` uses the branch ID or vice-versa).
 
-GitHub Actions allows users to select a specific version of the action to use,
-based on release tags. This script simplifies this process by performing the
-following steps:
+If your branch has more than one database or role see the
+[advanced usage section](#advanced-usage) below.
 
-1. **Retrieving the latest release tag:** The script starts by fetching the most
-   recent SemVer release tag of the current branch, by looking at the local data
-   available in your repository.
-1. **Prompting for a new release tag:** The user is then prompted to enter a new
-   release tag. To assist with this, the script displays the tag retrieved in
-   the previous step, and validates the format of the inputted tag (vX.X.X). The
-   user is also reminded to update the version field in package.json.
-1. **Tagging the new release:** The script then tags a new release and syncs the
-   separate major tag (e.g. v1, v2) with the new release tag (e.g. v1.0.0,
-   v2.1.2). When the user is creating a new major release, the script
-   auto-detects this and creates a `releases/v#` branch for the previous major
-   version.
-1. **Pushing changes to remote:** Finally, the script pushes the necessary
-   commits, tags and branches to the remote repository. From here, you will need
-   to create a new release in GitHub so users can easily reference the new tags
-   in their workflows.
+## Advanced usage
+
+The following fields are required to run the schema diff action:
+
+- `project_id`, the Neon project ID. If you have the GitHub integration
+  installed, you can access this field with `${{ vars.NEON_PROJECT_ID }}`
+- `api_key`, the Neon API key to access the databases. If you have the GitHub
+  integration installed, you can access this field with
+  `${{ secrets.NEON_API_KEY }}`
+- `compare_branch`, the name or ID of the branch to compare
+
+If you don't fill in the following fields, the action will populate the
+following extra parameters:
+
+- `github-token` with `${{ github.token }}`, this is the ephemeral GitHub token
+  used to create comments
+- `api_host` with `https://console.neon.tech/api/v2`
+- `username` with `neondb_owner`, the default role for new projects
+- `database` with `neondb`, the default database name for new projects
+
+The GitHub token is required to create PR comments. This value
+(`${{ github.token }}`) is
+[automatically populated by GitHub](https://docs.github.com/en/actions/security-for-github-actions/security-guides/automatic-token-authentication)
+with a unique value to use in each workflow job.
+
+By default, Neon creates a database with the name `neondb` with a `neondb_owner`
+role. If you intend to use other names, please add the fields explicitly in the
+action.
+
+If you don't want the schema comparison to happen with the parent branch of
+`compare_branch` you can explicitly specify the base branch with the
+`base_branch` field. The action below compares the schema with the `main` branch
+excplicitly.
+
+```yml
+steps:
+  - uses: neondatabase/schema-diff-action@v1
+    with:
+      project_id: ${{ vars.NEON_PROJECT_ID }}
+      compare_branch:
+        preview/pr-${{ github.event.number }}-${{ needs.setup.outputs.branch }}
+      base_branch: main
+      api_key: ${{ secrets.NEON_API_KEY }}
+      database: mydatabase
+      username: myrole
+```
+
+Additionally, you can set up extra parameters to control the state of your
+compare branch for comparison. The fields `timestamp` and `lsn` allow you to
+specify a point in time in your compare branch, which will be used for schema
+comparison. Only one value can be defined at a time.
+
+List of input fields
+
+| Field            | Required/optional | Default value                            |
+| ---------------- | ----------------- | ---------------------------------------- |
+| `project_id`     | required          | n/a                                      |
+| `compare_branch` | required          | n/a                                      |
+| `api_key`        | required          | n/a                                      |
+| `base_branch`    | optional          | empty, will default to the parent branch |
+| `api_host`       | optional          | `https://console.neon.tech/api/v2`       |
+| `username`       | optional          | `neondb_owner`                           |
+| `database`       | optional          | `neondb`                                 |
+| `lsn`            | optional          | empty, will default to the branch's head |
+| `timestamp`      | optional          | empty, will default to the branch's head |
+
+## Outputs
+
+The action provides two outputs:
+
+- `diff` the SQL patch diff
+- `comment_url` the URL of the created/updated comment
+
+## 🚧 New coming features
+
+- [ ] Split long diffs into multiple comments. Context, GitHub has a limit of
+      65535 characters per comment
+- [x] Support for two branch comparison instead of comparing with parent
+- [x] Support for LSN and timestamp fields
+- [x] Support for branch IDs in addition to branch names

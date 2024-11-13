@@ -1,24 +1,49 @@
-name: 'The name of your action here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
-
-# Add your action's branding here. This will appear on the GitHub Marketplace.
+name: Neon Schema Diff GitHub Action
+description:
+  Create GitHub Pull Request comments with the schema diff between two branches
+author: Neon Database
 branding:
-  icon: 'heart'
-  color: 'red'
-
-# Define your inputs here.
+  icon: align-left
+  color: green
 inputs:
-  milliseconds:
-    description: 'Your input description here'
+  github-token:
+    description: The GitHub token used to create an authenticated client
+    required: false
+    default: ${{ github.token }}
+  project_id:
+    description: The project id
     required: true
-    default: '1000'
-
-# Define your outputs here.
+  compare_branch:
+    description: The compare branch name or id (downstream branch)
+    required: true
+  api_key:
+    description: The Neon API key
+    required: true
+  base_branch:
+    description: The base branch name or id (upstream branch)
+    required: false
+  api_host:
+    description: The Neon API Host
+    default: https://console.neon.tech/api/v2
+  username:
+    description: The db role name
+    default: neondb_owner
+  database:
+    description: The database name
+    default: neondb
+  timestamp:
+    description:
+      The timestamp of the downstream branch to compare against. Leave it empty
+      to compare against the latest changes in your compare branch
+  lsn:
+    description:
+      The LSN of the downstream branch to compare against. Leave it empty to
+      compare against the latest changes in your compare branch
 outputs:
-  time:
-    description: 'Your output description here'
-
+  diff:
+    description: The schema diff SQL patch
+  comment_url:
+    description: The url of the comment containing the schema diff
 runs:
   using: node20
   main: dist/index.js
