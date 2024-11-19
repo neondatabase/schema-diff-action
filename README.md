@@ -7,8 +7,8 @@
   </picture>
 </p>
 
-![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/luist18/refactored-giggle/.github%2Fworkflows%2Flinter.yml?label=%F0%9F%94%8D%20Lint)
-![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/luist18/refactored-giggle/.github%2Fworkflows%2Fci.yml?label=%F0%9F%8F%97%EF%B8%8F%20Build)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/neondatabase/schema-diff-action/.github%2Fworkflows%2Flinter.yml?label=%F0%9F%94%8D%20Lint)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/neondatabase/schema-diff-action/.github%2Fworkflows%2Fci.yml?label=%F0%9F%8F%97%EF%B8%8F%20Build)
 [![coverage](./docs/coverage.svg)](./docs/coverage.svg)
 
 This action performs a database schema diff on specified Neon branches for each
@@ -20,7 +20,7 @@ pull requests are created for review before merging the changes back into the
 main branch. By including schema changes as a comment in the pull request,
 reviewers can easily assess the differences directly within the pull request.
 
-## Contributing to Neon GitHub Action development
+## Contributing
 
 If you would like to contribute to the development of this GitHub Action, see
 [Neon Schema Diff Action Development](docs/development.md)
@@ -30,14 +30,14 @@ If you would like to contribute to the development of this GitHub Action, see
 Using the action requires adding a Neon API key to your GitHub Secrets. There
 are two ways you can perform this setup:
 
-- **Using the Neon GitHub Integration** — this integration connects your Neon
-  project to your GitHub repository, creates an API key, and sets the API key in
-  your GitHub repository for you. See
+- **Using the Neon GitHub Integration** (recommended) — this integration
+  connects your Neon project to your GitHub repository, creates an API key, and
+  sets the API key in your GitHub repository for you. See
   [Neon GitHub Integration](/docs/guides/neon-github-integration) for
   instructions.
 - **Manual setup** — this method requires obtaining a Neon API key and
   configuring it manually in your GitHub repository.
-  1. Obtain an Neon API key. See
+  1. Obtain a Neon API key. See
      [Create an API key](https://neon.tech/docs/manage/api-keys#create-an-api-key)
      for instructions.
   2. In your GitHub repository, go to **Project settings** and locate
@@ -56,8 +56,7 @@ steps:
   - uses: neondatabase/schema-diff-action@v1
     with:
       project_id: rapid-haze-373089
-      compare_branch:
-        preview/pr-${{ github.event.number }}-${{ needs.setup.outputs.branch }}
+      compare_branch: dev/sunny_plant
       api_key: ${{ secrets.NEON_API_KEY }}
 ```
 
@@ -150,11 +149,3 @@ The action provides two outputs:
 - `diff` — the SQL schema diff between the `compare_branch` and the
   `base_branch`.
 - `comment_url` — the URL of the created or updated comment.
-
-## 🚧 Upcoming features
-
-- [ ] Split long diffs into multiple comments. Context, GitHub has a limit of
-      65535 characters per comment
-- [✓] Support for two branch comparison instead of comparing with parent
-- [✓] Support for LSN and timestamp fields
-- [✓] Support for branch IDs in addition to branch names
