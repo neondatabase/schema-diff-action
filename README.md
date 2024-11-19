@@ -53,6 +53,8 @@ are two ways you can perform this setup:
 Setup the action:
 
 ```yml
+permissions:
+  pull-requests: write
 steps:
   - uses: neondatabase/schema-diff-action@v1
     with:
@@ -73,6 +75,19 @@ branch, add the `base_branch` field. Both the `compare_branch` and `base_branch`
 accept either the name or the ID of the branch, and you can use both (_i.e._,
 the `compare_branch` can use the branch name while the `base_branch` uses the
 branch ID or vice-versa).
+
+For the action to be able to create PR comments you must add the correct
+permissions to the job. To do this add the following permissions to your job:
+
+```yml
+jobs:
+  your_job:
+    permisions:
+      pull-request: write
+    steps:
+      - uses: neondatabase/schema-diff-action@v1
+      ...
+```
 
 If your branch has more than one database or role, see the
 [advanced usage section](#advanced-usage) below.
