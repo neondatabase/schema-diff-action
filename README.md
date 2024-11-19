@@ -27,19 +27,25 @@ If you would like to contribute to the development of this GitHub Action, see
 
 ## How to set up the NEON_API_KEY
 
-Using the action requires adding a Neon API key to your GitHub Secrets. For
-information about obtaining an API key, see
-[Create an API key](https://neon.tech/docs/manage/api-keys#create-an-api-key).
+Using the action requires adding a Neon API key to your GitHub Secrets. There
+are two ways you can perform this setup:
 
-1. In your GitHub repository, go to **Project settings** and locate **Secrets**
-   at the bottom of the left sidebar.
-2. Click **Actions** > **New Repository Secret**.
-3. Name the secret `NEON_API_KEY` and paste your API key in the **Secret** field
-4. Click **Add Secret**.
-
-Alternatively, Neon offers a **GitHub Integration** that can perform the API key
-setup for you. See
-[Neon GitHub Integration](/docs/guides/neon-github-integration).
+- **Using the Neon GitHub Integration** — this integration connects your Neon
+  project to your GitHub repository, creates an API key, and sets the API key in
+  your GitHub repository for you. See
+  [Neon GitHub Integration](/docs/guides/neon-github-integration) for
+  instructions.
+- **Manual setup** — this method requires obtaining a Neon API key and
+  configuring it manually in your GitHub repository.
+  1. Obtain an Neon API key. See
+     [Create an API key](https://neon.tech/docs/manage/api-keys#create-an-api-key)
+     for instructions.
+  2. In your GitHub repository, go to **Project settings** and locate
+     **Secrets** at the bottom of the left sidebar.
+  3. Click **Actions** > **New Repository Secret**.
+  4. Name the secret `NEON_API_KEY` and paste your API key in the **Secret**
+     field
+  5. Click **Add Secret**.
 
 ## Usage
 
