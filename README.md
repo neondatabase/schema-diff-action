@@ -37,15 +37,16 @@ are two ways you can perform this setup:
   instructions.
 - **Manual setup** — this method requires obtaining a Neon API key and
   configuring it manually in your GitHub repository.
+
   1. Obtain a Neon API key. See
      [Create an API key](https://neon.tech/docs/manage/api-keys#create-an-api-key)
      for instructions.
-  2. In your GitHub repository, go to **Project settings** and locate
+  1. In your GitHub repository, go to **Project settings** and locate
      **Secrets** at the bottom of the left sidebar.
-  3. Click **Actions** > **New Repository Secret**.
-  4. Name the secret `NEON_API_KEY` and paste your API key in the **Secret**
+  1. Click **Actions** > **New Repository Secret**.
+  1. Name the secret `NEON_API_KEY` and paste your API key in the **Secret**
      field
-  5. Click **Add Secret**.
+  1. Click **Add Secret**.
 
 ## Usage
 
