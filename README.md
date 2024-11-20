@@ -20,6 +20,13 @@ pull requests are created for review before merging the changes back into the
 main branch. By including schema changes as a comment in the pull request,
 reviewers can easily assess the differences directly within the pull request.
 
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./docs/comment-dark-mode.png">
+    <img alt="Neon logo" src="./docs/comment-light-mode.png">
+  </picture>
+</p>
+
 ## Contributing
 
 If you would like to contribute to the development of this GitHub Action, see
@@ -53,8 +60,7 @@ are two ways you can perform this setup:
 Setup the action:
 
 ```yml
-permissions:
-  pull-requests: write
+permissions: write-all
 steps:
   - uses: neondatabase/schema-diff-action@v1
     with:
@@ -84,10 +90,18 @@ jobs:
   your_job:
     permisions:
       pull-request: write
+      ...other permissions needed for the rest of the job
     steps:
       - uses: neondatabase/schema-diff-action@v1
       ...
 ```
+
+While setting the permissions please consider any other action that your
+workflow may do so you don't miss any permission. For instance, if you
+repository is private you also need to grant read or write access to your
+repository with `contents: write`. For the full list of permissions please refer
+to
+[Defining access for the GITHUB_TOKEN permissions](https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/controlling-permissions-for-github_token#defining-access-for-the-github_token-permissions).
 
 If your branch has more than one database or role, see the
 [advanced usage section](#advanced-usage) below.
