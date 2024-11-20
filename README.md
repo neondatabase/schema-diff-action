@@ -23,7 +23,7 @@ reviewers can easily assess the differences directly within the pull request.
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="./docs/comment-dark-mode.png">
-    <img alt="Neon logo" src="./docs/comment-light-mode.png">
+    <img alt="Neon logo" src="./docs/comment-light-mode.png" style="max-width: 1500px;">
   </picture>
 </p>
 
