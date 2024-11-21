@@ -20,6 +20,13 @@ pull requests are created for review before merging the changes back into the
 main branch. By including schema changes as a comment in the pull request,
 reviewers can easily assess the differences directly within the pull request.
 
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./docs/comment-dark-mode.png">
+    <img alt="Neon logo" src="./docs/comment-light-mode.png" style="max-width: 1500px;">
+  </picture>
+</p>
+
 ## Contributing
 
 If you would like to contribute to the development of this GitHub Action, see
@@ -53,6 +60,7 @@ are two ways you can perform this setup:
 Setup the action:
 
 ```yml
+permissions: write-all
 steps:
   - uses: neondatabase/schema-diff-action@v1
     with:
@@ -73,6 +81,29 @@ branch, add the `base_branch` field. Both the `compare_branch` and `base_branch`
 accept either the name or the ID of the branch, and you can use both (_i.e._,
 the `compare_branch` can use the branch name while the `base_branch` uses the
 branch ID or vice-versa).
+
+To enable the action to create pull request (PR) comments, you must configure
+the appropriate job permissions. To do this, add the following permissions to
+your job configuration:
+
+```yml
+jobs:
+  your_job:
+    permisions:
+      pull-request: write
+      ...other permissions needed for the rest of the job
+    steps:
+      - uses: neondatabase/schema-diff-action@v1
+      ...
+```
+
+When setting permissions, make sure to account for all actions your workflow
+performs to avoid missing any required permissions. For example, if your
+repository is private, you must also grant read or write access to the
+repository with `contents: write`.
+
+For a complete list of permissions, refer to the GitHub documentation on
+[Defining access for the GITHUB_TOKEN permissions](https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/controlling-permissions-for-github_token#defining-access-for-the-github_token-permissions).
 
 If your branch has more than one database or role, see the
 [advanced usage section](#advanced-usage) below.
