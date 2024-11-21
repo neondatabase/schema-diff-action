@@ -82,8 +82,9 @@ accept either the name or the ID of the branch, and you can use both (_i.e._,
 the `compare_branch` can use the branch name while the `base_branch` uses the
 branch ID or vice-versa).
 
-For the action to be able to create PR comments you must add the correct
-permissions to the job. To do this add the following permissions to your job:
+To enable the action to create pull request (PR) comments, you must configure
+the appropriate job permissions. To do this, add the following permissions to
+your job configuration:
 
 ```yml
 jobs:
@@ -96,11 +97,12 @@ jobs:
       ...
 ```
 
-While setting the permissions please consider any other action that your
-workflow may do so you don't miss any permission. For instance, if you
-repository is private you also need to grant read or write access to your
-repository with `contents: write`. For the full list of permissions please refer
-to
+When setting permissions, make sure to account for all actions your workflow
+performs to avoid missing any required permissions. For example, if your
+repository is private, you must also grant read or write access to the
+repository with `contents: write`.
+
+For a complete list of permissions, refer to the GitHub documentation on
 [Defining access for the GITHUB_TOKEN permissions](https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/controlling-permissions-for-github_token#defining-access-for-the-github_token-permissions).
 
 If your branch has more than one database or role, see the
