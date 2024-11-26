@@ -2,8 +2,8 @@
 
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./docs/neon-logo-dark-color.svg">
-    <img alt="Neon logo" src="./docs/neon-logo-light-color.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="./docs/logos/neon-logo-dark.svg">
+    <img alt="Neon logo" src="./docs/logos/neon-logo-light.svg">
   </picture>
 </p>
 
@@ -20,28 +20,24 @@ pull requests are created for review before merging the changes back into the
 main branch. By including schema changes as a comment in the pull request,
 reviewers can easily assess the differences directly within the pull request.
 
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./docs/comment-dark-mode.png">
-    <img alt="Neon logo" src="./docs/comment-light-mode.png" style="max-width: 1500px;">
-  </picture>
-</p>
+You can take a look at the [example PR comment](docs/pr_comment.md) to see what
+the output looks like.
 
 ## Contributing
 
 If you would like to contribute to the development of this GitHub Action, see
-[Neon Schema Diff Action Development](docs/development.md)
+[docs/development.md](docs/development.md).
 
 ## How to set up the NEON_API_KEY
 
 Using the action requires adding a Neon API key to your GitHub Secrets. There
 are two ways you can perform this setup:
 
-- **Using the Neon GitHub Integration** (recommended) — this integration
+- **Using the Neon GitHub Integration** (recommended 👍) — this integration
   connects your Neon project to your GitHub repository, creates an API key, and
   sets the API key in your GitHub repository for you. See
-  [Neon GitHub Integration](/docs/guides/neon-github-integration) for
-  instructions.
+  [Neon GitHub Integration](https://neon.tech/docs/guides/neon-github-integration)
+  for instructions.
 - **Manual setup** — this method requires obtaining a Neon API key and
   configuring it manually in your GitHub repository.
 
@@ -71,8 +67,8 @@ steps:
 
 Alternatively, you can use `${{ vars.NEON_PROJECT_ID }}` to get your
 `project_id`. If you have set up the
-[Neon GitHub Integration](/docs/guides/neon-github-integration), the
-`NEON_PROJECT_ID` variable will be defined as a variable in your GitHub
+[Neon GitHub Integration](https://neon.tech/docs/guides/neon-github-integration),
+the `NEON_PROJECT_ID` variable will be defined as a variable in your GitHub
 repository.
 
 By default, the schema diff is calculated between the `compare_branch` and its
@@ -91,6 +87,7 @@ jobs:
   your_job:
     permisions:
       pull-request: write
+      contents: write
       ...other permissions needed for the rest of the job
     steps:
       - uses: neondatabase/schema-diff-action@v1

@@ -174,7 +174,7 @@ export function summary(
 ${DIFF_COMMENT_IDENTIFIER}
 ${DIFF_HASH_COMMENT_TEMPLATE.replace('%s', hash)}
 
-# 🔍 Neon Schema Diff summary
+# <picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/neondatabase/schema-diff-action/refs/heads/main/docs/logos/logo-dark.svg"><img alt="Neon logo" src="https://raw.githubusercontent.com/neondatabase/schema-diff-action/refs/heads/main/docs/logos/logo-light.svg" width="24" height="24"></picture> Neon Schema Diff summary
 
 Schema diff between the compare branch ([${compareBranch.name}](${compareBranchURL})) and the base branch ([${baseBranch.name}](${baseBranchURL})).
 
