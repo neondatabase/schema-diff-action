@@ -3,10 +3,16 @@
 
 # <picture><source media="(prefers-color-scheme: dark)" srcset="./logos/logo-dark.svg"><img alt="Neon logo" src="./logos/logo-light.svg" width="24" height="24"></picture> Neon Schema Diff summary
 
-Schema diff between the compare branch ([preview/pr-9-feat/add-soft-delete](https://console.neon.tech/app/projects/holy-wind-90398863/branches/br-misty-resonance-a5jvokot)) and the base branch ([main](https://console.neon.tech/app/projects/holy-wind-90398863/branches/br-crimson-mode-a5j632xb)).
+Schema diff between the compare branch
+([preview/pr-9-feat/add-soft-delete](https://console.neon.tech/app/projects/holy-wind-90398863/branches/br-misty-resonance-a5jvokot))
+and the base branch
+([main](https://console.neon.tech/app/projects/holy-wind-90398863/branches/br-crimson-mode-a5j632xb)).
 
-- Base branch: main ([br-crimson-mode-a5j632xb](https://console.neon.tech/app/projects/holy-wind-90398863/branches/br-crimson-mode-a5j632xb)) 🔒
-- Compare branch: preview/pr-9-feat/add-soft-delete ([br-misty-resonance-a5jvokot](https://console.neon.tech/app/projects/holy-wind-90398863/branches/br-misty-resonance-a5jvokot)) 
+- Base branch: main
+  ([br-crimson-mode-a5j632xb](https://console.neon.tech/app/projects/holy-wind-90398863/branches/br-crimson-mode-a5j632xb))
+  🔒
+- Compare branch: preview/pr-9-feat/add-soft-delete
+  ([br-misty-resonance-a5jvokot](https://console.neon.tech/app/projects/holy-wind-90398863/branches/br-misty-resonance-a5jvokot))
 - Database: neondb
 - Role: neondb_owner
 
@@ -24,14 +30,14 @@ Index: neondb-schema.sql
 +    updated_at timestamp without time zone DEFAULT now() NOT NULL,
 +    deleted_at timestamp without time zone
  );
- 
- 
+
+
  ALTER TABLE public.posts OWNER TO neondb_owner;
 @@ -180,5 +181,5 @@
  --
  -- Name: __drizzle_migrations id; Type: DEFAULT; Schema: drizzle; Owner: neondb_owner
  --
- 
+
 -ALTER TABLE ONLY drizzle.__drizzle_migrations ALTER COLUMN id SET DEFAULT nextval('drizzle.__drizzle_m
 \ No newline at end of file
 +ALTER TABLE ONLY drizzle.__drizzle_migrations ALTER COLUMN

@@ -36,8 +36,8 @@ are two ways you can perform this setup:
 - **Using the Neon GitHub Integration** (recommended 👍) — this integration
   connects your Neon project to your GitHub repository, creates an API key, and
   sets the API key in your GitHub repository for you. See
-  [Neon GitHub Integration](https://neon.tech/docs/guides/neon-github-integration) for
-  instructions.
+  [Neon GitHub Integration](https://neon.tech/docs/guides/neon-github-integration)
+  for instructions.
 - **Manual setup** — this method requires obtaining a Neon API key and
   configuring it manually in your GitHub repository.
 
@@ -67,8 +67,8 @@ steps:
 
 Alternatively, you can use `${{ vars.NEON_PROJECT_ID }}` to get your
 `project_id`. If you have set up the
-[Neon GitHub Integration](https://neon.tech/docs/guides/neon-github-integration), the
-`NEON_PROJECT_ID` variable will be defined as a variable in your GitHub
+[Neon GitHub Integration](https://neon.tech/docs/guides/neon-github-integration),
+the `NEON_PROJECT_ID` variable will be defined as a variable in your GitHub
 repository.
 
 By default, the schema diff is calculated between the `compare_branch` and its
