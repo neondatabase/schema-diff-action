@@ -15,10 +15,11 @@ This action performs a database schema diff on specified Neon branches for each
 pull request and writes a comment to the pull request highlighting the schema
 differences.
 
-It supports workflows where schema changes are made on a development branch, and
-pull requests are created for review before merging the changes back into the
-main branch. By including schema changes as a comment in the pull request,
-reviewers can easily assess the differences directly within the pull request.
+It supports workflows where schema changes are made on a branch. When you create
+or update a pull request containing schema changes, the action automatically
+generates a comment within the pull request. By including the schema diff as
+part of the comment, reviewers can easily assess the changes directly within the
+pull request.
 
 You can take a look at the [example PR comment](docs/pr_comment.md) to see what
 the output looks like.
@@ -56,7 +57,9 @@ are two ways you can perform this setup:
 Setup the action:
 
 ```yml
-permissions: write-all
+permissions:
+  pull-requests: write
+  contents: read
 steps:
   - uses: neondatabase/schema-diff-action@v1
     with:
@@ -87,7 +90,7 @@ jobs:
   your_job:
     permisions:
       pull-request: write
-      contents: write
+      contents: read
       ...other permissions needed for the rest of the job
     steps:
       - uses: neondatabase/schema-diff-action@v1
@@ -97,7 +100,7 @@ jobs:
 When setting permissions, make sure to account for all actions your workflow
 performs to avoid missing any required permissions. For example, if your
 repository is private, you must also grant read or write access to the
-repository with `contents: write`.
+repository with `contents: read` or `contents: write`.
 
 For a complete list of permissions, refer to the GitHub documentation on
 [Defining access for the GITHUB_TOKEN permissions](https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/controlling-permissions-for-github_token#defining-access-for-the-github_token-permissions).
