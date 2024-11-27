@@ -98,9 +98,11 @@ export async function run(): Promise<void> {
       core.info(`Comment ${operation} successfully`)
     }
 
-    core.setOutput('comment_url', url)
+    if (url) {
+      core.setOutput('comment_url', url)
 
-    core.info(`Comment URL: ${url}`)
+      core.info(`Comment URL: ${url}`)
+    }
   } catch (error) {
     // Fail the workflow run if an error occurs
     if (error instanceof Error) core.setFailed(error.message)
