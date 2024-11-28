@@ -19,8 +19,8 @@ export type BranchDiff = {
 }
 
 export type SummaryComment = {
-  url: string
-  operation: 'created' | 'updated' | 'noop'
+  url?: string
+  operation: 'created' | 'updated' | 'noop' | 'deleted'
 }
 
 export async function diff(
@@ -160,12 +160,11 @@ export function summary(
   role: string,
   projectId: string
 ): string {
-  let diffContent
-  if (sql === '') {
-    diffContent = 'No schema changes detected'
-  } else {
-    diffContent = `\`\`\`diff\n${sql}\n\`\`\``
+  if (sql.trim() === '') {
+    return ''
   }
+
+  const diffContent = `\`\`\`diff\n${sql}\n\`\`\``
 
   const compareBranchURL = getBranchURL(projectId, compareBranch.id)
   const baseBranchURL = getBranchURL(projectId, baseBranch.id)
@@ -208,8 +207,25 @@ export async function upsertGitHubComment(
     comment.body?.includes(DIFF_COMMENT_IDENTIFIER)
   )
 
+  const emptyDiff = diff.trim() === ''
+
   // If we can find the comment we update it, otherwise we create a new comment
   if (comment) {
+    if (emptyDiff) {
+      // If the diff is empty, we delete the comment.
+      const deletedComment = await oktokit.rest.issues.deleteComment({
+        ...context.repo,
+        comment_id: comment.id
+      })
+      if (deletedComment.status !== 204) {
+        throw new Error('Failed to delete comment')
+      }
+
+      return {
+        operation: 'deleted'
+      }
+    }
+
     // Before updating the comment, check if the hash is the same, if it is,
     // we don't need to update the comment as the diff hasn't changed
     if (
@@ -235,6 +251,13 @@ export async function upsertGitHubComment(
     return {
       url: updatedComment.data.html_url,
       operation: 'updated'
+    }
+  }
+
+  // If the diff is empty, we don't need to create a comment
+  if (emptyDiff) {
+    return {
+      operation: 'noop'
     }
   }
 

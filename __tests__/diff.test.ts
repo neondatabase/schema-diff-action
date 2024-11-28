@@ -306,7 +306,7 @@ describe('summary function', () => {
     jest.useRealTimers()
   })
 
-  it('returns summary with "No schema changes detected" when sql is empty', () => {
+  it('returns empty summary if there are no schema changes', () => {
     const sql = ''
     const hash = 'abcd1234'
 
@@ -320,27 +320,7 @@ describe('summary function', () => {
       projectId
     )
 
-    expect(result).toContain(DIFF_COMMENT_IDENTIFIER)
-    expect(result).toContain(DIFF_HASH_COMMENT_TEMPLATE.replace('%s', hash))
-    expect(result).toContain('No schema changes detected')
-    expect(result).toContain(
-      `Schema diff between the compare branch ([${compareBranch.name}]`
-    )
-    expect(result).toContain(
-      `- Base branch: ${baseBranch.name} ([${baseBranch.id}](${getBranchURL(
-        projectId,
-        baseBranch.id
-      )}))`
-    )
-    expect(result).toContain(
-      `- Compare branch: ${compareBranch.name} ([${compareBranch.id}](${getBranchURL(
-        projectId,
-        compareBranch.id
-      )})) 🔒`
-    )
-    expect(result).toContain(
-      `This comment was last updated at 1/1/2023 12:00:00 PM`
-    )
+    expect(result).toBe('')
   })
 
   it('returns formatted diff when sql is not empty', () => {
@@ -385,7 +365,7 @@ describe('summary function', () => {
   it('handles unprotected compare and base branches correctly', () => {
     const unprotectedCompareBranch = { ...compareBranch, protected: false }
     const unprotectedBaseBranch = { ...baseBranch, protected: false }
-    const sql = ''
+    const sql = 'sql content'
     const hash = 'abcd1234'
 
     const result = summary(
@@ -434,7 +414,8 @@ describe('upsertGitHubComment function', () => {
         issues: {
           listComments: jest.fn(),
           updateComment: jest.fn(),
-          createComment: jest.fn()
+          createComment: jest.fn(),
+          deleteComment: jest.fn()
         }
       }
     } as unknown as jest.Mocked<ReturnType<typeof github.getOctokit>>
@@ -552,5 +533,63 @@ describe('upsertGitHubComment function', () => {
     await expect(upsertGitHubComment(token, diff, hash)).rejects.toThrow(
       'Failed to create a comment'
     )
+  })
+
+  it('deletes the comment if the diff is empty and the comment exists', async () => {
+    const existingComment = {
+      id: 123,
+      body: `${DIFF_COMMENT_IDENTIFIER}\n${DIFF_HASH_COMMENT_TEMPLATE.replace('%s', hash)}\nExisting diff content`,
+      html_url: 'http://example.com/existing-comment'
+    }
+    ;(
+      mockOctokit.rest.issues.listComments as unknown as jest.Mock
+    ).mockResolvedValueOnce({ data: [existingComment] })
+    ;(
+      mockOctokit.rest.issues.deleteComment as unknown as jest.Mock
+    ).mockResolvedValueOnce({ status: 204 })
+
+    const result: SummaryComment = await upsertGitHubComment(token, '', hash)
+
+    expect(mockOctokit.rest.issues.deleteComment).toHaveBeenCalledWith({
+      ...mockContext.repo,
+      comment_id: existingComment.id
+    })
+    expect(result).toEqual({
+      operation: 'deleted',
+      url: undefined
+    })
+  })
+
+  it('throw an error if deleting the comment fails', async () => {
+    const existingComment = {
+      id: 123,
+      body: `${DIFF_COMMENT_IDENTIFIER}\n${DIFF_HASH_COMMENT_TEMPLATE.replace('%s', hash)}\nExisting diff content`,
+      html_url: 'http://example.com/existing-comment'
+    }
+    ;(
+      mockOctokit.rest.issues.listComments as unknown as jest.Mock
+    ).mockResolvedValueOnce({ data: [existingComment] })
+    ;(
+      mockOctokit.rest.issues.deleteComment as unknown as jest.Mock
+    ).mockResolvedValueOnce({ status: 500 })
+
+    await expect(upsertGitHubComment(token, '', hash)).rejects.toThrow(
+      `Failed to delete comment`
+    )
+  })
+
+  it('skips comment creation if diff is empty and no comment exists', async () => {
+    // eslint-disable-next-line no-extra-semi
+    ;(
+      mockOctokit.rest.issues.listComments as unknown as jest.Mock
+    ).mockResolvedValueOnce({ data: [] })
+
+    const result: SummaryComment = await upsertGitHubComment(token, '', hash)
+
+    expect(mockOctokit.rest.issues.createComment).not.toHaveBeenCalled()
+    expect(result).toEqual({
+      operation: 'noop',
+      url: undefined
+    })
   })
 })

@@ -38198,13 +38198,10 @@ async function diff(projectId, compareBranchInput, apiKey, apiHost, username, da
     };
 }
 function summary(sql, hash, compareBranch, baseBranch, database, role, projectId) {
-    let diffContent;
-    if (sql === '') {
-        diffContent = 'No schema changes detected';
+    if (sql.trim() === '') {
+        return '';
     }
-    else {
-        diffContent = `\`\`\`diff\n${sql}\n\`\`\``;
-    }
+    const diffContent = `\`\`\`diff\n${sql}\n\`\`\``;
     const compareBranchURL = (0, utils_1.getBranchURL)(projectId, compareBranch.id);
     const baseBranchURL = (0, utils_1.getBranchURL)(projectId, baseBranch.id);
     return `
@@ -38234,8 +38231,22 @@ async function upsertGitHubComment(token, diff, hash) {
         issue_number: context.issue.number
     });
     const comment = comments.data.find(comment => comment.body?.includes(DIFF_COMMENT_IDENTIFIER));
+    const emptyDiff = diff.trim() === '';
     // If we can find the comment we update it, otherwise we create a new comment
     if (comment) {
+        if (emptyDiff) {
+            // If the diff is empty, we delete the comment.
+            const deletedComment = await oktokit.rest.issues.deleteComment({
+                ...context.repo,
+                comment_id: comment.id
+            });
+            if (deletedComment.status !== 204) {
+                throw new Error('Failed to delete comment');
+            }
+            return {
+                operation: 'deleted'
+            };
+        }
         // Before updating the comment, check if the hash is the same, if it is,
         // we don't need to update the comment as the diff hasn't changed
         if (comment.body &&
@@ -38256,6 +38267,12 @@ async function upsertGitHubComment(token, diff, hash) {
         return {
             url: updatedComment.data.html_url,
             operation: 'updated'
+        };
+    }
+    // If the diff is empty, we don't need to create a comment
+    if (emptyDiff) {
+        return {
+            operation: 'noop'
         };
     }
     // Create a new comment
@@ -38378,8 +38395,10 @@ async function run() {
         else {
             core.info(`Comment ${operation} successfully`);
         }
-        core.setOutput('comment_url', url);
-        core.info(`Comment URL: ${url}`);
+        if (url) {
+            core.setOutput('comment_url', url);
+            core.info(`Comment URL: ${url}`);
+        }
     }
     catch (error) {
         // Fail the workflow run if an error occurs
