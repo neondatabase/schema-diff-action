@@ -105,7 +105,7 @@ repository with `contents: read` or `contents: write`.
 For a complete list of permissions, refer to the GitHub documentation on
 [Defining access for the GITHUB_TOKEN permissions](https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/controlling-permissions-for-github_token#defining-access-for-the-github_token-permissions).
 
-If your branch has more than one database or role, see the
+If your branch has more than one database, see the
 [advanced usage section](#advanced-usage) below.
 
 ## Advanced usage
@@ -125,7 +125,6 @@ use these default values:
 - `github-token` — `${{ github.token }}`, the ephemeral GitHub token used to
   create comments
 - `api_host` — `https://console.neon.tech/api/v2`
-- `username` — `neondb_owner`, the default role for new Neon projects
 - `database` — `neondb`, the default database name for new Neon projects
 
 The GitHub token is required to create PR comments. The (`${{ github.token }}`)
@@ -152,7 +151,6 @@ steps:
       base_branch: main
       api_key: ${{ secrets.NEON_API_KEY }}
       database: mydatabase
-      username: myrole
 ```
 
 Additionally, you can set up extra parameters to define the state of your
@@ -169,7 +167,6 @@ Supported parameters:
 | `api_key`        | required          | n/a                                      |
 | `base_branch`    | optional          | empty, will default to the parent branch |
 | `api_host`       | optional          | `https://console.neon.tech/api/v2`       |
-| `username`       | optional          | `neondb_owner`                           |
 | `database`       | optional          | `neondb`                                 |
 | `lsn`            | optional          | empty, will default to the branch's head |
 | `timestamp`      | optional          | empty, will default to the branch's head |

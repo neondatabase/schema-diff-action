@@ -33,7 +33,6 @@ export async function run(): Promise<void> {
     // Optional fields but with default value
     const apiHost: string = core.getInput('api_host', { trimWhitespace: true }) // defaults to https://console.neon.tech/api/v2
     const database: string = core.getInput('database', { trimWhitespace: true }) // defaults to neondb
-    const username: string = core.getInput('username', { trimWhitespace: true }) // defaults to neondb_owner
 
     // Optional fields without default values
     const timestamp: string = core.getInput('timestamp', {
@@ -46,13 +45,9 @@ export async function run(): Promise<void> {
       throw new Error('API host must be a valid URL')
     }
 
-    // Check if the database and username are valid, i.e. not empty
+    // Check if the database is valid, i.e. not empty
     if (!database) {
       throw new Error('Database name cannot be empty')
-    }
-
-    if (!username) {
-      throw new Error('Database username/role cannot be empty')
     }
 
     // Get the point in time for the schema diff
@@ -69,7 +64,6 @@ export async function run(): Promise<void> {
       branchInput,
       apiKey,
       apiHost,
-      username,
       database,
       pointInTime
     )
@@ -80,7 +74,6 @@ export async function run(): Promise<void> {
       compareBranch,
       baseBranch,
       database,
-      username,
       projectId
     )
 

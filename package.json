@@ -68,7 +68,7 @@
   "dependencies": {
     "@actions/core": "^1.11.1",
     "@actions/github": "^6.0.0",
-    "@neondatabase/api-client": "^1.10.3",
+    "@neondatabase/api-client": "^1.11.2",
     "diff": "^7.0.0"
   },
   "devDependencies": {

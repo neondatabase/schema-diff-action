@@ -43,7 +43,6 @@ const mockedDiffResult = {
     id: '2',
     name: 'main'
   } as Branch,
-  role: 'neondb_owner',
   database: 'neondb'
 }
 
@@ -106,27 +105,6 @@ describe('action', () => {
     expect(errorMock).not.toHaveBeenCalled()
   })
 
-  it('invalid username input', async () => {
-    getInputMock.mockImplementation((name: string) => {
-      switch (name) {
-        case 'api_host':
-          return 'https://console.neon.tech/api/v2'
-        case 'username':
-          return ''
-        default:
-          return name
-      }
-    })
-
-    await main.run()
-    expect(runMock).toHaveReturned()
-    expect(setFailedMock).toHaveBeenNthCalledWith(
-      1,
-      'Database username/role cannot be empty'
-    )
-    expect(errorMock).not.toHaveBeenCalled()
-  })
-
   it('valid inputs', async () => {
     getInputMock.mockImplementation((name: string) => {
       switch (name) {
@@ -134,8 +112,6 @@ describe('action', () => {
           return 'https://console.neon.tech/api/v2'
         case 'database':
           return 'neondb'
-        case 'username':
-          return 'neondb_owner'
         case 'timestamp':
         case 'lsn':
           return ''
@@ -175,8 +151,6 @@ describe('action', () => {
           return 'https://console.neon.tech/api/v2'
         case 'database':
           return 'neondb'
-        case 'username':
-          return 'neondb_owner'
         case 'timestamp':
         case 'lsn':
           return ''
