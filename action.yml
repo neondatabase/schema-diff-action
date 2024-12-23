@@ -25,9 +25,6 @@ inputs:
   api_host:
     description: The Neon API Host
     default: https://console.neon.tech/api/v2
-  username:
-    description: The db role name
-    default: neondb_owner
   database:
     description: The database name
     default: neondb
