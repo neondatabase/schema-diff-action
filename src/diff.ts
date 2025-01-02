@@ -14,7 +14,6 @@ export type BranchDiff = {
   hash: string
   compareBranch: Branch
   baseBranch: Branch
-  role: string
   database: string
 }
 
@@ -28,7 +27,6 @@ export async function diff(
   compareBranchInput: BranchComparisonInput,
   apiKey: string,
   apiHost: string,
-  username: string,
   database: string,
   pointInTime?: PointInTime
 ): Promise<BranchDiff> {
@@ -43,7 +41,9 @@ export async function diff(
   })
 
   // Get all branches for the project
-  const branches = await client.listProjectBranches(projectId)
+  const branches = await client.listProjectBranches({
+    projectId
+  })
   if (branches.status !== 200) {
     throw new Error(`Failed to list branches for project ${projectId}`)
   }
@@ -90,7 +90,6 @@ export async function diff(
   const compareSchema = await client.getProjectBranchSchema({
     projectId,
     branchId: compareBranch.id,
-    role: username,
     db_name: database,
     lsn: pointInTime?.type === 'lsn' ? pointInTime.value : undefined,
     timestamp: pointInTime?.type === 'timestamp' ? pointInTime.value : undefined
@@ -104,7 +103,6 @@ export async function diff(
   const baseSchema = await client.getProjectBranchSchema({
     projectId,
     branchId: baseBranch.id,
-    role: username,
     db_name: database
   })
   if (baseSchema.status !== 200) {
@@ -119,7 +117,6 @@ export async function diff(
       hash: '',
       compareBranch,
       baseBranch,
-      role: username,
       database: database
     }
   }
@@ -146,7 +143,6 @@ export async function diff(
     hash: hash,
     compareBranch,
     baseBranch,
-    role: username,
     database: database
   }
 }
@@ -157,7 +153,6 @@ export function summary(
   compareBranch: Branch,
   baseBranch: Branch,
   database: string,
-  role: string,
   projectId: string
 ): string {
   if (sql.trim() === '') {
@@ -180,7 +175,6 @@ Schema diff between the compare branch ([${compareBranch.name}](${compareBranchU
 - Base branch: ${baseBranch.name} ([${baseBranch.id}](${baseBranchURL})) ${baseBranch.protected ? '🔒' : ''}
 - Compare branch: ${compareBranch.name} ([${compareBranch.id}](${compareBranchURL})) ${compareBranch.protected ? '🔒' : ''}
 - Database: ${database}
-- Role: ${role}
 
 ${diffContent}
 

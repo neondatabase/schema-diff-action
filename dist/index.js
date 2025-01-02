@@ -7392,8 +7392,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g = Object.create((typeof Iterator === "function" ? Iterator : Object).prototype);
+    return g.next = verb(0), g["throw"] = verb(1), g["return"] = verb(2), typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
@@ -7430,16 +7430,7 @@ var __rest = (this && this.__rest) || function (s, e) {
     return t;
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.Api = exports.HttpClient = exports.ContentType = exports.SupportTicketSeverity = exports.OrgDeletionConditionName = exports.UserDeletionConditionName = exports.IdentityProviderId = exports.MemberRole = exports.BillingPaymentMethod = exports.BillingSubscriptionType = exports.NotificationActionType = exports.NotificationType = exports.NotificationCategoryType = exports.NotificationMetricType = exports.EndpointPoolerMode = exports.EndpointType = exports.EndpointState = exports.BranchState = exports.ConsumptionHistoryGranularity = exports.OperationStatus = exports.OperationAction = exports.Provisioner = void 0;
-/**
- * The Neon compute provisioner.
- * Specify the `k8s-neonvm` provisioner to create a compute endpoint that supports Autoscaling.
- */
-var Provisioner;
-(function (Provisioner) {
-    Provisioner["K8SPod"] = "k8s-pod";
-    Provisioner["K8SNeonvm"] = "k8s-neonvm";
-})(Provisioner || (exports.Provisioner = Provisioner = {}));
+exports.Api = exports.HttpClient = exports.ContentType = exports.SupportTicketSeverity = exports.IdentitySupportedAuthProvider = exports.OrgDeletionConditionName = exports.UserDeletionConditionName = exports.IdentityProviderId = exports.MemberRole = exports.BillingPaymentMethod = exports.BillingSubscriptionType = exports.BillingAccountState = exports.EndpointPoolerMode = exports.EndpointType = exports.EndpointState = exports.ConsumptionHistoryGranularity = exports.OperationStatus = exports.OperationAction = void 0;
 /** The action performed by the operation */
 var OperationAction;
 (function (OperationAction) {
@@ -7460,6 +7451,11 @@ var OperationAction;
     OperationAction["ApplyStorageConfig"] = "apply_storage_config";
     OperationAction["PrepareSecondaryPageserver"] = "prepare_secondary_pageserver";
     OperationAction["SwitchPageserver"] = "switch_pageserver";
+    OperationAction["DetachParentBranch"] = "detach_parent_branch";
+    OperationAction["TimelineArchive"] = "timeline_archive";
+    OperationAction["TimelineUnarchive"] = "timeline_unarchive";
+    OperationAction["StartReservedCompute"] = "start_reserved_compute";
+    OperationAction["SyncDbsAndRolesFromCompute"] = "sync_dbs_and_roles_from_compute";
 })(OperationAction || (exports.OperationAction = OperationAction = {}));
 /** The status of the operation */
 var OperationStatus;
@@ -7479,12 +7475,6 @@ var ConsumptionHistoryGranularity;
     ConsumptionHistoryGranularity["Daily"] = "daily";
     ConsumptionHistoryGranularity["Monthly"] = "monthly";
 })(ConsumptionHistoryGranularity || (exports.ConsumptionHistoryGranularity = ConsumptionHistoryGranularity = {}));
-/** The branch state */
-var BranchState;
-(function (BranchState) {
-    BranchState["Init"] = "init";
-    BranchState["Ready"] = "ready";
-})(BranchState || (exports.BranchState = BranchState = {}));
 /** The state of the compute endpoint */
 var EndpointState;
 (function (EndpointState) {
@@ -7503,33 +7493,15 @@ var EndpointPoolerMode;
 (function (EndpointPoolerMode) {
     EndpointPoolerMode["Transaction"] = "transaction";
 })(EndpointPoolerMode || (exports.EndpointPoolerMode = EndpointPoolerMode = {}));
-/** The metric type for a given notification */
-var NotificationMetricType;
-(function (NotificationMetricType) {
-    NotificationMetricType["DatabaseSize"] = "database_size";
-    NotificationMetricType["Connections"] = "connections";
-    NotificationMetricType["Cpu"] = "cpu";
-    NotificationMetricType["Ram"] = "ram";
-    NotificationMetricType["ComputeOverLimit"] = "compute_over_limit";
-})(NotificationMetricType || (exports.NotificationMetricType = NotificationMetricType = {}));
-/** The category type for a given notification */
-var NotificationCategoryType;
-(function (NotificationCategoryType) {
-    NotificationCategoryType["Usage"] = "usage";
-    NotificationCategoryType["Performance"] = "performance";
-})(NotificationCategoryType || (exports.NotificationCategoryType = NotificationCategoryType = {}));
-/** The type of the notification */
-var NotificationType;
-(function (NotificationType) {
-    NotificationType["Info"] = "info";
-    NotificationType["Warning"] = "warning";
-})(NotificationType || (exports.NotificationType = NotificationType = {}));
-/** The action type for a given notification */
-var NotificationActionType;
-(function (NotificationActionType) {
-    NotificationActionType["UpgradePlan"] = "upgrade_plan";
-    NotificationActionType["UpgradeCu"] = "upgrade_cu";
-})(NotificationActionType || (exports.NotificationActionType = NotificationActionType = {}));
+/** State of the billing account. */
+var BillingAccountState;
+(function (BillingAccountState) {
+    BillingAccountState["UNKNOWN"] = "UNKNOWN";
+    BillingAccountState["Active"] = "active";
+    BillingAccountState["Suspended"] = "suspended";
+    BillingAccountState["Deactivated"] = "deactivated";
+    BillingAccountState["Deleted"] = "deleted";
+})(BillingAccountState || (exports.BillingAccountState = BillingAccountState = {}));
 /**
  * Type of subscription to Neon Cloud.
  * Notice that for users without billing account this will be "UNKNOWN"
@@ -7542,6 +7514,8 @@ var BillingSubscriptionType;
     BillingSubscriptionType["FreeV2"] = "free_v2";
     BillingSubscriptionType["Launch"] = "launch";
     BillingSubscriptionType["Scale"] = "scale";
+    BillingSubscriptionType["Business"] = "business";
+    BillingSubscriptionType["VercelPgLegacy"] = "vercel_pg_legacy";
 })(BillingSubscriptionType || (exports.BillingSubscriptionType = BillingSubscriptionType = {}));
 /** Indicates whether and how an account makes payments. */
 var BillingPaymentMethod;
@@ -7551,7 +7525,11 @@ var BillingPaymentMethod;
     BillingPaymentMethod["Stripe"] = "stripe";
     BillingPaymentMethod["DirectPayment"] = "direct_payment";
     BillingPaymentMethod["AwsMp"] = "aws_mp";
+    BillingPaymentMethod["AzureMp"] = "azure_mp";
     BillingPaymentMethod["VercelMp"] = "vercel_mp";
+    BillingPaymentMethod["Staff"] = "staff";
+    BillingPaymentMethod["Trial"] = "trial";
+    BillingPaymentMethod["Sponsorship"] = "sponsorship";
 })(BillingPaymentMethod || (exports.BillingPaymentMethod = BillingPaymentMethod = {}));
 /** The role of the organization member */
 var MemberRole;
@@ -7565,7 +7543,10 @@ var IdentityProviderId;
     IdentityProviderId["Github"] = "github";
     IdentityProviderId["Google"] = "google";
     IdentityProviderId["Hasura"] = "hasura";
+    IdentityProviderId["Microsoft"] = "microsoft";
+    IdentityProviderId["Vercelmp"] = "vercelmp";
     IdentityProviderId["Keycloak"] = "keycloak";
+    IdentityProviderId["Test"] = "test";
 })(IdentityProviderId || (exports.IdentityProviderId = IdentityProviderId = {}));
 var UserDeletionConditionName;
 (function (UserDeletionConditionName) {
@@ -7577,6 +7558,11 @@ var OrgDeletionConditionName;
 (function (OrgDeletionConditionName) {
     OrgDeletionConditionName["ProjectCount"] = "project_count";
 })(OrgDeletionConditionName || (exports.OrgDeletionConditionName = OrgDeletionConditionName = {}));
+var IdentitySupportedAuthProvider;
+(function (IdentitySupportedAuthProvider) {
+    IdentitySupportedAuthProvider["Mock"] = "mock";
+    IdentitySupportedAuthProvider["Stack"] = "stack";
+})(IdentitySupportedAuthProvider || (exports.IdentitySupportedAuthProvider = IdentitySupportedAuthProvider = {}));
 var SupportTicketSeverity;
 (function (SupportTicketSeverity) {
     SupportTicketSeverity["Low"] = "low";
@@ -7748,7 +7734,7 @@ var Api = /** @class */ (function (_super) {
             return _this.request(__assign({ path: "/projects", method: 'GET', query: query, secure: true, format: 'json' }, params));
         };
         /**
-         * @description Creates a Neon project. A project is the top-level object in the Neon object hierarchy. Plan limits define how many projects you can create. Neon's Free plan permits one project per Neon account. For more information, see [Manage projects](https://neon.tech/docs/manage/projects/). You can specify a region and Postgres version in the request body. Neon currently supports PostgreSQL 14, 15, and 16. For supported regions and `region_id` values, see [Regions](https://neon.tech/docs/introduction/regions/).
+         * @description Creates a Neon project. A project is the top-level object in the Neon object hierarchy. Plan limits define how many projects you can create. For more information, see [Manage projects](https://neon.tech/docs/manage/projects/). You can specify a region and Postgres version in the request body. Neon currently supports PostgreSQL 14, 15, 16, and 17. For supported regions and `region_id` values, see [Regions](https://neon.tech/docs/introduction/regions/).
          *
          * @tags Project
          * @name CreateProject
@@ -7866,6 +7852,45 @@ var Api = /** @class */ (function (_super) {
             return _this.request(__assign({ path: "/projects/".concat(encodeURIComponent(projectId), "/permissions/").concat(encodeURIComponent(permissionId)), method: 'DELETE', secure: true, format: 'json' }, params));
         };
         /**
+         * @description Returns all the available JWKS URLs that can be used for verifying JWTs used as the authentication mechanism for the specified project.
+         *
+         * @tags Project
+         * @name GetProjectJwks
+         * @summary Returns all available JWKS URLs for a project
+         * @request GET:/projects/{project_id}/jwks
+         * @secure
+         */
+        _this.getProjectJwks = function (projectId, params) {
+            if (params === void 0) { params = {}; }
+            return _this.request(__assign({ path: "/projects/".concat(encodeURIComponent(projectId), "/jwks"), method: 'GET', secure: true, format: 'json' }, params));
+        };
+        /**
+         * @description Add a new JWKS URL to a project, such that it can be used for verifying JWTs used as the authentication mechanism for the specified project. The URL must be a valid HTTPS URL that returns a JSON Web Key Set. The `provider_name` field allows you to specify which authentication provider you're using (e.g., Clerk, Auth0, AWS Cognito, etc.). The `branch_id` can be used to specify on which branches the JWKS URL will be accepted. If not specified, then it will work on any branch. The `role_names` can be used to specify for which roles the JWKS URL will be accepted. The `jwt_audience` can be used to specify which "aud" values should be accepted by Neon in the JWTs that are used for authentication.
+         *
+         * @tags Project
+         * @name AddProjectJwks
+         * @summary Adds a JWKS URL to a project
+         * @request POST:/projects/{project_id}/jwks
+         * @secure
+         */
+        _this.addProjectJwks = function (projectId, data, params) {
+            if (params === void 0) { params = {}; }
+            return _this.request(__assign({ path: "/projects/".concat(encodeURIComponent(projectId), "/jwks"), method: 'POST', body: data, secure: true, type: ContentType.Json, format: 'json' }, params));
+        };
+        /**
+         * @description Deletes a JWKS URL from the specified project
+         *
+         * @tags Project
+         * @name DeleteProjectJwks
+         * @summary Delete a JWKS URL
+         * @request DELETE:/projects/{project_id}/jwks/{jwks_id}
+         * @secure
+         */
+        _this.deleteProjectJwks = function (projectId, jwksId, params) {
+            if (params === void 0) { params = {}; }
+            return _this.request(__assign({ path: "/projects/".concat(encodeURIComponent(projectId), "/jwks/").concat(encodeURIComponent(jwksId)), method: 'DELETE', secure: true, format: 'json' }, params));
+        };
+        /**
          * @description Retrieves a connection URI for the specified database. You can obtain a `project_id` by listing the projects for your Neon account. You can obtain the `database_name` by listing the databases for a branch. You can obtain a `role_name` by listing the roles for a branch.
          *
          * @tags Project
@@ -7901,9 +7926,10 @@ var Api = /** @class */ (function (_super) {
          * @request GET:/projects/{project_id}/branches
          * @secure
          */
-        _this.listProjectBranches = function (projectId, params) {
+        _this.listProjectBranches = function (_a, params) {
+            var projectId = _a.projectId, query = __rest(_a, ["projectId"]);
             if (params === void 0) { params = {}; }
-            return _this.request(__assign({ path: "/projects/".concat(encodeURIComponent(projectId), "/branches"), method: 'GET', secure: true, format: 'json' }, params));
+            return _this.request(__assign({ path: "/projects/".concat(encodeURIComponent(projectId), "/branches"), method: 'GET', query: query, secure: true, format: 'json' }, params));
         };
         /**
          * @description Retrieves information about the specified branch. You can obtain a `project_id` by listing the projects for your Neon account. You can obtain a `branch_id` by listing the project's branches. A `branch_id` value has a `br-` prefix. Each Neon project is initially created with a root and default branch named `main`. A project can contain one or more branches. A parent branch is identified by a `parent_id` value, which is the `id` of the parent branch. For related information, see [Manage branches](https://neon.tech/docs/manage/branches/).
@@ -7958,7 +7984,7 @@ var Api = /** @class */ (function (_super) {
             return _this.request(__assign({ path: "/projects/".concat(encodeURIComponent(projectId), "/branches/").concat(encodeURIComponent(branchId), "/restore"), method: 'POST', body: data, secure: true, type: ContentType.Json, format: 'json' }, params));
         };
         /**
-         * @description Retrieves the schema from the specified database. The `lsn` and `timestamp` values cannot be specified at the same time. If both are omitted, the database schema is retrieved from database's head .
+         * @description Retrieves the schema from the specified database. The `lsn` and `timestamp` values cannot be specified at the same time. If both are omitted, the database schema is retrieved from database's head.
          *
          * @tags Branch
          * @name GetProjectBranchSchema
@@ -7970,20 +7996,6 @@ var Api = /** @class */ (function (_super) {
             var projectId = _a.projectId, branchId = _a.branchId, query = __rest(_a, ["projectId", "branchId"]);
             if (params === void 0) { params = {}; }
             return _this.request(__assign({ path: "/projects/".concat(encodeURIComponent(projectId), "/branches/").concat(encodeURIComponent(branchId), "/schema"), method: 'GET', query: query, secure: true, format: 'json' }, params));
-        };
-        /**
-         * @description DEPRECATED. Use `/set_as_default` endpoint. Sets the specified branch as the project's primary branch. The primary designation is automatically removed from the previous primary branch. You can obtain a `project_id` by listing the projects for your Neon account. You can obtain the `branch_id` by listing the project's branches. For more information, see [Manage branches](https://neon.tech/docs/manage/branches/).
-         *
-         * @tags Branch
-         * @name SetPrimaryProjectBranch
-         * @summary Set branch as primary
-         * @request POST:/projects/{project_id}/branches/{branch_id}/set_as_primary
-         * @deprecated
-         * @secure
-         */
-        _this.setPrimaryProjectBranch = function (projectId, branchId, params) {
-            if (params === void 0) { params = {}; }
-            return _this.request(__assign({ path: "/projects/".concat(encodeURIComponent(projectId), "/branches/").concat(encodeURIComponent(branchId), "/set_as_primary"), method: 'POST', secure: true, format: 'json' }, params));
         };
         /**
          * @description Sets the specified branch as the project's default branch. The default designation is automatically removed from the previous default branch. You can obtain a `project_id` by listing the projects for your Neon account. You can obtain the `branch_id` by listing the project's branches. For more information, see [Manage branches](https://neon.tech/docs/manage/branches/).
@@ -8155,6 +8167,45 @@ var Api = /** @class */ (function (_super) {
             return _this.request(__assign({ path: "/projects/".concat(encodeURIComponent(projectId), "/branches/").concat(encodeURIComponent(branchId), "/roles/").concat(encodeURIComponent(roleName), "/reset_password"), method: 'POST', secure: true, format: 'json' }, params));
         };
         /**
+         * @description Retrieves the list of VPC endpoint restrictions for the specified project. This endpoint is under active development and its semantics may change in the future.
+         *
+         * @tags Project
+         * @name ListProjectVpcEndpoints
+         * @summary Get the list of VPC endpoint restrictions
+         * @request GET:/projects/{project_id}/vpc-endpoints
+         * @secure
+         */
+        _this.listProjectVpcEndpoints = function (projectId, params) {
+            if (params === void 0) { params = {}; }
+            return _this.request(__assign({ path: "/projects/".concat(encodeURIComponent(projectId), "/vpc-endpoints"), method: 'GET', secure: true, format: 'json' }, params));
+        };
+        /**
+         * @description Configures the specified VPC endpoint as restriction for the project, or updates the existing restriction. When a VPC endpoint is assigned as a restriction, only connections from this specific VPC are accepted. Note that a VPC endpoint can only used as a restriction on a project after it has been assigned to the parent organization. This endpoint is under active development and its semantics may change in the future.
+         *
+         * @tags Project
+         * @name AssignProjectVpcEndpoint
+         * @summary Assign or update a VPC endpoint restriction
+         * @request POST:/projects/{project_id}/vpc-endpoints/{vpc_endpoint_id}
+         * @secure
+         */
+        _this.assignProjectVpcEndpoint = function (projectId, vpcEndpointId, data, params) {
+            if (params === void 0) { params = {}; }
+            return _this.request(__assign({ path: "/projects/".concat(encodeURIComponent(projectId), "/vpc-endpoints/").concat(encodeURIComponent(vpcEndpointId)), method: 'POST', body: data, secure: true, type: ContentType.Json }, params));
+        };
+        /**
+         * @description Deletes the specified VPC endpoint restriction from the specified project. This endpoint is under active development and its semantics may change in the future.
+         *
+         * @tags Project
+         * @name DeleteProjectVpcEndpoint
+         * @summary Delete a VPC endpoint
+         * @request DELETE:/projects/{project_id}/vpc-endpoints/{vpc_endpoint_id}
+         * @secure
+         */
+        _this.deleteProjectVpcEndpoint = function (projectId, vpcEndpointId, params) {
+            if (params === void 0) { params = {}; }
+            return _this.request(__assign({ path: "/projects/".concat(encodeURIComponent(projectId), "/vpc-endpoints/").concat(encodeURIComponent(vpcEndpointId)), method: 'DELETE', secure: true }, params));
+        };
+        /**
          * @description Creates a compute endpoint for the specified branch. An endpoint is a Neon compute instance. There is a maximum of one read-write compute endpoint per branch. If the specified branch already has a read-write compute endpoint, the operation fails. A branch can have multiple read-only compute endpoints. You can obtain a `project_id` by listing the projects for your Neon account. You can obtain `branch_id` by listing the project's branches. A `branch_id` has a `br-` prefix. For supported regions and `region_id` values, see [Regions](https://neon.tech/docs/introduction/regions/). For more information about compute endpoints, see [Manage computes](https://neon.tech/docs/manage/endpoints/).
          *
          * @tags Endpoint
@@ -8259,7 +8310,7 @@ var Api = /** @class */ (function (_super) {
             return _this.request(__assign({ path: "/projects/".concat(encodeURIComponent(projectId), "/endpoints/").concat(encodeURIComponent(endpointId), "/restart"), method: 'POST', secure: true, format: 'json' }, params));
         };
         /**
-         * @description Retrieves consumption metrics for Scale plan accounts. History begins at the time of upgrade. Available for Scale plan users only.
+         * @description Retrieves consumption metrics for Scale and Business plan accounts. History begins at the time of upgrade. Available for Scale and Business plan users only.
          *
          * @tags Consumption
          * @name GetConsumptionHistoryPerAccount
@@ -8272,7 +8323,7 @@ var Api = /** @class */ (function (_super) {
             return _this.request(__assign({ path: "/consumption_history/account", method: 'GET', query: query, secure: true, format: 'json' }, params));
         };
         /**
-         * @description Retrieves consumption metrics for Scale plan projects. History begins at the time of upgrade. Available for Scale plan users only.
+         * @description Retrieves consumption metrics for Scale and Business plan projects. History begins at the time of upgrade. Available for Scale and Business plan users only. Issuing a call to this API does not wake a project's compute endpoint.
          *
          * @tags Consumption
          * @name GetConsumptionHistoryPerProject
@@ -8285,18 +8336,199 @@ var Api = /** @class */ (function (_super) {
             return _this.request(__assign({ path: "/consumption_history/projects", method: 'GET', query: query, secure: true, format: 'json' }, params));
         };
         /**
-         * @description Retrieves consumption metrics for each project for the current billing period. For usage information, see [Retrieving metrics for all projects](https://neon.tech/docs/guides/partner-billing#retrieving-metrics-for-all-projects).
+         * @description Retrieves information about the specified organization.
          *
-         * @tags Consumption
-         * @name ListProjectsConsumption
-         * @summary Get project consumption metrics
-         * @request GET:/consumption/projects
-         * @deprecated
+         * @tags Organizations
+         * @name GetOrganization
+         * @summary Get organization details
+         * @request GET:/organizations/{org_id}
          * @secure
          */
-        _this.listProjectsConsumption = function (query, params) {
+        _this.getOrganization = function (orgId, params) {
             if (params === void 0) { params = {}; }
-            return _this.request(__assign({ path: "/consumption/projects", method: 'GET', query: query, secure: true, format: 'json' }, params));
+            return _this.request(__assign({ path: "/organizations/".concat(encodeURIComponent(orgId)), method: 'GET', secure: true, format: 'json' }, params));
+        };
+        /**
+         * @description Retrieves the API keys for the specified organization. The response does not include API key tokens. A token is only provided when creating an API key. API keys can also be managed in the Neon Console. For more information, see [Manage API keys](https://neon.tech/docs/manage/api-keys/).
+         *
+         * @tags Organizations
+         * @name ListOrgApiKeys
+         * @summary Get a list of organization API keys
+         * @request GET:/organizations/{org_id}/api_keys
+         * @secure
+         */
+        _this.listOrgApiKeys = function (orgId, params) {
+            if (params === void 0) { params = {}; }
+            return _this.request(__assign({ path: "/organizations/".concat(encodeURIComponent(orgId), "/api_keys"), method: 'GET', secure: true, format: 'json' }, params));
+        };
+        /**
+         * @description Creates an API key for the specified organization. The `key_name` is a user-specified name for the key. This method returns an `id` and `key`. The `key` is a randomly generated, 64-bit token required to access the Neon API. API keys can also be managed in the Neon Console. See [Manage API keys](https://neon.tech/docs/manage/api-keys/).
+         *
+         * @tags Organizations
+         * @name CreateOrgApiKey
+         * @summary Create an organization API key
+         * @request POST:/organizations/{org_id}/api_keys
+         * @secure
+         */
+        _this.createOrgApiKey = function (orgId, data, params) {
+            if (params === void 0) { params = {}; }
+            return _this.request(__assign({ path: "/organizations/".concat(encodeURIComponent(orgId), "/api_keys"), method: 'POST', body: data, secure: true, type: ContentType.Json, format: 'json' }, params));
+        };
+        /**
+         * @description Revokes the specified organization API key. An API key that is no longer needed can be revoked. This action cannot be reversed. You can obtain `key_id` values by listing the API keys for an organization. API keys can also be managed in the Neon Console. See [Manage API keys](https://neon.tech/docs/manage/api-keys/).
+         *
+         * @tags Organizations
+         * @name RevokeOrgApiKey
+         * @summary Revoke an organization API key
+         * @request DELETE:/organizations/{org_id}/api_keys/{key_id}
+         * @secure
+         */
+        _this.revokeOrgApiKey = function (orgId, keyId, params) {
+            if (params === void 0) { params = {}; }
+            return _this.request(__assign({ path: "/organizations/".concat(encodeURIComponent(orgId), "/api_keys/").concat(encodeURIComponent(keyId)), method: 'DELETE', secure: true, format: 'json' }, params));
+        };
+        /**
+         * @description Retrieves information about the specified organization members.
+         *
+         * @tags Organizations
+         * @name GetOrganizationMembers
+         * @summary Get organization members details
+         * @request GET:/organizations/{org_id}/members
+         * @secure
+         */
+        _this.getOrganizationMembers = function (orgId, params) {
+            if (params === void 0) { params = {}; }
+            return _this.request(__assign({ path: "/organizations/".concat(encodeURIComponent(orgId), "/members"), method: 'GET', secure: true, format: 'json' }, params));
+        };
+        /**
+         * @description Retrieves information about the specified organization member.
+         *
+         * @tags Organizations
+         * @name GetOrganizationMember
+         * @summary Get organization member details
+         * @request GET:/organizations/{org_id}/members/{member_id}
+         * @secure
+         */
+        _this.getOrganizationMember = function (orgId, memberId, params) {
+            if (params === void 0) { params = {}; }
+            return _this.request(__assign({ path: "/organizations/".concat(encodeURIComponent(orgId), "/members/").concat(encodeURIComponent(memberId)), method: 'GET', secure: true, format: 'json' }, params));
+        };
+        /**
+         * @description Only an admin can perform this action.
+         *
+         * @tags Organizations
+         * @name UpdateOrganizationMember
+         * @summary Update the role for an organization member
+         * @request PATCH:/organizations/{org_id}/members/{member_id}
+         * @secure
+         */
+        _this.updateOrganizationMember = function (orgId, memberId, data, params) {
+            if (params === void 0) { params = {}; }
+            return _this.request(__assign({ path: "/organizations/".concat(encodeURIComponent(orgId), "/members/").concat(encodeURIComponent(memberId)), method: 'PATCH', body: data, secure: true, type: ContentType.Json, format: 'json' }, params));
+        };
+        /**
+         * @description Remove member from the organization. Only an admin of the organization can perform this action. If another admin is being removed, it will not be allows in case it is the only admin left in the organization.
+         *
+         * @tags Organizations
+         * @name RemoveOrganizationMember
+         * @summary Remove member from the organization
+         * @request DELETE:/organizations/{org_id}/members/{member_id}
+         * @secure
+         */
+        _this.removeOrganizationMember = function (orgId, memberId, params) {
+            if (params === void 0) { params = {}; }
+            return _this.request(__assign({ path: "/organizations/".concat(encodeURIComponent(orgId), "/members/").concat(encodeURIComponent(memberId)), method: 'DELETE', secure: true, format: 'json' }, params));
+        };
+        /**
+         * @description Retrieves information about extended invitations for the specified organization
+         *
+         * @tags Organizations
+         * @name GetOrganizationInvitations
+         * @summary Get organization invitation details
+         * @request GET:/organizations/{org_id}/invitations
+         * @secure
+         */
+        _this.getOrganizationInvitations = function (orgId, params) {
+            if (params === void 0) { params = {}; }
+            return _this.request(__assign({ path: "/organizations/".concat(encodeURIComponent(orgId), "/invitations"), method: 'GET', secure: true, format: 'json' }, params));
+        };
+        /**
+         * @description Creates invitations for a specific organization. If the invited user has an existing account, they automatically join as a member. If they don't yet have an account, they are invited to create one, after which they become a member. Each invited user receives an email notification.
+         *
+         * @tags Organizations
+         * @name CreateOrganizationInvitations
+         * @summary Create organization invitations
+         * @request POST:/organizations/{org_id}/invitations
+         * @secure
+         */
+        _this.createOrganizationInvitations = function (orgId, data, params) {
+            if (params === void 0) { params = {}; }
+            return _this.request(__assign({ path: "/organizations/".concat(encodeURIComponent(orgId), "/invitations"), method: 'POST', body: data, secure: true, type: ContentType.Json, format: 'json' }, params));
+        };
+        /**
+         * @description Retrieves the list of VPC endpoints for the specified organization. This endpoint is under active development and its semantics may change in the future.
+         *
+         * @tags Organizations
+         * @name ListOrganizationVpcEndpoints
+         * @summary Get the list of VPC endpoints
+         * @request GET:/organizations/{org_id}/vpc/region/{region_id}/vpc-endpoints
+         * @secure
+         */
+        _this.listOrganizationVpcEndpoints = function (orgId, regionId, params) {
+            if (params === void 0) { params = {}; }
+            return _this.request(__assign({ path: "/organizations/".concat(encodeURIComponent(orgId), "/vpc/region/").concat(encodeURIComponent(regionId), "/vpc-endpoints"), method: 'GET', secure: true, format: 'json' }, params));
+        };
+        /**
+         * @description Retrieves detailed information about the VPC endpoint. This endpoint is under active development and its semantics may change in the future.
+         *
+         * @tags Organizations
+         * @name GetOrganizationVpcEndpointDetails
+         * @summary Retrieve the state of a VPC endpoint configuration
+         * @request GET:/organizations/{org_id}/vpc/region/{region_id}/vpc-endpoints/{vpc_endpoint_id}
+         * @secure
+         */
+        _this.getOrganizationVpcEndpointDetails = function (orgId, regionId, vpcEndpointId, params) {
+            if (params === void 0) { params = {}; }
+            return _this.request(__assign({ path: "/organizations/".concat(encodeURIComponent(orgId), "/vpc/region/").concat(encodeURIComponent(regionId), "/vpc-endpoints/").concat(encodeURIComponent(vpcEndpointId)), method: 'GET', secure: true, format: 'json' }, params));
+        };
+        /**
+         * @description Assigns the specified VPC endpoint to the specified organization or updates the existing assignment. This endpoint is under active development and its semantics may change in the future.
+         *
+         * @tags Organizations
+         * @name AssignOrganizationVpcEndpoint
+         * @summary Assign or update a VPC endpoint
+         * @request POST:/organizations/{org_id}/vpc/region/{region_id}/vpc-endpoints/{vpc_endpoint_id}
+         * @secure
+         */
+        _this.assignOrganizationVpcEndpoint = function (orgId, regionId, vpcEndpointId, data, params) {
+            if (params === void 0) { params = {}; }
+            return _this.request(__assign({ path: "/organizations/".concat(encodeURIComponent(orgId), "/vpc/region/").concat(encodeURIComponent(regionId), "/vpc-endpoints/").concat(encodeURIComponent(vpcEndpointId)), method: 'POST', body: data, secure: true, type: ContentType.Json }, params));
+        };
+        /**
+         * @description Deletes the specified VPC endpoint from the specified organization. This endpoint is under active development and its semantics may change in the future.
+         *
+         * @tags Organizations
+         * @name DeleteOrganizationVpcEndpoint
+         * @summary Delete a VPC endpoint
+         * @request DELETE:/organizations/{org_id}/vpc/region/{region_id}/vpc-endpoints/{vpc_endpoint_id}
+         * @secure
+         */
+        _this.deleteOrganizationVpcEndpoint = function (orgId, regionId, vpcEndpointId, params) {
+            if (params === void 0) { params = {}; }
+            return _this.request(__assign({ path: "/organizations/".concat(encodeURIComponent(orgId), "/vpc/region/").concat(encodeURIComponent(regionId), "/vpc-endpoints/").concat(encodeURIComponent(vpcEndpointId)), method: 'DELETE', secure: true }, params));
+        };
+        /**
+         * @description Retrieves the list of supported Neon regions
+         *
+         * @tags Region
+         * @name GetActiveRegions
+         * @summary Get current active regions
+         * @request GET:/regions
+         * @secure
+         */
+        _this.getActiveRegions = function (params) {
+            if (params === void 0) { params = {}; }
+            return _this.request(__assign({ path: "/regions", method: 'GET', secure: true, format: 'json' }, params));
         };
         /**
          * @description Retrieves information about the current Neon user account.
@@ -8314,7 +8546,7 @@ var Api = /** @class */ (function (_super) {
         /**
          * @description Retrieves information about the current Neon user's organizations
          *
-         * @tags Users
+         * @tags Users, Organizations
          * @name GetCurrentUserOrganizations
          * @summary Get current user organizations list
          * @request GET:/users/me/organizations
@@ -8323,6 +8555,19 @@ var Api = /** @class */ (function (_super) {
         _this.getCurrentUserOrganizations = function (params) {
             if (params === void 0) { params = {}; }
             return _this.request(__assign({ path: "/users/me/organizations", method: 'GET', secure: true, format: 'json' }, params));
+        };
+        /**
+         * @description Transfers selected projects, identified by their IDs, from your personal account to a specified organization.
+         *
+         * @tags Users
+         * @name TransferProjectsFromUserToOrg
+         * @summary Transfer projects from your personal account to a specified destination account
+         * @request POST:/users/me/projects/transfer
+         * @secure
+         */
+        _this.transferProjectsFromUserToOrg = function (data, params) {
+            if (params === void 0) { params = {}; }
+            return _this.request(__assign({ path: "/users/me/projects/transfer", method: 'POST', body: data, secure: true, type: ContentType.Json, format: 'json' }, params));
         };
         return _this;
     }
@@ -38114,7 +38359,7 @@ const pkg_1 = __nccwpck_require__(6257);
 const utils_1 = __nccwpck_require__(1798);
 const DIFF_COMMENT_IDENTIFIER = '<!--- [schema diff GitHub action comment identifier] -->';
 const DIFF_HASH_COMMENT_TEMPLATE = '<!--- [diff digest: %s] -->';
-async function diff(projectId, compareBranchInput, apiKey, apiHost, username, database, pointInTime) {
+async function diff(projectId, compareBranchInput, apiKey, apiHost, database, pointInTime) {
     const client = (0, api_client_1.createApiClient)({
         apiKey,
         baseURL: apiHost,
@@ -38125,7 +38370,9 @@ async function diff(projectId, compareBranchInput, apiKey, apiHost, username, da
         }
     });
     // Get all branches for the project
-    const branches = await client.listProjectBranches(projectId);
+    const branches = await client.listProjectBranches({
+        projectId
+    });
     if (branches.status !== 200) {
         throw new Error(`Failed to list branches for project ${projectId}`);
     }
@@ -38156,7 +38403,6 @@ async function diff(projectId, compareBranchInput, apiKey, apiHost, username, da
     const compareSchema = await client.getProjectBranchSchema({
         projectId,
         branchId: compareBranch.id,
-        role: username,
         db_name: database,
         lsn: pointInTime?.type === 'lsn' ? pointInTime.value : undefined,
         timestamp: pointInTime?.type === 'timestamp' ? pointInTime.value : undefined
@@ -38167,7 +38413,6 @@ async function diff(projectId, compareBranchInput, apiKey, apiHost, username, da
     const baseSchema = await client.getProjectBranchSchema({
         projectId,
         branchId: baseBranch.id,
-        role: username,
         db_name: database
     });
     if (baseSchema.status !== 200) {
@@ -38179,7 +38424,6 @@ async function diff(projectId, compareBranchInput, apiKey, apiHost, username, da
             hash: '',
             compareBranch,
             baseBranch,
-            role: username,
             database: database
         };
     }
@@ -38193,11 +38437,10 @@ async function diff(projectId, compareBranchInput, apiKey, apiHost, username, da
         hash: hash,
         compareBranch,
         baseBranch,
-        role: username,
         database: database
     };
 }
-function summary(sql, hash, compareBranch, baseBranch, database, role, projectId) {
+function summary(sql, hash, compareBranch, baseBranch, database, projectId) {
     if (sql.trim() === '') {
         return '';
     }
@@ -38215,7 +38458,6 @@ Schema diff between the compare branch ([${compareBranch.name}](${compareBranchU
 - Base branch: ${baseBranch.name} ([${baseBranch.id}](${baseBranchURL})) ${baseBranch.protected ? '🔒' : ''}
 - Compare branch: ${compareBranch.name} ([${compareBranch.id}](${compareBranchURL})) ${compareBranch.protected ? '🔒' : ''}
 - Database: ${database}
-- Role: ${role}
 
 ${diffContent}
 
@@ -38364,7 +38606,6 @@ async function run() {
         // Optional fields but with default value
         const apiHost = core.getInput('api_host', { trimWhitespace: true }); // defaults to https://console.neon.tech/api/v2
         const database = core.getInput('database', { trimWhitespace: true }); // defaults to neondb
-        const username = core.getInput('username', { trimWhitespace: true }); // defaults to neondb_owner
         // Optional fields without default values
         const timestamp = core.getInput('timestamp', {
             trimWhitespace: true
@@ -38374,19 +38615,16 @@ async function run() {
         if (!urlRegex.test(apiHost)) {
             throw new Error('API host must be a valid URL');
         }
-        // Check if the database and username are valid, i.e. not empty
+        // Check if the database is valid, i.e. not empty
         if (!database) {
             throw new Error('Database name cannot be empty');
-        }
-        if (!username) {
-            throw new Error('Database username/role cannot be empty');
         }
         // Get the point in time for the schema diff
         const pointInTime = (0, utils_1.getPointInTime)(timestamp, lsn);
         const branchInput = (0, utils_1.getBranchInput)(compareBranchIdentifier, baseBranchIdentifier);
         // Get the diff, summary and comment URL
-        const { sql, hash, compareBranch, baseBranch } = await (0, diff_1.diff)(projectId, branchInput, apiKey, apiHost, username, database, pointInTime);
-        const markdown = (0, diff_1.summary)(sql, hash, compareBranch, baseBranch, database, username, projectId);
+        const { sql, hash, compareBranch, baseBranch } = await (0, diff_1.diff)(projectId, branchInput, apiKey, apiHost, database, pointInTime);
+        const markdown = (0, diff_1.summary)(sql, hash, compareBranch, baseBranch, database, projectId);
         core.setOutput('diff', sql);
         const { url, operation } = await (0, diff_1.upsertGitHubComment)(githubToken, markdown, hash);
         if (operation === 'noop') {
@@ -40388,7 +40626,7 @@ module.exports = parseParams
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
 "use strict";
-// Axios v1.7.7 Copyright (c) 2024 Matt Zabriskie and contributors
+// Axios v1.7.9 Copyright (c) 2024 Matt Zabriskie and contributors
 
 
 const FormData$1 = __nccwpck_require__(6454);
@@ -40406,6 +40644,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 const FormData__default = /*#__PURE__*/_interopDefaultLegacy(FormData$1);
 const url__default = /*#__PURE__*/_interopDefaultLegacy(url);
+const proxyFromEnv__default = /*#__PURE__*/_interopDefaultLegacy(proxyFromEnv);
 const http__default = /*#__PURE__*/_interopDefaultLegacy(http);
 const https__default = /*#__PURE__*/_interopDefaultLegacy(https);
 const util__default = /*#__PURE__*/_interopDefaultLegacy(util);
@@ -41561,7 +41800,7 @@ function encode(val) {
  *
  * @param {string} url The base of the url (e.g., http://www.google.com)
  * @param {object} [params] The params to be appended
- * @param {?object} options
+ * @param {?(object|Function)} options
  *
  * @returns {string} The formatted url
  */
@@ -41572,6 +41811,12 @@ function buildURL(url, params, options) {
   }
   
   const _encode = options && options.encode || encode;
+
+  if (utils$1.isFunction(options)) {
+    options = {
+      serialize: options
+    };
+  } 
 
   const serializeFn = options && options.serialize;
 
@@ -42461,7 +42706,7 @@ function buildFullPath(baseURL, requestedURL) {
   return requestedURL;
 }
 
-const VERSION = "1.7.7";
+const VERSION = "1.7.9";
 
 function parseProtocol(url) {
   const match = /^([-+\w]{1,25})(:?\/\/|:)/.exec(url);
@@ -42673,7 +42918,7 @@ const readBlob$1 = readBlob;
 
 const BOUNDARY_ALPHABET = utils$1.ALPHABET.ALPHA_DIGIT + '-_';
 
-const textEncoder = new util.TextEncoder();
+const textEncoder = typeof TextEncoder === 'function' ? new TextEncoder() : new util__default["default"].TextEncoder();
 
 const CRLF = '\r\n';
 const CRLF_BYTES = textEncoder.encode(CRLF);
@@ -43011,7 +43256,7 @@ function dispatchBeforeRedirect(options, responseDetails) {
 function setProxy(options, configProxy, location) {
   let proxy = configProxy;
   if (!proxy && proxy !== false) {
-    const proxyUrl = proxyFromEnv.getProxyForUrl(location);
+    const proxyUrl = proxyFromEnv__default["default"].getProxyForUrl(location);
     if (proxyUrl) {
       proxy = new URL(proxyUrl);
     }
@@ -43242,7 +43487,7 @@ const httpAdapter = isHttpAdapterSupported && function httpAdapter(config) {
         } catch (e) {
         }
       }
-    } else if (utils$1.isBlob(data)) {
+    } else if (utils$1.isBlob(data) || utils$1.isFile(data)) {
       data.size && headers.setContentType(data.type || 'application/octet-stream');
       headers.setContentLength(data.size || 0);
       data = stream__default["default"].Readable.from(readBlob$1(data));
@@ -43495,7 +43740,7 @@ const httpAdapter = isHttpAdapterSupported && function httpAdapter(config) {
           }
 
           const err = new AxiosError(
-            'maxContentLength size of ' + config.maxContentLength + ' exceeded',
+            'stream has been aborted',
             AxiosError.ERR_BAD_RESPONSE,
             config,
             lastRequest
@@ -43618,68 +43863,18 @@ const httpAdapter = isHttpAdapterSupported && function httpAdapter(config) {
   });
 };
 
-const isURLSameOrigin = platform.hasStandardBrowserEnv ?
+const isURLSameOrigin = platform.hasStandardBrowserEnv ? ((origin, isMSIE) => (url) => {
+  url = new URL(url, platform.origin);
 
-// Standard browser envs have full support of the APIs needed to test
-// whether the request URL is of the same origin as current location.
-  (function standardBrowserEnv() {
-    const msie = platform.navigator && /(msie|trident)/i.test(platform.navigator.userAgent);
-    const urlParsingNode = document.createElement('a');
-    let originURL;
-
-    /**
-    * Parse a URL to discover its components
-    *
-    * @param {String} url The URL to be parsed
-    * @returns {Object}
-    */
-    function resolveURL(url) {
-      let href = url;
-
-      if (msie) {
-        // IE needs attribute set twice to normalize properties
-        urlParsingNode.setAttribute('href', href);
-        href = urlParsingNode.href;
-      }
-
-      urlParsingNode.setAttribute('href', href);
-
-      // urlParsingNode provides the UrlUtils interface - http://url.spec.whatwg.org/#urlutils
-      return {
-        href: urlParsingNode.href,
-        protocol: urlParsingNode.protocol ? urlParsingNode.protocol.replace(/:$/, '') : '',
-        host: urlParsingNode.host,
-        search: urlParsingNode.search ? urlParsingNode.search.replace(/^\?/, '') : '',
-        hash: urlParsingNode.hash ? urlParsingNode.hash.replace(/^#/, '') : '',
-        hostname: urlParsingNode.hostname,
-        port: urlParsingNode.port,
-        pathname: (urlParsingNode.pathname.charAt(0) === '/') ?
-          urlParsingNode.pathname :
-          '/' + urlParsingNode.pathname
-      };
-    }
-
-    originURL = resolveURL(window.location.href);
-
-    /**
-    * Determine if a URL shares the same origin as the current location
-    *
-    * @param {String} requestURL The URL to test
-    * @returns {boolean} True if URL shares the same origin, otherwise false
-    */
-    return function isURLSameOrigin(requestURL) {
-      const parsed = (utils$1.isString(requestURL)) ? resolveURL(requestURL) : requestURL;
-      return (parsed.protocol === originURL.protocol &&
-          parsed.host === originURL.host);
-    };
-  })() :
-
-  // Non standard browser envs (web workers, react-native) lack needed support.
-  (function nonStandardBrowserEnv() {
-    return function isURLSameOrigin() {
-      return true;
-    };
-  })();
+  return (
+    origin.protocol === url.protocol &&
+    origin.host === url.host &&
+    (isMSIE || origin.port === url.port)
+  );
+})(
+  new URL(platform.origin),
+  platform.navigator && /(msie|trident)/i.test(platform.navigator.userAgent)
+) : () => true;
 
 const cookies = platform.hasStandardBrowserEnv ?
 
@@ -43736,7 +43931,7 @@ function mergeConfig(config1, config2) {
   config2 = config2 || {};
   const config = {};
 
-  function getMergedValue(target, source, caseless) {
+  function getMergedValue(target, source, prop, caseless) {
     if (utils$1.isPlainObject(target) && utils$1.isPlainObject(source)) {
       return utils$1.merge.call({caseless}, target, source);
     } else if (utils$1.isPlainObject(source)) {
@@ -43748,11 +43943,11 @@ function mergeConfig(config1, config2) {
   }
 
   // eslint-disable-next-line consistent-return
-  function mergeDeepProperties(a, b, caseless) {
+  function mergeDeepProperties(a, b, prop , caseless) {
     if (!utils$1.isUndefined(b)) {
-      return getMergedValue(a, b, caseless);
+      return getMergedValue(a, b, prop , caseless);
     } else if (!utils$1.isUndefined(a)) {
-      return getMergedValue(undefined, a, caseless);
+      return getMergedValue(undefined, a, prop , caseless);
     }
   }
 
@@ -43810,7 +44005,7 @@ function mergeConfig(config1, config2) {
     socketPath: defaultToConfig2,
     responseEncoding: defaultToConfig2,
     validateStatus: mergeDirectKeys,
-    headers: (a, b) => mergeDeepProperties(headersToObject(a), headersToObject(b), true)
+    headers: (a, b , prop) => mergeDeepProperties(headersToObject(a), headersToObject(b),prop, true)
   };
 
   utils$1.forEach(Object.keys(Object.assign({}, config1, config2)), function computeConfigValue(prop) {
@@ -44603,6 +44798,14 @@ validators$1.transitional = function transitional(validator, version, message) {
   };
 };
 
+validators$1.spelling = function spelling(correctSpelling) {
+  return (value, opt) => {
+    // eslint-disable-next-line no-console
+    console.warn(`${opt} is likely a misspelling of ${correctSpelling}`);
+    return true;
+  }
+};
+
 /**
  * Assert object's properties type
  *
@@ -44672,9 +44875,9 @@ class Axios {
       return await this._request(configOrUrl, config);
     } catch (err) {
       if (err instanceof Error) {
-        let dummy;
+        let dummy = {};
 
-        Error.captureStackTrace ? Error.captureStackTrace(dummy = {}) : (dummy = new Error());
+        Error.captureStackTrace ? Error.captureStackTrace(dummy) : (dummy = new Error());
 
         // slice off the Error: ... line
         const stack = dummy.stack ? dummy.stack.replace(/^.+\n/, '') : '';
@@ -44728,6 +44931,11 @@ class Axios {
         }, true);
       }
     }
+
+    validator.assertOptions(config, {
+      baseUrl: validators.spelling('baseURL'),
+      withXsrfToken: validators.spelling('withXSRFToken')
+    }, true);
 
     // Set config.method
     config.method = (config.method || this.defaults.method || 'get').toLowerCase();

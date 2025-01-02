@@ -44,7 +44,6 @@ need to perform some initial setup steps before you can develop your action.
     action
       ✓ invalid api host (2 ms)
       ✓ invalid database input (1 ms)
-      ✓ invalid username input
       ✓ valid inputs (11 ms)
 
    PASS __tests__/diff.test.ts

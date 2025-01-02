@@ -17,7 +17,6 @@ describe('diff function', () => {
   const projectId = 'test-project'
   const apiKey = 'test-api-key'
   const apiHost = 'https://api.neon.tech'
-  const username = 'test-user'
   const database = 'test-db'
 
   beforeEach(() => {
@@ -33,7 +32,6 @@ describe('diff function', () => {
         { compare: { type: 'name', value: 'branch1' } },
         apiKey,
         apiHost,
-        username,
         database
       )
     ).rejects.toThrow(`Failed to list branches for project ${projectId}`)
@@ -51,7 +49,6 @@ describe('diff function', () => {
         { compare: { type: 'name', value: 'branch1' } },
         apiKey,
         apiHost,
-        username,
         database
       )
     ).rejects.toThrow(`Branch branch1 not found in project ${projectId}`)
@@ -72,7 +69,6 @@ describe('diff function', () => {
         },
         apiKey,
         apiHost,
-        username,
         database
       )
     ).rejects.toThrow(`Branch branch2 not found in project ${projectId}`)
@@ -90,7 +86,6 @@ describe('diff function', () => {
         { compare: { type: 'name', value: 'branch1' } },
         apiKey,
         apiHost,
-        username,
         database
       )
     ).rejects.toThrow(`Branch branch1 has no parent`)
@@ -113,7 +108,6 @@ describe('diff function', () => {
         { compare: { type: 'name', value: 'branch1' } },
         apiKey,
         apiHost,
-        username,
         database
       )
     ).rejects.toThrow(`Parent branch for branch1 not found`)
@@ -139,7 +133,6 @@ describe('diff function', () => {
         { compare: { type: 'name', value: 'branch1' } },
         apiKey,
         apiHost,
-        username,
         database
       )
     ).rejects.toThrow(
@@ -170,7 +163,6 @@ describe('diff function', () => {
         { compare: { type: 'name', value: 'branch1' } },
         apiKey,
         apiHost,
-        username,
         database
       )
     ).rejects.toThrow(
@@ -204,7 +196,6 @@ describe('diff function', () => {
       { compare: { type: 'name', value: 'branch1' } },
       apiKey,
       apiHost,
-      username,
       database
     )
 
@@ -265,7 +256,6 @@ describe('diff function', () => {
       { compare: { type: 'name', value: 'branch1' } },
       apiKey,
       apiHost,
-      username,
       database
     )
 
@@ -295,7 +285,6 @@ describe('summary function', () => {
   } as Branch
 
   const database = 'test-db'
-  const role = 'test-role'
   const projectId = 'project-123'
 
   beforeEach(() => {
@@ -316,7 +305,6 @@ describe('summary function', () => {
       compareBranch,
       baseBranch,
       database,
-      role,
       projectId
     )
 
@@ -333,7 +321,6 @@ describe('summary function', () => {
       compareBranch,
       baseBranch,
       database,
-      role,
       projectId
     )
 
@@ -374,7 +361,6 @@ describe('summary function', () => {
       unprotectedCompareBranch,
       unprotectedBaseBranch,
       database,
-      role,
       projectId
     )
 
