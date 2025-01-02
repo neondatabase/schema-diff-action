@@ -38730,6 +38730,7 @@ function getBranchURL(projectId, branchId) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.version = void 0;
 exports.version = '1.0.1';
+// This file is auto-generated. Use 'npm run prebuild' when you need to update the version!
 
 
 /***/ }),
