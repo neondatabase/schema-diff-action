@@ -14,7 +14,6 @@ and the base branch
 - Compare branch: preview/pr-9-feat/add-soft-delete
   ([br-misty-resonance-a5jvokot](https://console.neon.tech/app/projects/holy-wind-90398863/branches/br-misty-resonance-a5jvokot))
 - Database: neondb
-- Role: neondb_owner
 
 ```diff
 Index: neondb-schema.sql
