@@ -1,5 +1,6 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 
 version=$(node -p "require('./package.json').version")
-echo "export const version = '$version'" > src/version.ts
-echo "\n// This file is auto-generated. Use 'npm run prebuild' when you need to update the version!" >> src/version.ts
+
+printf "export const version = '%s'\n\n" "$version" > src/version.ts
+printf "// This file is auto-generated. Use 'npm run prebuild' when you need to update the version!\n" >> src/version.ts
