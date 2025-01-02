@@ -1,9 +1,8 @@
 import * as github from '@actions/github'
 import { createApiClient, type Branch } from '@neondatabase/api-client'
 import { createPatch } from 'diff'
-
-import { pkg } from './pkg'
 import { BranchComparisonInput, getBranchURL, PointInTime } from './utils'
+import { version } from './version'
 
 const DIFF_COMMENT_IDENTIFIER =
   '<!--- [schema diff GitHub action comment identifier] -->'
@@ -38,7 +37,7 @@ export async function diff(
     timeout: 60000,
     headers: {
       // action version from the package.json
-      'User-Agent': `neon-schema-diff-action v${pkg()['version'] as string}`
+      'User-Agent': `neon-schema-diff-action v${version}`
     }
   })
 
