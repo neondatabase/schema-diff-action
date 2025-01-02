@@ -6,10 +6,10 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/luist18/refactored-giggle"
+    "url": "git+https://github.com/neondatabase/schema-diff-action"
   },
   "bugs": {
-    "url": "https://github.com/luist18/refactored-giggle/issues"
+    "url": "https://github.com/neondatabase/schema-diff-action/issues"
   },
   "keywords": [
     "actions",
