@@ -1,7 +1,7 @@
 {
   "name": "schema-diff",
   "description": "Neon Schema Diff GitHub Action",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "author": "",
   "private": true,
   "repository": {
@@ -32,8 +32,9 @@
     "local-action": "npx local-action . src/main.ts .env",
     "package": "npx ncc build src/index.ts -o dist --source-map --license licenses.txt",
     "package:watch": "npm run package -- --watch",
+    "prebuild": "sh ./scripts/generate-version.sh",
     "test": "npx jest",
-    "all": "npm run format:write && npm run lint && npm run test && npm run coverage && npm run package"
+    "all": "npm run prebuild && npm run format:write && npm run lint && npm run test && npm run coverage && npm run package"
   },
   "license": "MIT",
   "jest": {
