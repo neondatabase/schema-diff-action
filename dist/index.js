@@ -38355,8 +38355,8 @@ exports.upsertGitHubComment = upsertGitHubComment;
 const github = __importStar(__nccwpck_require__(3228));
 const api_client_1 = __nccwpck_require__(3643);
 const diff_1 = __nccwpck_require__(2823);
-const pkg_1 = __nccwpck_require__(6257);
 const utils_1 = __nccwpck_require__(1798);
+const version_1 = __nccwpck_require__(311);
 const DIFF_COMMENT_IDENTIFIER = '<!--- [schema diff GitHub action comment identifier] -->';
 const DIFF_HASH_COMMENT_TEMPLATE = '<!--- [diff digest: %s] -->';
 async function diff(projectId, compareBranchInput, apiKey, apiHost, database, pointInTime) {
@@ -38366,7 +38366,7 @@ async function diff(projectId, compareBranchInput, apiKey, apiHost, database, po
         timeout: 60000,
         headers: {
             // action version from the package.json
-            'User-Agent': `neon-schema-diff-action v${(0, pkg_1.pkg)()['version']}`
+            'User-Agent': `neon-schema-diff-action v${version_1.version}`
         }
     });
     // Get all branches for the project
@@ -38461,7 +38461,7 @@ Schema diff between the compare branch ([${compareBranch.name}](${compareBranchU
 
 ${diffContent}
 
-This comment was last updated at ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}
+This comment was last updated at ${new Date().toUTCString()}
 `;
 }
 async function upsertGitHubComment(token, diff, hash) {
@@ -38648,25 +38648,6 @@ async function run() {
 
 /***/ }),
 
-/***/ 6257:
-/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
-
-"use strict";
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.pkg = pkg;
-const node_fs_1 = __importDefault(__nccwpck_require__(3024));
-function pkg() {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return JSON.parse(node_fs_1.default.readFileSync('package.json', 'utf-8'));
-}
-
-
-/***/ }),
-
 /***/ 1798:
 /***/ ((__unused_webpack_module, exports) => {
 
@@ -38737,6 +38718,19 @@ function getBranchInput(compareBranch, baseBranch) {
 function getBranchURL(projectId, branchId) {
     return `https://console.neon.tech/app/projects/${projectId}/branches/${branchId}`;
 }
+
+
+/***/ }),
+
+/***/ 311:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.version = void 0;
+exports.version = '1.0.1';
+// This file is auto-generated. Use 'npm run prebuild' when you need to update the version!
 
 
 /***/ }),
@@ -38850,14 +38844,6 @@ module.exports = require("net");
 
 "use strict";
 module.exports = require("node:events");
-
-/***/ }),
-
-/***/ 3024:
-/***/ ((module) => {
-
-"use strict";
-module.exports = require("node:fs");
 
 /***/ }),
 

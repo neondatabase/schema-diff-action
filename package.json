@@ -1,15 +1,15 @@
 {
   "name": "schema-diff",
   "description": "Neon Schema Diff GitHub Action",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "author": "",
-  "private": true,
+  "private": false,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/luist18/refactored-giggle"
+    "url": "git+https://github.com/neondatabase/schema-diff-action"
   },
   "bugs": {
-    "url": "https://github.com/luist18/refactored-giggle/issues"
+    "url": "https://github.com/neondatabase/schema-diff-action/issues"
   },
   "keywords": [
     "actions",
@@ -23,7 +23,7 @@
     "node": ">=21"
   },
   "scripts": {
-    "bundle": "npm run format:write && npm run package",
+    "bundle": "npm run prebuild && npm run format:write && npm run package",
     "ci-test": "npx jest",
     "coverage": "npx make-coverage-badge --output-path ./docs/coverage.svg",
     "format:write": "npx prettier --write .",
@@ -32,6 +32,7 @@
     "local-action": "npx local-action . src/main.ts .env",
     "package": "npx ncc build src/index.ts -o dist --source-map --license licenses.txt",
     "package:watch": "npm run package -- --watch",
+    "prebuild": "sh ./scripts/generate-version.sh",
     "test": "npx jest",
     "all": "npm run format:write && npm run lint && npm run test && npm run coverage && npm run package"
   },

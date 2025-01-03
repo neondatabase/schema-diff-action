@@ -345,7 +345,7 @@ describe('summary function', () => {
       )})) 🔒`
     )
     expect(result).toContain(
-      `This comment was last updated at 1/1/2023 12:00:00 PM`
+      `This comment was last updated at Sun, 01 Jan 2023 12:00:00 GMT`
     )
   })
 
