@@ -3,7 +3,7 @@
   "description": "Neon Schema Diff GitHub Action",
   "version": "1.0.1",
   "author": "",
-  "private": true,
+  "private": false,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/neondatabase/schema-diff-action"
@@ -23,7 +23,7 @@
     "node": ">=21"
   },
   "scripts": {
-    "bundle": "npm run format:write && npm run package",
+    "bundle": "npm run prebuild && npm run format:write && npm run package",
     "ci-test": "npx jest",
     "coverage": "npx make-coverage-badge --output-path ./docs/coverage.svg",
     "format:write": "npx prettier --write .",
@@ -34,7 +34,7 @@
     "package:watch": "npm run package -- --watch",
     "prebuild": "sh ./scripts/generate-version.sh",
     "test": "npx jest",
-    "all": "npm run prebuild && npm run format:write && npm run lint && npm run test && npm run coverage && npm run package"
+    "all": "npm run format:write && npm run lint && npm run test && npm run coverage && npm run package"
   },
   "license": "MIT",
   "jest": {
