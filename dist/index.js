@@ -7932,6 +7932,20 @@ var Api = /** @class */ (function (_super) {
             return _this.request(__assign({ path: "/projects/".concat(encodeURIComponent(projectId), "/branches"), method: 'GET', query: query, secure: true, format: 'json' }, params));
         };
         /**
+         * @description Retrieves the total number of branches in the specified project. You can obtain a `project_id` by listing the projects for your Neon account.
+         *
+         * @tags Branch
+         * @name CountProjectBranches
+         * @summary Get the total number of branches in a project
+         * @request GET:/projects/{project_id}/branches/count
+         * @secure
+         */
+        _this.countProjectBranches = function (_a, params) {
+            var projectId = _a.projectId, query = __rest(_a, ["projectId"]);
+            if (params === void 0) { params = {}; }
+            return _this.request(__assign({ path: "/projects/".concat(encodeURIComponent(projectId), "/branches/count"), method: 'GET', query: query, secure: true, format: 'json' }, params));
+        };
+        /**
          * @description Retrieves information about the specified branch. You can obtain a `project_id` by listing the projects for your Neon account. You can obtain a `branch_id` by listing the project's branches. A `branch_id` value has a `br-` prefix. Each Neon project is initially created with a root and default branch named `main`. A project can contain one or more branches. A parent branch is identified by a `parent_id` value, which is the `id` of the parent branch. For related information, see [Manage branches](https://neon.tech/docs/manage/branches/).
          *
          * @tags Branch
@@ -7996,6 +8010,20 @@ var Api = /** @class */ (function (_super) {
             var projectId = _a.projectId, branchId = _a.branchId, query = __rest(_a, ["projectId", "branchId"]);
             if (params === void 0) { params = {}; }
             return _this.request(__assign({ path: "/projects/".concat(encodeURIComponent(projectId), "/branches/").concat(encodeURIComponent(branchId), "/schema"), method: 'GET', query: query, secure: true, format: 'json' }, params));
+        };
+        /**
+         * @description Compares the schema from the specified database with another branch's schema. Hidden from the public spec.
+         *
+         * @tags Branch
+         * @name GetProjectBranchSchemaComparison
+         * @summary Compare the database schema with another branch's schema
+         * @request GET:/projects/{project_id}/branches/{branch_id}/compare_schema
+         * @secure
+         */
+        _this.getProjectBranchSchemaComparison = function (_a, params) {
+            var projectId = _a.projectId, branchId = _a.branchId, query = __rest(_a, ["projectId", "branchId"]);
+            if (params === void 0) { params = {}; }
+            return _this.request(__assign({ path: "/projects/".concat(encodeURIComponent(projectId), "/branches/").concat(encodeURIComponent(branchId), "/compare_schema"), method: 'GET', query: query, secure: true, format: 'json' }, params));
         };
         /**
          * @description Sets the specified branch as the project's default branch. The default designation is automatically removed from the previous default branch. You can obtain a `project_id` by listing the projects for your Neon account. You can obtain the `branch_id` by listing the project's branches. For more information, see [Manage branches](https://neon.tech/docs/manage/branches/).
@@ -8172,12 +8200,12 @@ var Api = /** @class */ (function (_super) {
          * @tags Project
          * @name ListProjectVpcEndpoints
          * @summary Get the list of VPC endpoint restrictions
-         * @request GET:/projects/{project_id}/vpc-endpoints
+         * @request GET:/projects/{project_id}/vpc_endpoints
          * @secure
          */
         _this.listProjectVpcEndpoints = function (projectId, params) {
             if (params === void 0) { params = {}; }
-            return _this.request(__assign({ path: "/projects/".concat(encodeURIComponent(projectId), "/vpc-endpoints"), method: 'GET', secure: true, format: 'json' }, params));
+            return _this.request(__assign({ path: "/projects/".concat(encodeURIComponent(projectId), "/vpc_endpoints"), method: 'GET', secure: true, format: 'json' }, params));
         };
         /**
          * @description Configures the specified VPC endpoint as restriction for the project, or updates the existing restriction. When a VPC endpoint is assigned as a restriction, only connections from this specific VPC are accepted. Note that a VPC endpoint can only used as a restriction on a project after it has been assigned to the parent organization. This endpoint is under active development and its semantics may change in the future.
@@ -8185,12 +8213,12 @@ var Api = /** @class */ (function (_super) {
          * @tags Project
          * @name AssignProjectVpcEndpoint
          * @summary Assign or update a VPC endpoint restriction
-         * @request POST:/projects/{project_id}/vpc-endpoints/{vpc_endpoint_id}
+         * @request POST:/projects/{project_id}/vpc_endpoints/{vpc_endpoint_id}
          * @secure
          */
         _this.assignProjectVpcEndpoint = function (projectId, vpcEndpointId, data, params) {
             if (params === void 0) { params = {}; }
-            return _this.request(__assign({ path: "/projects/".concat(encodeURIComponent(projectId), "/vpc-endpoints/").concat(encodeURIComponent(vpcEndpointId)), method: 'POST', body: data, secure: true, type: ContentType.Json }, params));
+            return _this.request(__assign({ path: "/projects/".concat(encodeURIComponent(projectId), "/vpc_endpoints/").concat(encodeURIComponent(vpcEndpointId)), method: 'POST', body: data, secure: true, type: ContentType.Json }, params));
         };
         /**
          * @description Deletes the specified VPC endpoint restriction from the specified project. This endpoint is under active development and its semantics may change in the future.
@@ -8198,12 +8226,12 @@ var Api = /** @class */ (function (_super) {
          * @tags Project
          * @name DeleteProjectVpcEndpoint
          * @summary Delete a VPC endpoint
-         * @request DELETE:/projects/{project_id}/vpc-endpoints/{vpc_endpoint_id}
+         * @request DELETE:/projects/{project_id}/vpc_endpoints/{vpc_endpoint_id}
          * @secure
          */
         _this.deleteProjectVpcEndpoint = function (projectId, vpcEndpointId, params) {
             if (params === void 0) { params = {}; }
-            return _this.request(__assign({ path: "/projects/".concat(encodeURIComponent(projectId), "/vpc-endpoints/").concat(encodeURIComponent(vpcEndpointId)), method: 'DELETE', secure: true }, params));
+            return _this.request(__assign({ path: "/projects/".concat(encodeURIComponent(projectId), "/vpc_endpoints/").concat(encodeURIComponent(vpcEndpointId)), method: 'DELETE', secure: true }, params));
         };
         /**
          * @description Creates a compute endpoint for the specified branch. An endpoint is a Neon compute instance. There is a maximum of one read-write compute endpoint per branch. If the specified branch already has a read-write compute endpoint, the operation fails. A branch can have multiple read-only compute endpoints. You can obtain a `project_id` by listing the projects for your Neon account. You can obtain `branch_id` by listing the project's branches. A `branch_id` has a `br-` prefix. For supported regions and `region_id` values, see [Regions](https://neon.tech/docs/introduction/regions/). For more information about compute endpoints, see [Manage computes](https://neon.tech/docs/manage/endpoints/).
@@ -8471,12 +8499,12 @@ var Api = /** @class */ (function (_super) {
          * @tags Organizations
          * @name ListOrganizationVpcEndpoints
          * @summary Get the list of VPC endpoints
-         * @request GET:/organizations/{org_id}/vpc/region/{region_id}/vpc-endpoints
+         * @request GET:/organizations/{org_id}/vpc/region/{region_id}/vpc_endpoints
          * @secure
          */
         _this.listOrganizationVpcEndpoints = function (orgId, regionId, params) {
             if (params === void 0) { params = {}; }
-            return _this.request(__assign({ path: "/organizations/".concat(encodeURIComponent(orgId), "/vpc/region/").concat(encodeURIComponent(regionId), "/vpc-endpoints"), method: 'GET', secure: true, format: 'json' }, params));
+            return _this.request(__assign({ path: "/organizations/".concat(encodeURIComponent(orgId), "/vpc/region/").concat(encodeURIComponent(regionId), "/vpc_endpoints"), method: 'GET', secure: true, format: 'json' }, params));
         };
         /**
          * @description Retrieves detailed information about the VPC endpoint. This endpoint is under active development and its semantics may change in the future.
@@ -8484,12 +8512,12 @@ var Api = /** @class */ (function (_super) {
          * @tags Organizations
          * @name GetOrganizationVpcEndpointDetails
          * @summary Retrieve the state of a VPC endpoint configuration
-         * @request GET:/organizations/{org_id}/vpc/region/{region_id}/vpc-endpoints/{vpc_endpoint_id}
+         * @request GET:/organizations/{org_id}/vpc/region/{region_id}/vpc_endpoints/{vpc_endpoint_id}
          * @secure
          */
         _this.getOrganizationVpcEndpointDetails = function (orgId, regionId, vpcEndpointId, params) {
             if (params === void 0) { params = {}; }
-            return _this.request(__assign({ path: "/organizations/".concat(encodeURIComponent(orgId), "/vpc/region/").concat(encodeURIComponent(regionId), "/vpc-endpoints/").concat(encodeURIComponent(vpcEndpointId)), method: 'GET', secure: true, format: 'json' }, params));
+            return _this.request(__assign({ path: "/organizations/".concat(encodeURIComponent(orgId), "/vpc/region/").concat(encodeURIComponent(regionId), "/vpc_endpoints/").concat(encodeURIComponent(vpcEndpointId)), method: 'GET', secure: true, format: 'json' }, params));
         };
         /**
          * @description Assigns the specified VPC endpoint to the specified organization or updates the existing assignment. This endpoint is under active development and its semantics may change in the future.
@@ -8497,12 +8525,12 @@ var Api = /** @class */ (function (_super) {
          * @tags Organizations
          * @name AssignOrganizationVpcEndpoint
          * @summary Assign or update a VPC endpoint
-         * @request POST:/organizations/{org_id}/vpc/region/{region_id}/vpc-endpoints/{vpc_endpoint_id}
+         * @request POST:/organizations/{org_id}/vpc/region/{region_id}/vpc_endpoints/{vpc_endpoint_id}
          * @secure
          */
         _this.assignOrganizationVpcEndpoint = function (orgId, regionId, vpcEndpointId, data, params) {
             if (params === void 0) { params = {}; }
-            return _this.request(__assign({ path: "/organizations/".concat(encodeURIComponent(orgId), "/vpc/region/").concat(encodeURIComponent(regionId), "/vpc-endpoints/").concat(encodeURIComponent(vpcEndpointId)), method: 'POST', body: data, secure: true, type: ContentType.Json }, params));
+            return _this.request(__assign({ path: "/organizations/".concat(encodeURIComponent(orgId), "/vpc/region/").concat(encodeURIComponent(regionId), "/vpc_endpoints/").concat(encodeURIComponent(vpcEndpointId)), method: 'POST', body: data, secure: true, type: ContentType.Json }, params));
         };
         /**
          * @description Deletes the specified VPC endpoint from the specified organization. This endpoint is under active development and its semantics may change in the future.
@@ -8510,12 +8538,12 @@ var Api = /** @class */ (function (_super) {
          * @tags Organizations
          * @name DeleteOrganizationVpcEndpoint
          * @summary Delete a VPC endpoint
-         * @request DELETE:/organizations/{org_id}/vpc/region/{region_id}/vpc-endpoints/{vpc_endpoint_id}
+         * @request DELETE:/organizations/{org_id}/vpc/region/{region_id}/vpc_endpoints/{vpc_endpoint_id}
          * @secure
          */
         _this.deleteOrganizationVpcEndpoint = function (orgId, regionId, vpcEndpointId, params) {
             if (params === void 0) { params = {}; }
-            return _this.request(__assign({ path: "/organizations/".concat(encodeURIComponent(orgId), "/vpc/region/").concat(encodeURIComponent(regionId), "/vpc-endpoints/").concat(encodeURIComponent(vpcEndpointId)), method: 'DELETE', secure: true }, params));
+            return _this.request(__assign({ path: "/organizations/".concat(encodeURIComponent(orgId), "/vpc/region/").concat(encodeURIComponent(regionId), "/vpc_endpoints/").concat(encodeURIComponent(vpcEndpointId)), method: 'DELETE', secure: true }, params));
         };
         /**
          * @description Retrieves the list of supported Neon regions
@@ -8613,7 +8641,22 @@ exports.createApiClient = void 0;
 __exportStar(__nccwpck_require__(6647), exports);
 var api_gen_1 = __nccwpck_require__(6647);
 var createApiClient = function (config) {
-    return new api_gen_1.Api(__assign(__assign({}, config), { headers: __assign(__assign({}, config.headers), (config.apiKey && {
+    return new api_gen_1.Api(__assign(__assign({}, config), { 
+        // this is will fix the issue with passing arrays as search params
+        // before: ?project_ids[]=1&project_ids[]=2
+        // after: ?project_ids=1,2
+        paramsSerializer: function (params) {
+            var entries = Object.entries(params);
+            var transformedEntries = entries.map(function (_a) {
+                var key = _a[0], value = _a[1];
+                return [
+                    key,
+                    Array.isArray(value) ? value.join(',') : value,
+                ];
+            });
+            var searchParams = new URLSearchParams(transformedEntries);
+            return searchParams.toString();
+        }, headers: __assign(__assign({}, config.headers), (config.apiKey && {
             Authorization: "Bearer ".concat(config.apiKey),
         })) }));
 };
