@@ -7455,6 +7455,7 @@ var IdentityProviderId;
     IdentityProviderId["Google"] = "google";
     IdentityProviderId["Hasura"] = "hasura";
     IdentityProviderId["Microsoft"] = "microsoft";
+    IdentityProviderId["Microsoftv2"] = "microsoftv2";
     IdentityProviderId["Vercelmp"] = "vercelmp";
     IdentityProviderId["Keycloak"] = "keycloak";
     IdentityProviderId["Test"] = "test";
@@ -8557,13 +8558,29 @@ var createApiClient = function (config) {
         // before: ?project_ids[]=1&project_ids[]=2
         // after: ?project_ids=1,2
         paramsSerializer: function (params) {
+            if (!params)
+                return '';
+            var parseValue = function (val) {
+                if (Array.isArray(val)) {
+                    return val.map(function (v) { return parseValue(v); }).join(',');
+                }
+                if (val instanceof Date) {
+                    return val.toISOString();
+                }
+                if (typeof val === 'object' && val !== null) {
+                    return JSON.stringify(val);
+                }
+                return String(val);
+            };
             var entries = Object.entries(params);
-            var transformedEntries = entries.map(function (_a) {
-                var key = _a[0], value = _a[1];
-                return [
-                    key,
-                    Array.isArray(value) ? value.join(',') : value,
-                ];
+            var transformedEntries = entries
+                .filter(function (_a) {
+                var _ = _a[0], val = _a[1];
+                return val !== null && typeof val !== 'undefined';
+            })
+                .map(function (_a) {
+                var key = _a[0], val = _a[1];
+                return [key, parseValue(val)];
             });
             var searchParams = new URLSearchParams(transformedEntries);
             return searchParams.toString();
