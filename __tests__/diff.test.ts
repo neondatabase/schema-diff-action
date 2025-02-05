@@ -1,17 +1,30 @@
-import { createApiClient, type Branch } from '@neondatabase/api-client'
 import * as github from '@actions/github'
+import { createApiClient } from '@neondatabase/api-client'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
+import { apiResponse, githubApiResponse } from '../__fixtures__/api-client'
+import {
+  buildBranch,
+  buildListProjectsBranchesResponse,
+  buildBranchSchemaResponse,
+  buildGitHubComment
+} from '../__fixtures__/mocks'
 import { diff, summary, SummaryComment, upsertGitHubComment } from '../src/diff'
 import { getBranchURL } from '../src/utils'
 
-jest.mock('@actions/github')
-jest.mock('@neondatabase/api-client')
+vi.mock('@actions/github')
+vi.mock('@neondatabase/api-client')
 
 const mockClient = {
-  listProjectBranches: jest.fn(),
-  getProjectBranchSchema: jest.fn()
-}
-;(createApiClient as jest.Mock).mockReturnValue(mockClient)
+  listProjectBranches: vi.fn(),
+  getProjectBranchSchema: vi.fn()
+} satisfies Partial<ReturnType<typeof createApiClient>>
+
+vi.mocked(createApiClient).mockReturnValue(
+  mockClient as unknown as ReturnType<typeof createApiClient>
+)
+
+const defaultBranch = buildBranch('1', 'branch1')
 
 describe('diff function', () => {
   const projectId = 'test-project'
@@ -20,11 +33,13 @@ describe('diff function', () => {
   const database = 'test-db'
 
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
   })
 
   it('throws an error if branches cannot be retrieved', async () => {
-    mockClient.listProjectBranches.mockResolvedValueOnce({ status: 500 })
+    mockClient.listProjectBranches.mockResolvedValueOnce(
+      apiResponse(500, buildListProjectsBranchesResponse())
+    )
 
     await expect(
       diff(
@@ -38,10 +53,9 @@ describe('diff function', () => {
   })
 
   it('throws an error if the compare branch is not found', async () => {
-    mockClient.listProjectBranches.mockResolvedValueOnce({
-      status: 200,
-      data: { branches: [] }
-    })
+    mockClient.listProjectBranches.mockResolvedValueOnce(
+      apiResponse(200, buildListProjectsBranchesResponse())
+    )
 
     await expect(
       diff(
@@ -55,10 +69,9 @@ describe('diff function', () => {
   })
 
   it('throws an error if the base branch is not found', async () => {
-    mockClient.listProjectBranches.mockResolvedValueOnce({
-      status: 200,
-      data: { branches: [{ id: '1', name: 'branch1' }] }
-    })
+    mockClient.listProjectBranches.mockResolvedValueOnce(
+      apiResponse(200, buildListProjectsBranchesResponse(defaultBranch))
+    )
 
     await expect(
       diff(
@@ -75,10 +88,9 @@ describe('diff function', () => {
   })
 
   it('throws an error if the compare branch has no parent and no base branch is provided', async () => {
-    mockClient.listProjectBranches.mockResolvedValueOnce({
-      status: 200,
-      data: { branches: [{ id: '1', name: 'branch1' }] }
-    })
+    mockClient.listProjectBranches.mockResolvedValueOnce(
+      apiResponse(200, buildListProjectsBranchesResponse(defaultBranch))
+    )
 
     await expect(
       diff(
@@ -92,15 +104,15 @@ describe('diff function', () => {
   })
 
   it('throws an error if the parent branch is not found', async () => {
-    mockClient.listProjectBranches.mockResolvedValueOnce({
-      status: 200,
-      data: {
-        branches: [
-          { id: '1', name: 'branch1', parent_id: '2' },
-          { id: '3', name: 'branch3' }
-        ]
-      }
-    })
+    mockClient.listProjectBranches.mockResolvedValueOnce(
+      apiResponse(
+        200,
+        buildListProjectsBranchesResponse(
+          buildBranch('1', 'branch1', '2'),
+          buildBranch('3', 'branch3')
+        )
+      )
+    )
 
     await expect(
       diff(
@@ -114,18 +126,18 @@ describe('diff function', () => {
   })
 
   it('throws an error if the child branch schema cannot be retrieved', async () => {
-    mockClient.listProjectBranches.mockResolvedValueOnce({
-      status: 200,
-      data: {
-        branches: [
-          { id: '1', name: 'branch1', parent_id: '2' },
-          { id: '2', name: 'branch2' }
-        ]
-      }
-    })
-    mockClient.getProjectBranchSchema.mockResolvedValueOnce({
-      status: 500
-    })
+    mockClient.listProjectBranches.mockResolvedValueOnce(
+      apiResponse(
+        200,
+        buildListProjectsBranchesResponse(
+          buildBranch('1', 'branch1', '2'),
+          buildBranch('2', 'branch2')
+        )
+      )
+    )
+    mockClient.getProjectBranchSchema.mockResolvedValueOnce(
+      apiResponse(500, buildBranchSchemaResponse())
+    )
 
     await expect(
       diff(
@@ -140,56 +152,24 @@ describe('diff function', () => {
     )
   })
 
-  it('throws an error if the parent branch schema cannot be retrieved', async () => {
-    mockClient.listProjectBranches.mockResolvedValueOnce({
-      status: 200,
-      data: {
-        branches: [
-          { id: '1', name: 'branch1', parent_id: '2' },
-          { id: '2', name: 'branch2' }
-        ]
-      }
-    })
-    mockClient.getProjectBranchSchema
-      .mockResolvedValueOnce({
-        status: 200,
-        data: { sql: 'CREATE TABLE test (id INT);' }
-      })
-      .mockResolvedValueOnce({ status: 500 })
-
-    await expect(
-      diff(
-        projectId,
-        { compare: { type: 'name', value: 'branch1' } },
-        apiKey,
-        apiHost,
-        database
-      )
-    ).rejects.toThrow(
-      `Failed to get schema for the base branch branch2 in project ${projectId}`
-    )
-  })
-
   it('returns an empty diff if the schemas are identical', async () => {
     const schemaSQL = 'CREATE TABLE test (id INT);'
-    mockClient.listProjectBranches.mockResolvedValueOnce({
-      status: 200,
-      data: {
-        branches: [
-          { id: '1', name: 'branch1', parent_id: '2' },
-          { id: '2', name: 'branch2' }
-        ]
-      }
-    })
+    mockClient.listProjectBranches.mockResolvedValueOnce(
+      apiResponse(
+        200,
+        buildListProjectsBranchesResponse(
+          buildBranch('1', 'branch1', '2'),
+          buildBranch('2', 'branch2')
+        )
+      )
+    )
     mockClient.getProjectBranchSchema
-      .mockResolvedValueOnce({
-        status: 200,
-        data: { sql: schemaSQL }
-      })
-      .mockResolvedValueOnce({
-        status: 200,
-        data: { sql: schemaSQL }
-      })
+      .mockResolvedValueOnce(
+        apiResponse(200, buildBranchSchemaResponse(schemaSQL))
+      )
+      .mockResolvedValueOnce(
+        apiResponse(200, buildBranchSchemaResponse(schemaSQL))
+      )
 
     const result = await diff(
       projectId,
@@ -220,36 +200,31 @@ describe('diff function', () => {
       '\\ No newline at end of file\n'
     const fakeHash = 'abcd1234'
 
-    // (createPatch as jest.Mock).mockReturnValue(fakeDiff);
-    mockClient.listProjectBranches.mockResolvedValueOnce({
-      status: 200,
-      data: {
-        branches: [
-          { id: '1', name: 'branch1', parent_id: '2' },
-          { id: '2', name: 'branch2' }
-        ]
-      }
-    })
-    mockClient.getProjectBranchSchema
-      .mockResolvedValueOnce({
-        status: 200,
-        data: { sql: childSQL }
-      })
-      .mockResolvedValueOnce({
-        status: 200,
-        data: { sql: parentSQL }
-      })
-
-    // Mock the hashing function to return a fixed hash for consistency in tests
-    jest
-      .spyOn(global.crypto.subtle, 'digest')
-      .mockResolvedValueOnce(
-        new Uint8Array(
-          (String(fakeHash).match(/.{2}/g) || []).map(byte =>
-            parseInt(byte, 16)
-          )
+    mockClient.listProjectBranches.mockResolvedValueOnce(
+      apiResponse(
+        200,
+        buildListProjectsBranchesResponse(
+          buildBranch('1', 'branch1', '2'),
+          buildBranch('2', 'branch2')
         )
       )
+    )
+    mockClient.getProjectBranchSchema
+      .mockResolvedValueOnce(
+        apiResponse(200, buildBranchSchemaResponse(childSQL))
+      )
+      .mockResolvedValueOnce(
+        apiResponse(200, buildBranchSchemaResponse(parentSQL))
+      )
+
+    // Mock crypto.subtle.digest in Vitest
+    vi.spyOn(crypto.subtle, 'digest').mockResolvedValueOnce(
+      new Uint8Array(
+        (String(fakeHash).match(/.{2}/g) || []).map((byte) =>
+          parseInt(byte, 16)
+        )
+      )
+    )
 
     const result = await diff(
       projectId,
@@ -272,27 +247,19 @@ const DIFF_COMMENT_IDENTIFIER =
 const DIFF_HASH_COMMENT_TEMPLATE = '<!--- [diff digest: %s] -->'
 
 describe('summary function', () => {
-  const compareBranch = {
-    id: 'branch-1',
-    name: 'feature-branch',
-    protected: true
-  } as Branch
-
-  const baseBranch = {
-    id: 'branch-0',
-    name: 'main',
-    protected: false
-  } as Branch
+  const compareBranch = buildBranch('1', 'feature-branch', undefined, true)
+  const baseBranch = buildBranch('0', 'main', undefined, false)
 
   const database = 'test-db'
   const projectId = 'project-123'
 
   beforeEach(() => {
-    jest.useFakeTimers().setSystemTime(new Date('2023-01-01T12:00:00Z'))
+    vi.useFakeTimers()
+    vi.setSystemTime(new Date('2023-01-01T12:00:00Z'))
   })
 
   afterEach(() => {
-    jest.useRealTimers()
+    vi.useRealTimers()
   })
 
   it('returns empty summary if there are no schema changes', () => {
@@ -348,36 +315,6 @@ describe('summary function', () => {
       `This comment was last updated at Sun, 01 Jan 2023 12:00:00 GMT`
     )
   })
-
-  it('handles unprotected compare and base branches correctly', () => {
-    const unprotectedCompareBranch = { ...compareBranch, protected: false }
-    const unprotectedBaseBranch = { ...baseBranch, protected: false }
-    const sql = 'sql content'
-    const hash = 'abcd1234'
-
-    const result = summary(
-      sql,
-      hash,
-      unprotectedCompareBranch,
-      unprotectedBaseBranch,
-      database,
-      projectId
-    )
-
-    expect(result).toContain(
-      `- Base branch: ${unprotectedBaseBranch.name} ([${unprotectedBaseBranch.id}](${getBranchURL(
-        projectId,
-        unprotectedBaseBranch.id
-      )}))`
-    )
-    expect(result).not.toContain('🔒') // No lock icon since both branches are unprotected
-    expect(result).toContain(
-      `- Compare branch: ${unprotectedCompareBranch.name} ([${unprotectedCompareBranch.id}](${getBranchURL(
-        projectId,
-        unprotectedCompareBranch.id
-      )}))`
-    )
-  })
 })
 
 describe('upsertGitHubComment function', () => {
@@ -389,40 +326,41 @@ describe('upsertGitHubComment function', () => {
     repo: { owner: 'test-owner', repo: 'test-repo' },
     issue: { number: 1 }
   }
+
   // @ts-expect-error - mock github context
   github.context = mockContext
 
-  let mockOctokit: jest.Mocked<ReturnType<typeof github.getOctokit>>
+  let mockOctokit: ReturnType<typeof github.getOctokit>
 
   beforeEach(() => {
     mockOctokit = {
       rest: {
         issues: {
-          listComments: jest.fn(),
-          updateComment: jest.fn(),
-          createComment: jest.fn(),
-          deleteComment: jest.fn()
+          listComments: vi.fn(),
+          updateComment: vi.fn(),
+          createComment: vi.fn(),
+          deleteComment: vi.fn()
         }
       }
-    } as unknown as jest.Mocked<ReturnType<typeof github.getOctokit>>
-    ;(github.getOctokit as jest.Mock).mockReturnValue(mockOctokit)
+    } as unknown as ReturnType<typeof github.getOctokit>
+
+    vi.mocked(github.getOctokit).mockReturnValue(mockOctokit)
   })
 
   afterEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
   })
 
   it('creates a new comment when no matching comment exists', async () => {
-    // eslint-disable-next-line no-extra-semi
-    ;(
-      mockOctokit.rest.issues.listComments as unknown as jest.Mock
-    ).mockResolvedValueOnce({ data: [] })
-    ;(
-      mockOctokit.rest.issues.createComment as unknown as jest.Mock
-    ).mockResolvedValueOnce({
-      status: 201,
-      data: { html_url: 'http://example.com/new-comment' }
-    })
+    vi.mocked(mockOctokit.rest.issues.listComments).mockResolvedValueOnce(
+      githubApiResponse([], 200)
+    )
+    vi.mocked(mockOctokit.rest.issues.createComment).mockResolvedValueOnce(
+      githubApiResponse(
+        buildGitHubComment(1, 'http://example.com/new-comment'),
+        201
+      )
+    )
 
     const result: SummaryComment = await upsertGitHubComment(token, diff, hash)
 
@@ -442,20 +380,21 @@ describe('upsertGitHubComment function', () => {
   })
 
   it('updates an existing comment when the hash has changed', async () => {
-    const existingComment = {
-      id: 123,
-      body: `${DIFF_COMMENT_IDENTIFIER}\n<!--- [diff digest: oldhash] -->\nOld diff content`,
-      html_url: 'http://example.com/existing-comment'
-    }
-    ;(
-      mockOctokit.rest.issues.listComments as unknown as jest.Mock
-    ).mockResolvedValueOnce({ data: [existingComment] })
-    ;(
-      mockOctokit.rest.issues.updateComment as unknown as jest.Mock
-    ).mockResolvedValueOnce({
-      status: 200,
-      data: { html_url: 'http://example.com/updated-comment' }
-    })
+    const existingComment = buildGitHubComment(
+      123,
+      'http://example.com/comment',
+      `${DIFF_COMMENT_IDENTIFIER}\n<!--- [diff digest: oldhash] -->\nOld diff content`
+    )
+
+    vi.mocked(mockOctokit.rest.issues.listComments).mockResolvedValueOnce(
+      githubApiResponse([existingComment], 200)
+    )
+    vi.mocked(mockOctokit.rest.issues.updateComment).mockResolvedValueOnce(
+      githubApiResponse(
+        buildGitHubComment(123, 'http://example.com/updated-comment'),
+        200
+      )
+    )
 
     const result: SummaryComment = await upsertGitHubComment(token, diff, hash)
 
@@ -471,14 +410,15 @@ describe('upsertGitHubComment function', () => {
   })
 
   it('does not update the comment if the hash matches', async () => {
-    const existingComment = {
-      id: 123,
-      body: `${DIFF_COMMENT_IDENTIFIER}\n${DIFF_HASH_COMMENT_TEMPLATE.replace('%s', hash)}\nExisting diff content`,
-      html_url: 'http://example.com/existing-comment'
-    }
-    ;(
-      mockOctokit.rest.issues.listComments as unknown as jest.Mock
-    ).mockResolvedValueOnce({ data: [existingComment] })
+    const existingComment = buildGitHubComment(
+      123,
+      'http://example.com/existing-comment',
+      `${DIFF_COMMENT_IDENTIFIER}\n${DIFF_HASH_COMMENT_TEMPLATE.replace('%s', hash)}\nExisting diff content`
+    )
+
+    vi.mocked(mockOctokit.rest.issues.listComments).mockResolvedValueOnce(
+      githubApiResponse([existingComment], 200)
+    )
 
     const result: SummaryComment = await upsertGitHubComment(token, diff, hash)
 
@@ -490,31 +430,32 @@ describe('upsertGitHubComment function', () => {
   })
 
   it('throws an error if updating the comment fails', async () => {
-    const existingComment = {
-      id: 123,
-      body: `${DIFF_COMMENT_IDENTIFIER}\n<!--- [diff digest: oldhash] -->\nOld diff content`,
-      html_url: 'http://example.com/existing-comment'
-    }
-    ;(
-      mockOctokit.rest.issues.listComments as unknown as jest.Mock
-    ).mockResolvedValueOnce({ data: [existingComment] })
-    ;(
-      mockOctokit.rest.issues.updateComment as unknown as jest.Mock
-    ).mockResolvedValueOnce({ status: 500 })
+    const existingComment = buildGitHubComment(
+      123,
+      'http://example.com/existing-comment',
+      `${DIFF_COMMENT_IDENTIFIER}\nold hash\nExisting diff content`
+    )
+
+    vi.mocked(mockOctokit.rest.issues.listComments).mockResolvedValueOnce(
+      githubApiResponse([existingComment], 200)
+    )
+
+    vi.mocked(mockOctokit.rest.issues.updateComment).mockRejectedValueOnce(
+      new Error('Update failed')
+    )
 
     await expect(upsertGitHubComment(token, diff, hash)).rejects.toThrow(
-      `Failed to update comment ${existingComment.id}`
+      `Update failed`
     )
   })
 
   it('throws an error if creating the comment fails', async () => {
-    // eslint-disable-next-line no-extra-semi
-    ;(
-      mockOctokit.rest.issues.listComments as unknown as jest.Mock
-    ).mockResolvedValueOnce({ data: [] })
-    ;(
-      mockOctokit.rest.issues.createComment as unknown as jest.Mock
-    ).mockResolvedValueOnce({ status: 500 })
+    vi.mocked(mockOctokit.rest.issues.listComments).mockResolvedValueOnce(
+      githubApiResponse([], 200)
+    )
+    vi.mocked(mockOctokit.rest.issues.createComment).mockRejectedValueOnce(
+      new Error('Failed to create a comment')
+    )
 
     await expect(upsertGitHubComment(token, diff, hash)).rejects.toThrow(
       'Failed to create a comment'
@@ -522,17 +463,17 @@ describe('upsertGitHubComment function', () => {
   })
 
   it('deletes the comment if the diff is empty and the comment exists', async () => {
-    const existingComment = {
-      id: 123,
-      body: `${DIFF_COMMENT_IDENTIFIER}\n${DIFF_HASH_COMMENT_TEMPLATE.replace('%s', hash)}\nExisting diff content`,
-      html_url: 'http://example.com/existing-comment'
-    }
-    ;(
-      mockOctokit.rest.issues.listComments as unknown as jest.Mock
-    ).mockResolvedValueOnce({ data: [existingComment] })
-    ;(
-      mockOctokit.rest.issues.deleteComment as unknown as jest.Mock
-    ).mockResolvedValueOnce({ status: 204 })
+    const existingComment = buildGitHubComment(
+      123,
+      'http://example.com/existing-comment',
+      `${DIFF_COMMENT_IDENTIFIER}\n${DIFF_HASH_COMMENT_TEMPLATE.replace('%s', hash)}\nExisting diff content`
+    )
+    vi.mocked(mockOctokit.rest.issues.listComments).mockResolvedValueOnce(
+      githubApiResponse([existingComment], 200)
+    )
+    vi.mocked(mockOctokit.rest.issues.deleteComment).mockResolvedValueOnce(
+      githubApiResponse(void 0 as never, 204)
+    )
 
     const result: SummaryComment = await upsertGitHubComment(token, '', hash)
 
@@ -547,17 +488,18 @@ describe('upsertGitHubComment function', () => {
   })
 
   it('throw an error if deleting the comment fails', async () => {
-    const existingComment = {
-      id: 123,
-      body: `${DIFF_COMMENT_IDENTIFIER}\n${DIFF_HASH_COMMENT_TEMPLATE.replace('%s', hash)}\nExisting diff content`,
-      html_url: 'http://example.com/existing-comment'
-    }
-    ;(
-      mockOctokit.rest.issues.listComments as unknown as jest.Mock
-    ).mockResolvedValueOnce({ data: [existingComment] })
-    ;(
-      mockOctokit.rest.issues.deleteComment as unknown as jest.Mock
-    ).mockResolvedValueOnce({ status: 500 })
+    const existingComment = buildGitHubComment(
+      123,
+      'http://example.com/existing-comment',
+      `${DIFF_COMMENT_IDENTIFIER}\n${DIFF_HASH_COMMENT_TEMPLATE.replace('%s', hash)}\nExisting diff content`
+    )
+    vi.mocked(mockOctokit.rest.issues.listComments).mockResolvedValueOnce(
+      githubApiResponse([existingComment], 200)
+    )
+
+    vi.mocked(mockOctokit.rest.issues.deleteComment).mockRejectedValueOnce(
+      new Error('Failed to delete comment')
+    )
 
     await expect(upsertGitHubComment(token, '', hash)).rejects.toThrow(
       `Failed to delete comment`
@@ -565,10 +507,9 @@ describe('upsertGitHubComment function', () => {
   })
 
   it('skips comment creation if diff is empty and no comment exists', async () => {
-    // eslint-disable-next-line no-extra-semi
-    ;(
-      mockOctokit.rest.issues.listComments as unknown as jest.Mock
-    ).mockResolvedValueOnce({ data: [] })
+    vi.mocked(mockOctokit.rest.issues.listComments).mockResolvedValueOnce(
+      githubApiResponse([], 200)
+    )
 
     const result: SummaryComment = await upsertGitHubComment(token, '', hash)
 

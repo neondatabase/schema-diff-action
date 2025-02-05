@@ -18,8 +18,8 @@ and the base branch
 ```diff
 Index: neondb-schema.sql
 ===================================================================
---- neondb-schema.sql	Branch main
-+++ neondb-schema.sql	Branch preview/pr-9-feat/add-soft-delete
+--- neondb-schema.sql Branch main
++++ neondb-schema.sql Branch preview/pr-9-feat/add-soft-delete
 @@ -111,9 +111,10 @@
      title text NOT NULL,
      content text NOT NULL,

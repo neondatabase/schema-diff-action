@@ -1,7 +1,7 @@
 import * as core from '@actions/core'
 
-import { summary, diff, upsertGitHubComment } from './diff'
-import { getBranchInput, getPointInTime } from './utils'
+import { diff, summary, upsertGitHubComment } from './diff.js'
+import { getBranchInput, getPointInTime } from './utils.js'
 
 const urlRegex = /https?:\/\/[^\s/$.?#].[^\s]*/i
 
@@ -78,6 +78,11 @@ export async function run(): Promise<void> {
     )
 
     core.setOutput('diff', sql)
+
+    if (process.env.ENVIRONMENT === 'development') {
+      core.info('Skipping comment creation in development environment')
+      return
+    }
 
     const { url, operation } = await upsertGitHubComment(
       githubToken,

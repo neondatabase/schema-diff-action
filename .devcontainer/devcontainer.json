@@ -1,7 +1,7 @@
 {
   "name": "GitHub Actions (TypeScript)",
-  "image": "mcr.microsoft.com/devcontainers/typescript-node:20",
-  "postCreateCommand": "npm install",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm",
+  "postCreateCommand": "bun i",
   "customizations": {
     "codespaces": {
       "openFiles": ["README.md"]
@@ -35,6 +35,7 @@
     "GITHUB_TOKEN": "${localEnv:GITHUB_TOKEN}"
   },
   "features": {
+    "ghcr.io/shyim/devcontainers-features/bun:0": {},
     "ghcr.io/devcontainers/features/github-cli:1": {},
     "ghcr.io/devcontainers-contrib/features/prettier:1": {}
   }
