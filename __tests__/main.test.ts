@@ -1,72 +1,47 @@
-/**
- * Unit tests for the action's main functionality, src/main.ts
- */
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import * as core from '@actions/core'
+import * as core from '../__fixtures__/core'
+import { diff, summary, upsertGitHubComment } from '../__fixtures__/diff'
+import {
+  buildBranch,
+  buildBranchDiff,
+  buildSummaryComment
+} from '../__fixtures__/mocks'
 
-// @ts-nocheck
+const { run } = await import('../src/main.js')
 
-import * as main from '../src/main'
-import { diff, upsertGitHubComment, SummaryComment } from '../src/diff'
-import { Branch } from '@neondatabase/api-client'
+vi.mock('@actions/core', () => core)
+vi.mock('../src/diff', () => ({
+  diff,
+  upsertGitHubComment,
+  summary
+}))
 
-// Mock the action's main function
-const runMock = jest.spyOn(main, 'run')
-
-// Mock the GitHub Actions core library
-let infoMock: jest.SpiedFunction<typeof core.info>
-let errorMock: jest.SpiedFunction<typeof core.error>
-let getInputMock: jest.SpiedFunction<typeof core.getInput>
-let setFailedMock: jest.SpiedFunction<typeof core.setFailed>
-let setOutputMock: jest.SpiedFunction<typeof core.setOutput>
-
-// Mock diff functions
-jest.mock('../src/diff')
-
-let diffMock: jest.SpiedFunction<typeof diff>
-let upsertGitHubCommentMock: jest.SpiedFunction<typeof upsertGitHubComment>
-
-const mockedUpsertGitHubCommentResult: SummaryComment = {
-  url: 'https://github.com/refactored-giggle/stunning-tribble/pull/2#issuecomment-2450615121',
-  operation: 'created'
-}
-
-const mockedDiffResult = {
-  sql: 'CREATE TABLE test_table (id INT PRIMARY KEY);',
-  hash: 'e5b4c8d3b5b6',
-  compareBranch: {
-    id: '1',
-    name: 'dev',
-    parent_id: '2'
-  } as Branch,
-  baseBranch: {
-    id: '2',
-    name: 'main'
-  } as Branch,
-  database: 'neondb'
-}
+const defaultComment = buildSummaryComment(
+  'https://github.com/refactored-giggle/stunning-tribble/pull/2#issuecomment-2450615121',
+  'created'
+)
+const defaultCompareBranch = buildBranch('1', 'dev', '2')
+const defaultBaseBranch = buildBranch('2', 'main')
+const defaultBranchDiff = buildBranchDiff(
+  'CREATE TABLE test_table (id INT PRIMARY KEY);',
+  'e5b4c8d3b5b6',
+  defaultCompareBranch,
+  defaultBaseBranch,
+  'neondb'
+)
 
 describe('action', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
 
-    infoMock = jest.spyOn(core, 'info').mockImplementation()
-    errorMock = jest.spyOn(core, 'error').mockImplementation()
-    getInputMock = jest.spyOn(core, 'getInput').mockImplementation()
-    setFailedMock = jest.spyOn(core, 'setFailed').mockImplementation()
-    setOutputMock = jest.spyOn(core, 'setOutput').mockImplementation()
+    diff.mockReturnValue(Promise.resolve(defaultBranchDiff))
 
-    diffMock = jest
-      .mocked(diff)
-      .mockReturnValue(Promise.resolve(mockedDiffResult))
-
-    upsertGitHubCommentMock = jest
-      .mocked(upsertGitHubComment)
-      .mockReturnValue(Promise.resolve(mockedUpsertGitHubCommentResult))
+    upsertGitHubComment.mockReturnValue(Promise.resolve(defaultComment))
   })
 
   it('invalid api host', async () => {
-    getInputMock.mockImplementation((name: string) => {
+    core.getInput.mockImplementation((name: string) => {
       switch (name) {
         case 'api_host':
           return 'not a url'
@@ -75,17 +50,16 @@ describe('action', () => {
       }
     })
 
-    await main.run()
-    expect(runMock).toHaveReturned()
-    expect(setFailedMock).toHaveBeenNthCalledWith(
+    await run()
+    expect(core.setFailed).toHaveBeenNthCalledWith(
       1,
       'API host must be a valid URL'
     )
-    expect(errorMock).not.toHaveBeenCalled()
+    expect(core.error).not.toHaveBeenCalled()
   })
 
   it('invalid database input', async () => {
-    getInputMock.mockImplementation((name: string) => {
+    core.getInput.mockImplementation((name: string) => {
       switch (name) {
         case 'api_host':
           return 'https://console.neon.tech/api/v2'
@@ -96,17 +70,16 @@ describe('action', () => {
       }
     })
 
-    await main.run()
-    expect(runMock).toHaveReturned()
-    expect(setFailedMock).toHaveBeenNthCalledWith(
+    await run()
+    expect(core.setFailed).toHaveBeenNthCalledWith(
       1,
       'Database name cannot be empty'
     )
-    expect(errorMock).not.toHaveBeenCalled()
+    expect(core.error).not.toHaveBeenCalled()
   })
 
   it('valid inputs', async () => {
-    getInputMock.mockImplementation((name: string) => {
+    core.getInput.mockImplementation((name: string) => {
       switch (name) {
         case 'api_host':
           return 'https://console.neon.tech/api/v2'
@@ -120,32 +93,35 @@ describe('action', () => {
       }
     })
 
-    await main.run()
-    expect(runMock).toHaveReturned()
-    expect(diffMock).toHaveBeenCalled()
-    expect(upsertGitHubCommentMock).toHaveBeenCalled()
-    expect(setFailedMock).not.toHaveBeenCalled()
-    expect(errorMock).not.toHaveBeenCalled()
-    expect(setOutputMock).toHaveBeenCalledTimes(2)
-    expect(setOutputMock).toHaveBeenNthCalledWith(1, 'diff', expect.any(String))
-    expect(setOutputMock).toHaveBeenNthCalledWith(
+    await run()
+    expect(diff).toHaveBeenCalled()
+    expect(upsertGitHubComment).toHaveBeenCalled()
+    expect(core.setFailed).not.toHaveBeenCalled()
+    expect(core.error).not.toHaveBeenCalled()
+    expect(core.setOutput).toHaveBeenCalledTimes(2)
+    expect(core.setOutput).toHaveBeenNthCalledWith(
+      1,
+      'diff',
+      expect.any(String)
+    )
+    expect(core.setOutput).toHaveBeenNthCalledWith(
       2,
       'comment_url',
       expect.any(String)
     )
-    expect(infoMock).toHaveBeenCalledTimes(2)
-    expect(infoMock).toHaveBeenNthCalledWith(
+    expect(core.info).toHaveBeenCalledTimes(2)
+    expect(core.info).toHaveBeenNthCalledWith(
       1,
-      `Comment ${mockedUpsertGitHubCommentResult.operation} successfully`
+      `Comment ${defaultComment.operation} successfully`
     )
-    expect(infoMock).toHaveBeenNthCalledWith(
+    expect(core.info).toHaveBeenNthCalledWith(
       2,
-      `Comment URL: ${mockedUpsertGitHubCommentResult.url}`
+      `Comment URL: ${defaultComment.url}`
     )
   })
 
   it('valid inputs, noop operation', async () => {
-    getInputMock.mockImplementation((name: string) => {
+    core.getInput.mockImplementation((name: string) => {
       switch (name) {
         case 'api_host':
           return 'https://console.neon.tech/api/v2'
@@ -159,34 +135,37 @@ describe('action', () => {
       }
     })
 
-    upsertGitHubCommentMock.mockReturnValue(
+    upsertGitHubComment.mockReturnValue(
       Promise.resolve({
-        ...mockedUpsertGitHubCommentResult,
+        ...defaultComment,
         operation: 'noop'
       })
     )
 
-    await main.run()
-    expect(runMock).toHaveReturned()
-    expect(diffMock).toHaveBeenCalled()
-    expect(upsertGitHubCommentMock).toHaveBeenCalled()
-    expect(setFailedMock).not.toHaveBeenCalled()
-    expect(errorMock).not.toHaveBeenCalled()
-    expect(setOutputMock).toHaveBeenCalledTimes(2)
-    expect(setOutputMock).toHaveBeenNthCalledWith(1, 'diff', expect.any(String))
-    expect(setOutputMock).toHaveBeenNthCalledWith(
+    await run()
+    expect(diff).toHaveBeenCalled()
+    expect(upsertGitHubComment).toHaveBeenCalled()
+    expect(core.setFailed).not.toHaveBeenCalled()
+    expect(core.error).not.toHaveBeenCalled()
+    expect(core.setOutput).toHaveBeenCalledTimes(2)
+    expect(core.setOutput).toHaveBeenNthCalledWith(
+      1,
+      'diff',
+      expect.any(String)
+    )
+    expect(core.setOutput).toHaveBeenNthCalledWith(
       2,
       'comment_url',
       expect.any(String)
     )
-    expect(infoMock).toHaveBeenCalledTimes(2)
-    expect(infoMock).toHaveBeenNthCalledWith(
+    expect(core.info).toHaveBeenCalledTimes(2)
+    expect(core.info).toHaveBeenNthCalledWith(
       1,
       `No changes detected in the schema diff`
     )
-    expect(infoMock).toHaveBeenNthCalledWith(
+    expect(core.info).toHaveBeenNthCalledWith(
       2,
-      `Comment URL: ${mockedUpsertGitHubCommentResult.url}`
+      `Comment URL: ${defaultComment.url}`
     )
   })
 })

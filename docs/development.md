@@ -22,19 +22,19 @@ need to perform some initial setup steps before you can develop your action.
 1. :hammer_and_wrench: Install the dependencies
 
    ```bash
-   npm install
+   bun install
    ```
 
 1. :building_construction: Package the TypeScript for distribution
 
    ```bash
-   npm run bundle
+   bun run bundle
    ```
 
 1. :white_check_mark: Run the tests
 
    ```bash
-   $ npm test
+   $ bun run test
 
    PASS  ./index.test.js
     index
@@ -54,3 +54,14 @@ need to perform some initial setup steps before you can develop your action.
       ✓ works with valid project and branch (2 ms)
    ...
    ```
+
+1. :white_check_mark: Run the action locally with `local-action`
+
+   ```bash
+   $ cp .env.example .env
+   # modify your environment variables
+   $ bun run local-action
+   ```
+
+   Currently, the action skips the create comment part, in the future we can
+   have a specific repository to test this flow entirely in the CI.

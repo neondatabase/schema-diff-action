@@ -1,8 +1,9 @@
 import * as github from '@actions/github'
-import { createApiClient, type Branch } from '@neondatabase/api-client'
+import { type Branch, createApiClient } from '@neondatabase/api-client'
 import { createPatch } from 'diff'
-import { BranchComparisonInput, getBranchURL, PointInTime } from './utils'
-import { version } from './version'
+
+import { BranchComparisonInput, getBranchURL, PointInTime } from './utils.js'
+import { version } from './version.js'
 
 const DIFF_COMMENT_IDENTIFIER =
   '<!--- [schema diff GitHub action comment identifier] -->'
@@ -51,7 +52,7 @@ export async function diff(
 
   // Find a branch by id or name
   const compareBranch = branches.data?.branches.find(
-    branch =>
+    (branch) =>
       branch.id === compareInput.value || branch.name === compareInput.value
   )
   if (!compareBranch) {
@@ -65,7 +66,8 @@ export async function diff(
   let baseBranch: Branch | undefined
   if (baseInput) {
     baseBranch = branches.data?.branches.find(
-      branch => branch.id === baseInput.value || branch.name === baseInput.value
+      (branch) =>
+        branch.id === baseInput.value || branch.name === baseInput.value
     )
     if (!baseBranch) {
       throw new Error(
@@ -80,7 +82,7 @@ export async function diff(
     }
 
     baseBranch = branches.data?.branches.find(
-      branch => branch.id === compareBranch.parent_id
+      (branch) => branch.id === compareBranch.parent_id
     )
     if (!baseBranch) {
       throw new Error(`Parent branch for ${compareInput.value} not found`)
@@ -134,7 +136,7 @@ export async function diff(
   )
 
   const hash = Array.from(new Uint8Array(hashBuffer))
-    .map(b => b.toString(16).padStart(2, '0'))
+    .map((b) => b.toString(16).padStart(2, '0'))
     .join('')
 
   return {
@@ -196,7 +198,7 @@ export async function upsertGitHubComment(
     issue_number: context.issue.number
   })
 
-  const comment = comments.data.find(comment =>
+  const comment = comments.data.find((comment) =>
     comment.body?.includes(DIFF_COMMENT_IDENTIFIER)
   )
 
