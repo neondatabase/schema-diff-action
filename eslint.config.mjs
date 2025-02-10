@@ -22,14 +22,11 @@ const compat = new FlatCompat({
 })
 
 export default [
-  {
-    ignores: ['**/coverage', '**/dist', '**/linter', '**/node_modules']
-  },
+  { ignores: ['**/coverage', '**/dist', '**/linter', '**/node_modules'] },
   ...compat.extends(
     'eslint:recommended',
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
-    'plugin:@vitest/legacy-recommended',
     'plugin:prettier/recommended'
   ),
   {
@@ -52,18 +49,12 @@ export default [
       ecmaVersion: 2023,
       sourceType: 'module',
 
-      parserOptions: {
-        project: ['tsconfig.eslint.json'],
-        tsconfigRootDir: '.'
-      }
+      parserOptions: { project: ['tsconfig.eslint.json'], tsconfigRootDir: '.' }
     },
 
     settings: {
       'import/resolver': {
-        typescript: {
-          alwaysTryTypes: true,
-          project: 'tsconfig.eslint.json'
-        }
+        typescript: { alwaysTryTypes: true, project: 'tsconfig.eslint.json' }
       }
     },
 
@@ -98,10 +89,7 @@ export default [
             'unknown'
           ],
           'newlines-between': 'always',
-          alphabetize: {
-            order: 'asc',
-            caseInsensitive: true
-          }
+          alphabetize: { order: 'asc', caseInsensitive: true }
         }
       ]
     }
