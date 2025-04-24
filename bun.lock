@@ -6,7 +6,7 @@
       "dependencies": {
         "@actions/core": "^1.11.1",
         "@actions/github": "^6.0.0",
-        "@neondatabase/api-client": "^1.11.5",
+        "@neondatabase/api-client": "^2.0.0",
         "diff": "^7.0.0",
       },
       "devDependencies": {
@@ -189,7 +189,7 @@
 
     "@jridgewell/trace-mapping": ["@jridgewell/trace-mapping@0.3.25", "", { "dependencies": { "@jridgewell/resolve-uri": "^3.1.0", "@jridgewell/sourcemap-codec": "^1.4.14" } }, "sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ=="],
 
-    "@neondatabase/api-client": ["@neondatabase/api-client@1.12.0", "", { "dependencies": { "axios": "^1.7.9" } }, "sha512-ypkbYwrQGLYJIydJ7vi0819NIr1ENMXKMYUyrpi6HMoiEdIQ1Fwmjo/gFXi+cL1r0N/n+kLgErArQEzivhrHSQ=="],
+    "@neondatabase/api-client": ["@neondatabase/api-client@2.0.0", "", { "dependencies": { "axios": "^1.7.9" } }, "sha512-UwjRRy8gyShNDfbbP1N+rA235FzqVWP/WPi4cgLnkGgConqpiR+U9Dsegaxu+HxAgK678kQ/5wc4/EPexvE7tw=="],
 
     "@nodelib/fs.scandir": ["@nodelib/fs.scandir@2.1.5", "", { "dependencies": { "@nodelib/fs.stat": "2.0.5", "run-parallel": "^1.1.9" } }, "sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g=="],
 
