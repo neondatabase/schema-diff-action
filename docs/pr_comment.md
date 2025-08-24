@@ -15,6 +15,9 @@ and the base branch
   ([br-misty-resonance-a5jvokot](https://console.neon.tech/app/projects/holy-wind-90398863/branches/br-misty-resonance-a5jvokot))
 - Database: neondb
 
+<details><summary>Diff</summary>
+<p>
+
 ```diff
 Index: neondb-schema.sql
 ===================================================================
@@ -43,5 +46,8 @@ Index: neondb-schema.sql
 \ No newline at end of file
 
 ```
+
+</p>
+</details> 
 
 This comment was last updated at 11/20/2024 10:05:59 AM
