@@ -88,8 +88,8 @@ your job configuration:
 ```yml
 jobs:
   your_job:
-    permisions:
-      pull-request: write
+    permissions:
+      pull-requests: write
       contents: read
       ...other permissions needed for the rest of the job
     steps:
