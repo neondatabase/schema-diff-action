@@ -70,5 +70,8 @@
     "prettier-eslint": "^16.4.1",
     "typescript": "^5.8.3",
     "vitest": "^3.1.2"
+  },
+  "overrides": {
+    "undici": "^5.29.0"
   }
 }
