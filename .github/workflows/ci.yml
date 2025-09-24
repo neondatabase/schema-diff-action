@@ -25,6 +25,8 @@ jobs:
       - name: Checkout
         id: checkout
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          persist-credentials: false
 
       - name: Setup Bun
         id: setup-bun
@@ -56,6 +58,8 @@ jobs:
       - name: Checkout
         id: checkout
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          persist-credentials: false
 
       - name: Test Local Action
         id: test-action
@@ -71,5 +75,9 @@ jobs:
       - name: Print
         id: output
         run: |
-          echo "diff: ${{ steps.test-action.outputs.diff }}"
-          echo "comment_url: ${{ steps.test-action.outputs.comment_url }}"
+          echo "diff: ${STEPS_TEST_ACTION_OUTPUTS_DIFF}"
+          echo "comment_url: ${STEPS_TEST_ACTION_OUTPUTS_COMMENT_URL}"
+        env:
+          STEPS_TEST_ACTION_OUTPUTS_DIFF: ${{ steps.test-action.outputs.diff }}
+          STEPS_TEST_ACTION_OUTPUTS_COMMENT_URL:
+            ${{ steps.test-action.outputs.comment_url }}
