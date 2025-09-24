@@ -27327,6 +27327,7 @@ function requireContext () {
 	        this.action = process.env.GITHUB_ACTION;
 	        this.actor = process.env.GITHUB_ACTOR;
 	        this.job = process.env.GITHUB_JOB;
+	        this.runAttempt = parseInt(process.env.GITHUB_RUN_ATTEMPT, 10);
 	        this.runNumber = parseInt(process.env.GITHUB_RUN_NUMBER, 10);
 	        this.runId = parseInt(process.env.GITHUB_RUN_ID, 10);
 	        this.apiUrl = (_a = process.env.GITHUB_API_URL) !== null && _a !== undefined ? _a : `https://api.github.com`;
@@ -30756,7 +30757,7 @@ var distSrc = /*#__PURE__*/Object.freeze({
 var require$$3 = /*@__PURE__*/getAugmentedNamespace(distSrc);
 
 // pkg/dist-src/version.js
-var VERSION = "9.2.1";
+var VERSION = "9.2.2";
 
 // pkg/dist-src/normalize-paginated-list-response.js
 function normalizePaginatedListResponse(response) {
@@ -30804,7 +30805,7 @@ function iterator(octokit, route, parameters) {
           const response = await requestMethod({ method, url, headers });
           const normalizedResponse = normalizePaginatedListResponse(response);
           url = ((normalizedResponse.headers.link || "").match(
-            /<([^>]+)>;\s*rel="next"/
+            /<([^<>]+)>;\s*rel="next"/
           ) || [])[1];
           return { value: normalizedResponse };
         } catch (error) {
