@@ -1,4 +1,4 @@
-name: Auto Package
+name: Auto Bundler
 
 on:
   pull_request:
@@ -15,13 +15,11 @@ permissions:
   pull-requests: write
 
 jobs:
-  auto-package:
-    name: Auto Package Dependabot PR
+  auto-bundler:
+    name: Auto Bundler
     runs-on: ubuntu-latest
-    # Run on Dependabot PRs or manual triggers
-    if:
-      github.actor == 'dependabot[bot]' || github.event_name ==
-      'workflow_dispatch'
+    # Run only on release branches
+    if: startsWith(github.head_ref, 'release/') == true
     steps:
       - name: Harden Runner
         uses: step-security/harden-runner@f4a75cfd619ee5ce8d5b864b0d183aff3c69b55a # v2.13.1
@@ -46,8 +44,8 @@ jobs:
       - name: Install Dependencies
         run: bun install
 
-      - name: Run Packaging
-        run: bun run package
+      - name: Run bundle
+        run: bun run bundle
 
       - name: Check for changes
         id: check-changes
@@ -64,7 +62,7 @@ jobs:
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add .
-          git commit -m "chore: update package after dependency updates"
+          git commit -m "chore: update for release"
           git push
 
       - name: Add label to PR
@@ -72,7 +70,7 @@ jobs:
         env:
           PR_URL: ${{github.event.pull_request.html_url}}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh pr edit "$PR_URL" --add-label "auto-package"
+        run: gh pr edit "$PR_URL" --add-label "auto-bundler"
 
       - name: Add comment to PR
         if: steps.check-changes.outputs.has_changes == 'true'
@@ -84,5 +82,5 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '👋 I just pushed packaging updates after the dependency changes. Please verify the changes!'
+              body: '👋 I just pushed updates to the PR. Please verify the changes!'
             })
