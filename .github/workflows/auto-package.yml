@@ -60,15 +60,19 @@ jobs:
 
       - name: Commit and push if changes exist
         if: steps.check-changes.outputs.has_changes == 'true'
-        env:
-          PR_URL: ${{github.event.pull_request.html_url}}
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add .
           git commit -m "chore: update package after dependency updates"
           git push
-          gh pr edit "$PR_URL" --add-label "auto-package"
+
+      - name: Add label to PR
+        if: steps.check-changes.outputs.has_changes == 'true'
+        env:
+          PR_URL: ${{github.event.pull_request.html_url}}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh pr edit "$PR_URL" --add-label "auto-package"
 
       - name: Add comment to PR
         if: steps.check-changes.outputs.has_changes == 'true'
