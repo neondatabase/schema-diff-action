@@ -3,10 +3,10 @@ import require$$0$2 from 'crypto';
 import require$$1 from 'fs';
 import require$$1$4 from 'path';
 import require$$2$1 from 'http';
-import require$$4$1 from 'https';
+import require$$3$1 from 'https';
 import require$$0$5 from 'net';
 import require$$1$1 from 'tls';
-import require$$4$2 from 'events';
+import require$$4$1 from 'events';
 import require$$0$4 from 'assert';
 import require$$0$3 from 'util';
 import require$$0$6 from 'stream';
@@ -19,10 +19,10 @@ import require$$0$7 from 'node:events';
 import require$$0$9 from 'worker_threads';
 import require$$2$2 from 'perf_hooks';
 import require$$5 from 'util/types';
-import require$$4$3 from 'async_hooks';
+import require$$4$2 from 'async_hooks';
 import require$$1$3 from 'console';
 import require$$0$a from 'url';
-import require$$3$1 from 'zlib';
+import require$$3$2 from 'zlib';
 import require$$6 from 'string_decoder';
 import require$$0$b from 'diagnostics_channel';
 import require$$2$3 from 'child_process';
@@ -419,8 +419,8 @@ function requireTunnel$1 () {
 	hasRequiredTunnel$1 = 1;
 	var tls = require$$1$1;
 	var http = require$$2$1;
-	var https = require$$4$1;
-	var events = require$$4$2;
+	var https = require$$3$1;
+	var events = require$$4$1;
 	var util = require$$0$3;
 
 
@@ -7816,7 +7816,7 @@ function requireDispatcher () {
 	if (hasRequiredDispatcher) return dispatcher;
 	hasRequiredDispatcher = 1;
 
-	const EventEmitter = require$$4$2;
+	const EventEmitter = require$$4$1;
 
 	class Dispatcher extends EventEmitter {
 	  dispatch () {
@@ -8551,7 +8551,7 @@ function requireRedirectHandler () {
 	const { kBodyUsed } = requireSymbols$4();
 	const assert = require$$0$4;
 	const { InvalidArgumentError } = requireErrors();
-	const EE = require$$4$2;
+	const EE = require$$4$1;
 
 	const redirectableStatusCodes = [300, 301, 302, 303, 307, 308];
 
@@ -12446,7 +12446,7 @@ function requireApiRequest () {
 	} = requireErrors();
 	const util = requireUtil$6();
 	const { getResolveErrorBodyCallback } = requireUtil$4();
-	const { AsyncResource } = require$$4$3;
+	const { AsyncResource } = require$$4$2;
 	const { addSignal, removeSignal } = requireAbortSignal();
 
 	class RequestHandler extends AsyncResource {
@@ -12635,7 +12635,7 @@ function requireApiStream () {
 	} = requireErrors();
 	const util = requireUtil$6();
 	const { getResolveErrorBodyCallback } = requireUtil$4();
-	const { AsyncResource } = require$$4$3;
+	const { AsyncResource } = require$$4$2;
 	const { addSignal, removeSignal } = requireAbortSignal();
 
 	class StreamHandler extends AsyncResource {
@@ -12866,7 +12866,7 @@ function requireApiPipeline () {
 	  RequestAbortedError
 	} = requireErrors();
 	const util = requireUtil$6();
-	const { AsyncResource } = require$$4$3;
+	const { AsyncResource } = require$$4$2;
 	const { addSignal, removeSignal } = requireAbortSignal();
 	const assert = require$$0$4;
 
@@ -13113,7 +13113,7 @@ function requireApiUpgrade () {
 	hasRequiredApiUpgrade = 1;
 
 	const { InvalidArgumentError, RequestAbortedError, SocketError } = requireErrors();
-	const { AsyncResource } = require$$4$3;
+	const { AsyncResource } = require$$4$2;
 	const util = requireUtil$6();
 	const { addSignal, removeSignal } = requireAbortSignal();
 	const assert = require$$0$4;
@@ -13225,7 +13225,7 @@ function requireApiConnect () {
 	if (hasRequiredApiConnect) return apiConnect;
 	hasRequiredApiConnect = 1;
 
-	const { AsyncResource } = require$$4$3;
+	const { AsyncResource } = require$$4$2;
 	const { InvalidArgumentError, RequestAbortedError, SocketError } = requireErrors();
 	const util = requireUtil$6();
 	const { addSignal, removeSignal } = requireAbortSignal();
@@ -16205,7 +16205,7 @@ function requireRequest () {
 	const { URLSerializer } = requireDataURL();
 	const { kHeadersList, kConstruct } = requireSymbols$4();
 	const assert = require$$0$4;
-	const { getMaxListeners, setMaxListeners, getEventListeners, defaultMaxListeners } = require$$4$2;
+	const { getMaxListeners, setMaxListeners, getEventListeners, defaultMaxListeners } = require$$4$1;
 
 	let TransformStream = globalThis.TransformStream;
 
@@ -17138,7 +17138,7 @@ function requireFetch () {
 	} = requireResponse();
 	const { Headers } = requireHeaders();
 	const { Request, makeRequest } = requireRequest();
-	const zlib = require$$3$1;
+	const zlib = require$$3$2;
 	const {
 	  bytesMatch,
 	  makePolicyContainer,
@@ -17181,7 +17181,7 @@ function requireFetch () {
 	  DOMException
 	} = requireConstants$3();
 	const { kHeadersList } = requireSymbols$4();
-	const EE = require$$4$2;
+	const EE = require$$4$1;
 	const { Readable, pipeline } = require$$0$6;
 	const { addAbortListener, isErrored, isReadable, nodeMajor, nodeMinor } = requireUtil$6();
 	const { dataURLProcessor, serializeAMimeType } = requireDataURL();
@@ -24433,7 +24433,7 @@ function requireLib () {
 	Object.defineProperty(lib, "__esModule", { value: true });
 	lib.HttpClient = lib.isHttps = lib.HttpClientResponse = lib.HttpClientError = lib.getProxyUrl = lib.MediaTypes = lib.Headers = lib.HttpCodes = undefined;
 	const http = __importStar(require$$2$1);
-	const https = __importStar(require$$4$1);
+	const https = __importStar(require$$3$1);
 	const pm = __importStar(requireProxy());
 	const tunnel = __importStar(requireTunnel());
 	const undici_1 = requireUndici();
@@ -26134,7 +26134,7 @@ function requireToolrunner () {
 	Object.defineProperty(toolrunner, "__esModule", { value: true });
 	toolrunner.argStringToArray = toolrunner.ToolRunner = undefined;
 	const os = __importStar(require$$0$1);
-	const events = __importStar(require$$4$2);
+	const events = __importStar(require$$4$1);
 	const child = __importStar(require$$2$3);
 	const path = __importStar(require$$1$4);
 	const io = __importStar(requireIo());
@@ -42974,18 +42974,1091 @@ function requireAsynckit () {
 	return asynckit;
 }
 
+var esObjectAtoms;
+var hasRequiredEsObjectAtoms;
+
+function requireEsObjectAtoms () {
+	if (hasRequiredEsObjectAtoms) return esObjectAtoms;
+	hasRequiredEsObjectAtoms = 1;
+
+	/** @type {import('.')} */
+	esObjectAtoms = Object;
+	return esObjectAtoms;
+}
+
+var esErrors;
+var hasRequiredEsErrors;
+
+function requireEsErrors () {
+	if (hasRequiredEsErrors) return esErrors;
+	hasRequiredEsErrors = 1;
+
+	/** @type {import('.')} */
+	esErrors = Error;
+	return esErrors;
+}
+
+var _eval;
+var hasRequired_eval;
+
+function require_eval () {
+	if (hasRequired_eval) return _eval;
+	hasRequired_eval = 1;
+
+	/** @type {import('./eval')} */
+	_eval = EvalError;
+	return _eval;
+}
+
+var range;
+var hasRequiredRange;
+
+function requireRange () {
+	if (hasRequiredRange) return range;
+	hasRequiredRange = 1;
+
+	/** @type {import('./range')} */
+	range = RangeError;
+	return range;
+}
+
+var ref;
+var hasRequiredRef;
+
+function requireRef () {
+	if (hasRequiredRef) return ref;
+	hasRequiredRef = 1;
+
+	/** @type {import('./ref')} */
+	ref = ReferenceError;
+	return ref;
+}
+
+var syntax;
+var hasRequiredSyntax;
+
+function requireSyntax () {
+	if (hasRequiredSyntax) return syntax;
+	hasRequiredSyntax = 1;
+
+	/** @type {import('./syntax')} */
+	syntax = SyntaxError;
+	return syntax;
+}
+
+var type;
+var hasRequiredType;
+
+function requireType () {
+	if (hasRequiredType) return type;
+	hasRequiredType = 1;
+
+	/** @type {import('./type')} */
+	type = TypeError;
+	return type;
+}
+
+var uri;
+var hasRequiredUri;
+
+function requireUri () {
+	if (hasRequiredUri) return uri;
+	hasRequiredUri = 1;
+
+	/** @type {import('./uri')} */
+	uri = URIError;
+	return uri;
+}
+
+var abs;
+var hasRequiredAbs;
+
+function requireAbs () {
+	if (hasRequiredAbs) return abs;
+	hasRequiredAbs = 1;
+
+	/** @type {import('./abs')} */
+	abs = Math.abs;
+	return abs;
+}
+
+var floor;
+var hasRequiredFloor;
+
+function requireFloor () {
+	if (hasRequiredFloor) return floor;
+	hasRequiredFloor = 1;
+
+	/** @type {import('./floor')} */
+	floor = Math.floor;
+	return floor;
+}
+
+var max;
+var hasRequiredMax;
+
+function requireMax () {
+	if (hasRequiredMax) return max;
+	hasRequiredMax = 1;
+
+	/** @type {import('./max')} */
+	max = Math.max;
+	return max;
+}
+
+var min;
+var hasRequiredMin;
+
+function requireMin () {
+	if (hasRequiredMin) return min;
+	hasRequiredMin = 1;
+
+	/** @type {import('./min')} */
+	min = Math.min;
+	return min;
+}
+
+var pow;
+var hasRequiredPow;
+
+function requirePow () {
+	if (hasRequiredPow) return pow;
+	hasRequiredPow = 1;
+
+	/** @type {import('./pow')} */
+	pow = Math.pow;
+	return pow;
+}
+
+var round;
+var hasRequiredRound;
+
+function requireRound () {
+	if (hasRequiredRound) return round;
+	hasRequiredRound = 1;
+
+	/** @type {import('./round')} */
+	round = Math.round;
+	return round;
+}
+
+var _isNaN;
+var hasRequired_isNaN;
+
+function require_isNaN () {
+	if (hasRequired_isNaN) return _isNaN;
+	hasRequired_isNaN = 1;
+
+	/** @type {import('./isNaN')} */
+	_isNaN = Number.isNaN || function isNaN(a) {
+		return a !== a;
+	};
+	return _isNaN;
+}
+
+var sign;
+var hasRequiredSign;
+
+function requireSign () {
+	if (hasRequiredSign) return sign;
+	hasRequiredSign = 1;
+
+	var $isNaN = /*@__PURE__*/ require_isNaN();
+
+	/** @type {import('./sign')} */
+	sign = function sign(number) {
+		if ($isNaN(number) || number === 0) {
+			return number;
+		}
+		return number < 0 ? -1 : 1;
+	};
+	return sign;
+}
+
+var gOPD;
+var hasRequiredGOPD;
+
+function requireGOPD () {
+	if (hasRequiredGOPD) return gOPD;
+	hasRequiredGOPD = 1;
+
+	/** @type {import('./gOPD')} */
+	gOPD = Object.getOwnPropertyDescriptor;
+	return gOPD;
+}
+
+var gopd;
+var hasRequiredGopd;
+
+function requireGopd () {
+	if (hasRequiredGopd) return gopd;
+	hasRequiredGopd = 1;
+
+	/** @type {import('.')} */
+	var $gOPD = /*@__PURE__*/ requireGOPD();
+
+	if ($gOPD) {
+		try {
+			$gOPD([], 'length');
+		} catch (e) {
+			// IE 8 has a broken gOPD
+			$gOPD = null;
+		}
+	}
+
+	gopd = $gOPD;
+	return gopd;
+}
+
+var esDefineProperty;
+var hasRequiredEsDefineProperty;
+
+function requireEsDefineProperty () {
+	if (hasRequiredEsDefineProperty) return esDefineProperty;
+	hasRequiredEsDefineProperty = 1;
+
+	/** @type {import('.')} */
+	var $defineProperty = Object.defineProperty || false;
+	if ($defineProperty) {
+		try {
+			$defineProperty({}, 'a', { value: 1 });
+		} catch (e) {
+			// IE 8 has a broken defineProperty
+			$defineProperty = false;
+		}
+	}
+
+	esDefineProperty = $defineProperty;
+	return esDefineProperty;
+}
+
+var shams$1;
+var hasRequiredShams$1;
+
+function requireShams$1 () {
+	if (hasRequiredShams$1) return shams$1;
+	hasRequiredShams$1 = 1;
+
+	/** @type {import('./shams')} */
+	/* eslint complexity: [2, 18], max-statements: [2, 33] */
+	shams$1 = function hasSymbols() {
+		if (typeof Symbol !== 'function' || typeof Object.getOwnPropertySymbols !== 'function') { return false; }
+		if (typeof Symbol.iterator === 'symbol') { return true; }
+
+		/** @type {{ [k in symbol]?: unknown }} */
+		var obj = {};
+		var sym = Symbol('test');
+		var symObj = Object(sym);
+		if (typeof sym === 'string') { return false; }
+
+		if (Object.prototype.toString.call(sym) !== '[object Symbol]') { return false; }
+		if (Object.prototype.toString.call(symObj) !== '[object Symbol]') { return false; }
+
+		// temp disabled per https://github.com/ljharb/object.assign/issues/17
+		// if (sym instanceof Symbol) { return false; }
+		// temp disabled per https://github.com/WebReflection/get-own-property-symbols/issues/4
+		// if (!(symObj instanceof Symbol)) { return false; }
+
+		// if (typeof Symbol.prototype.toString !== 'function') { return false; }
+		// if (String(sym) !== Symbol.prototype.toString.call(sym)) { return false; }
+
+		var symVal = 42;
+		obj[sym] = symVal;
+		for (var _ in obj) { return false; } // eslint-disable-line no-restricted-syntax, no-unreachable-loop
+		if (typeof Object.keys === 'function' && Object.keys(obj).length !== 0) { return false; }
+
+		if (typeof Object.getOwnPropertyNames === 'function' && Object.getOwnPropertyNames(obj).length !== 0) { return false; }
+
+		var syms = Object.getOwnPropertySymbols(obj);
+		if (syms.length !== 1 || syms[0] !== sym) { return false; }
+
+		if (!Object.prototype.propertyIsEnumerable.call(obj, sym)) { return false; }
+
+		if (typeof Object.getOwnPropertyDescriptor === 'function') {
+			// eslint-disable-next-line no-extra-parens
+			var descriptor = /** @type {PropertyDescriptor} */ (Object.getOwnPropertyDescriptor(obj, sym));
+			if (descriptor.value !== symVal || descriptor.enumerable !== true) { return false; }
+		}
+
+		return true;
+	};
+	return shams$1;
+}
+
+var hasSymbols;
+var hasRequiredHasSymbols;
+
+function requireHasSymbols () {
+	if (hasRequiredHasSymbols) return hasSymbols;
+	hasRequiredHasSymbols = 1;
+
+	var origSymbol = typeof Symbol !== 'undefined' && Symbol;
+	var hasSymbolSham = requireShams$1();
+
+	/** @type {import('.')} */
+	hasSymbols = function hasNativeSymbols() {
+		if (typeof origSymbol !== 'function') { return false; }
+		if (typeof Symbol !== 'function') { return false; }
+		if (typeof origSymbol('foo') !== 'symbol') { return false; }
+		if (typeof Symbol('bar') !== 'symbol') { return false; }
+
+		return hasSymbolSham();
+	};
+	return hasSymbols;
+}
+
+var Reflect_getPrototypeOf;
+var hasRequiredReflect_getPrototypeOf;
+
+function requireReflect_getPrototypeOf () {
+	if (hasRequiredReflect_getPrototypeOf) return Reflect_getPrototypeOf;
+	hasRequiredReflect_getPrototypeOf = 1;
+
+	/** @type {import('./Reflect.getPrototypeOf')} */
+	Reflect_getPrototypeOf = (typeof Reflect !== 'undefined' && Reflect.getPrototypeOf) || null;
+	return Reflect_getPrototypeOf;
+}
+
+var Object_getPrototypeOf;
+var hasRequiredObject_getPrototypeOf;
+
+function requireObject_getPrototypeOf () {
+	if (hasRequiredObject_getPrototypeOf) return Object_getPrototypeOf;
+	hasRequiredObject_getPrototypeOf = 1;
+
+	var $Object = /*@__PURE__*/ requireEsObjectAtoms();
+
+	/** @type {import('./Object.getPrototypeOf')} */
+	Object_getPrototypeOf = $Object.getPrototypeOf || null;
+	return Object_getPrototypeOf;
+}
+
+var implementation;
+var hasRequiredImplementation;
+
+function requireImplementation () {
+	if (hasRequiredImplementation) return implementation;
+	hasRequiredImplementation = 1;
+
+	/* eslint no-invalid-this: 1 */
+
+	var ERROR_MESSAGE = 'Function.prototype.bind called on incompatible ';
+	var toStr = Object.prototype.toString;
+	var max = Math.max;
+	var funcType = '[object Function]';
+
+	var concatty = function concatty(a, b) {
+	    var arr = [];
+
+	    for (var i = 0; i < a.length; i += 1) {
+	        arr[i] = a[i];
+	    }
+	    for (var j = 0; j < b.length; j += 1) {
+	        arr[j + a.length] = b[j];
+	    }
+
+	    return arr;
+	};
+
+	var slicy = function slicy(arrLike, offset) {
+	    var arr = [];
+	    for (var i = offset, j = 0; i < arrLike.length; i += 1, j += 1) {
+	        arr[j] = arrLike[i];
+	    }
+	    return arr;
+	};
+
+	var joiny = function (arr, joiner) {
+	    var str = '';
+	    for (var i = 0; i < arr.length; i += 1) {
+	        str += arr[i];
+	        if (i + 1 < arr.length) {
+	            str += joiner;
+	        }
+	    }
+	    return str;
+	};
+
+	implementation = function bind(that) {
+	    var target = this;
+	    if (typeof target !== 'function' || toStr.apply(target) !== funcType) {
+	        throw new TypeError(ERROR_MESSAGE + target);
+	    }
+	    var args = slicy(arguments, 1);
+
+	    var bound;
+	    var binder = function () {
+	        if (this instanceof bound) {
+	            var result = target.apply(
+	                this,
+	                concatty(args, arguments)
+	            );
+	            if (Object(result) === result) {
+	                return result;
+	            }
+	            return this;
+	        }
+	        return target.apply(
+	            that,
+	            concatty(args, arguments)
+	        );
+
+	    };
+
+	    var boundLength = max(0, target.length - args.length);
+	    var boundArgs = [];
+	    for (var i = 0; i < boundLength; i++) {
+	        boundArgs[i] = '$' + i;
+	    }
+
+	    bound = Function('binder', 'return function (' + joiny(boundArgs, ',') + '){ return binder.apply(this,arguments); }')(binder);
+
+	    if (target.prototype) {
+	        var Empty = function Empty() {};
+	        Empty.prototype = target.prototype;
+	        bound.prototype = new Empty();
+	        Empty.prototype = null;
+	    }
+
+	    return bound;
+	};
+	return implementation;
+}
+
+var functionBind;
+var hasRequiredFunctionBind;
+
+function requireFunctionBind () {
+	if (hasRequiredFunctionBind) return functionBind;
+	hasRequiredFunctionBind = 1;
+
+	var implementation = requireImplementation();
+
+	functionBind = Function.prototype.bind || implementation;
+	return functionBind;
+}
+
+var functionCall;
+var hasRequiredFunctionCall;
+
+function requireFunctionCall () {
+	if (hasRequiredFunctionCall) return functionCall;
+	hasRequiredFunctionCall = 1;
+
+	/** @type {import('./functionCall')} */
+	functionCall = Function.prototype.call;
+	return functionCall;
+}
+
+var functionApply;
+var hasRequiredFunctionApply;
+
+function requireFunctionApply () {
+	if (hasRequiredFunctionApply) return functionApply;
+	hasRequiredFunctionApply = 1;
+
+	/** @type {import('./functionApply')} */
+	functionApply = Function.prototype.apply;
+	return functionApply;
+}
+
+var reflectApply;
+var hasRequiredReflectApply;
+
+function requireReflectApply () {
+	if (hasRequiredReflectApply) return reflectApply;
+	hasRequiredReflectApply = 1;
+
+	/** @type {import('./reflectApply')} */
+	reflectApply = typeof Reflect !== 'undefined' && Reflect && Reflect.apply;
+	return reflectApply;
+}
+
+var actualApply;
+var hasRequiredActualApply;
+
+function requireActualApply () {
+	if (hasRequiredActualApply) return actualApply;
+	hasRequiredActualApply = 1;
+
+	var bind = requireFunctionBind();
+
+	var $apply = requireFunctionApply();
+	var $call = requireFunctionCall();
+	var $reflectApply = requireReflectApply();
+
+	/** @type {import('./actualApply')} */
+	actualApply = $reflectApply || bind.call($call, $apply);
+	return actualApply;
+}
+
+var callBindApplyHelpers;
+var hasRequiredCallBindApplyHelpers;
+
+function requireCallBindApplyHelpers () {
+	if (hasRequiredCallBindApplyHelpers) return callBindApplyHelpers;
+	hasRequiredCallBindApplyHelpers = 1;
+
+	var bind = requireFunctionBind();
+	var $TypeError = /*@__PURE__*/ requireType();
+
+	var $call = requireFunctionCall();
+	var $actualApply = requireActualApply();
+
+	/** @type {import('.')} */
+	callBindApplyHelpers = function callBindBasic(args) {
+		if (args.length < 1 || typeof args[0] !== 'function') {
+			throw new $TypeError('a function is required');
+		}
+		return $actualApply(bind, $call, args);
+	};
+	return callBindApplyHelpers;
+}
+
+var get;
+var hasRequiredGet;
+
+function requireGet () {
+	if (hasRequiredGet) return get;
+	hasRequiredGet = 1;
+
+	var callBind = requireCallBindApplyHelpers();
+	var gOPD = /*@__PURE__*/ requireGopd();
+
+	var hasProtoAccessor;
+	try {
+		// eslint-disable-next-line no-extra-parens, no-proto
+		hasProtoAccessor = /** @type {{ __proto__?: typeof Array.prototype }} */ ([]).__proto__ === Array.prototype;
+	} catch (e) {
+		if (!e || typeof e !== 'object' || !('code' in e) || e.code !== 'ERR_PROTO_ACCESS') {
+			throw e;
+		}
+	}
+
+	// eslint-disable-next-line no-extra-parens
+	var desc = !!hasProtoAccessor && gOPD && gOPD(Object.prototype, /** @type {keyof typeof Object.prototype} */ ('__proto__'));
+
+	var $Object = Object;
+	var $getPrototypeOf = $Object.getPrototypeOf;
+
+	/** @type {import('./get')} */
+	get = desc && typeof desc.get === 'function'
+		? callBind([desc.get])
+		: typeof $getPrototypeOf === 'function'
+			? /** @type {import('./get')} */ function getDunder(value) {
+				// eslint-disable-next-line eqeqeq
+				return $getPrototypeOf(value == null ? value : $Object(value));
+			}
+			: false;
+	return get;
+}
+
+var getProto;
+var hasRequiredGetProto;
+
+function requireGetProto () {
+	if (hasRequiredGetProto) return getProto;
+	hasRequiredGetProto = 1;
+
+	var reflectGetProto = requireReflect_getPrototypeOf();
+	var originalGetProto = requireObject_getPrototypeOf();
+
+	var getDunderProto = /*@__PURE__*/ requireGet();
+
+	/** @type {import('.')} */
+	getProto = reflectGetProto
+		? function getProto(O) {
+			// @ts-expect-error TS can't narrow inside a closure, for some reason
+			return reflectGetProto(O);
+		}
+		: originalGetProto
+			? function getProto(O) {
+				if (!O || (typeof O !== 'object' && typeof O !== 'function')) {
+					throw new TypeError('getProto: not an object');
+				}
+				// @ts-expect-error TS can't narrow inside a closure, for some reason
+				return originalGetProto(O);
+			}
+			: getDunderProto
+				? function getProto(O) {
+					// @ts-expect-error TS can't narrow inside a closure, for some reason
+					return getDunderProto(O);
+				}
+				: null;
+	return getProto;
+}
+
+var hasown;
+var hasRequiredHasown;
+
+function requireHasown () {
+	if (hasRequiredHasown) return hasown;
+	hasRequiredHasown = 1;
+
+	var call = Function.prototype.call;
+	var $hasOwn = Object.prototype.hasOwnProperty;
+	var bind = requireFunctionBind();
+
+	/** @type {import('.')} */
+	hasown = bind.call(call, $hasOwn);
+	return hasown;
+}
+
+var getIntrinsic;
+var hasRequiredGetIntrinsic;
+
+function requireGetIntrinsic () {
+	if (hasRequiredGetIntrinsic) return getIntrinsic;
+	hasRequiredGetIntrinsic = 1;
+
+	var undefined$1;
+
+	var $Object = /*@__PURE__*/ requireEsObjectAtoms();
+
+	var $Error = /*@__PURE__*/ requireEsErrors();
+	var $EvalError = /*@__PURE__*/ require_eval();
+	var $RangeError = /*@__PURE__*/ requireRange();
+	var $ReferenceError = /*@__PURE__*/ requireRef();
+	var $SyntaxError = /*@__PURE__*/ requireSyntax();
+	var $TypeError = /*@__PURE__*/ requireType();
+	var $URIError = /*@__PURE__*/ requireUri();
+
+	var abs = /*@__PURE__*/ requireAbs();
+	var floor = /*@__PURE__*/ requireFloor();
+	var max = /*@__PURE__*/ requireMax();
+	var min = /*@__PURE__*/ requireMin();
+	var pow = /*@__PURE__*/ requirePow();
+	var round = /*@__PURE__*/ requireRound();
+	var sign = /*@__PURE__*/ requireSign();
+
+	var $Function = Function;
+
+	// eslint-disable-next-line consistent-return
+	var getEvalledConstructor = function (expressionSyntax) {
+		try {
+			return $Function('"use strict"; return (' + expressionSyntax + ').constructor;')();
+		} catch (e) {}
+	};
+
+	var $gOPD = /*@__PURE__*/ requireGopd();
+	var $defineProperty = /*@__PURE__*/ requireEsDefineProperty();
+
+	var throwTypeError = function () {
+		throw new $TypeError();
+	};
+	var ThrowTypeError = $gOPD
+		? (function () {
+			try {
+				// eslint-disable-next-line no-unused-expressions, no-caller, no-restricted-properties
+				arguments.callee; // IE 8 does not throw here
+				return throwTypeError;
+			} catch (calleeThrows) {
+				try {
+					// IE 8 throws on Object.getOwnPropertyDescriptor(arguments, '')
+					return $gOPD(arguments, 'callee').get;
+				} catch (gOPDthrows) {
+					return throwTypeError;
+				}
+			}
+		}())
+		: throwTypeError;
+
+	var hasSymbols = requireHasSymbols()();
+
+	var getProto = requireGetProto();
+	var $ObjectGPO = requireObject_getPrototypeOf();
+	var $ReflectGPO = requireReflect_getPrototypeOf();
+
+	var $apply = requireFunctionApply();
+	var $call = requireFunctionCall();
+
+	var needsEval = {};
+
+	var TypedArray = typeof Uint8Array === 'undefined' || !getProto ? undefined$1 : getProto(Uint8Array);
+
+	var INTRINSICS = {
+		__proto__: null,
+		'%AggregateError%': typeof AggregateError === 'undefined' ? undefined$1 : AggregateError,
+		'%Array%': Array,
+		'%ArrayBuffer%': typeof ArrayBuffer === 'undefined' ? undefined$1 : ArrayBuffer,
+		'%ArrayIteratorPrototype%': hasSymbols && getProto ? getProto([][Symbol.iterator]()) : undefined$1,
+		'%AsyncFromSyncIteratorPrototype%': undefined$1,
+		'%AsyncFunction%': needsEval,
+		'%AsyncGenerator%': needsEval,
+		'%AsyncGeneratorFunction%': needsEval,
+		'%AsyncIteratorPrototype%': needsEval,
+		'%Atomics%': typeof Atomics === 'undefined' ? undefined$1 : Atomics,
+		'%BigInt%': typeof BigInt === 'undefined' ? undefined$1 : BigInt,
+		'%BigInt64Array%': typeof BigInt64Array === 'undefined' ? undefined$1 : BigInt64Array,
+		'%BigUint64Array%': typeof BigUint64Array === 'undefined' ? undefined$1 : BigUint64Array,
+		'%Boolean%': Boolean,
+		'%DataView%': typeof DataView === 'undefined' ? undefined$1 : DataView,
+		'%Date%': Date,
+		'%decodeURI%': decodeURI,
+		'%decodeURIComponent%': decodeURIComponent,
+		'%encodeURI%': encodeURI,
+		'%encodeURIComponent%': encodeURIComponent,
+		'%Error%': $Error,
+		'%eval%': eval, // eslint-disable-line no-eval
+		'%EvalError%': $EvalError,
+		'%Float32Array%': typeof Float32Array === 'undefined' ? undefined$1 : Float32Array,
+		'%Float64Array%': typeof Float64Array === 'undefined' ? undefined$1 : Float64Array,
+		'%FinalizationRegistry%': typeof FinalizationRegistry === 'undefined' ? undefined$1 : FinalizationRegistry,
+		'%Function%': $Function,
+		'%GeneratorFunction%': needsEval,
+		'%Int8Array%': typeof Int8Array === 'undefined' ? undefined$1 : Int8Array,
+		'%Int16Array%': typeof Int16Array === 'undefined' ? undefined$1 : Int16Array,
+		'%Int32Array%': typeof Int32Array === 'undefined' ? undefined$1 : Int32Array,
+		'%isFinite%': isFinite,
+		'%isNaN%': isNaN,
+		'%IteratorPrototype%': hasSymbols && getProto ? getProto(getProto([][Symbol.iterator]())) : undefined$1,
+		'%JSON%': typeof JSON === 'object' ? JSON : undefined$1,
+		'%Map%': typeof Map === 'undefined' ? undefined$1 : Map,
+		'%MapIteratorPrototype%': typeof Map === 'undefined' || !hasSymbols || !getProto ? undefined$1 : getProto(new Map()[Symbol.iterator]()),
+		'%Math%': Math,
+		'%Number%': Number,
+		'%Object%': $Object,
+		'%Object.getOwnPropertyDescriptor%': $gOPD,
+		'%parseFloat%': parseFloat,
+		'%parseInt%': parseInt,
+		'%Promise%': typeof Promise === 'undefined' ? undefined$1 : Promise,
+		'%Proxy%': typeof Proxy === 'undefined' ? undefined$1 : Proxy,
+		'%RangeError%': $RangeError,
+		'%ReferenceError%': $ReferenceError,
+		'%Reflect%': typeof Reflect === 'undefined' ? undefined$1 : Reflect,
+		'%RegExp%': RegExp,
+		'%Set%': typeof Set === 'undefined' ? undefined$1 : Set,
+		'%SetIteratorPrototype%': typeof Set === 'undefined' || !hasSymbols || !getProto ? undefined$1 : getProto(new Set()[Symbol.iterator]()),
+		'%SharedArrayBuffer%': typeof SharedArrayBuffer === 'undefined' ? undefined$1 : SharedArrayBuffer,
+		'%String%': String,
+		'%StringIteratorPrototype%': hasSymbols && getProto ? getProto(''[Symbol.iterator]()) : undefined$1,
+		'%Symbol%': hasSymbols ? Symbol : undefined$1,
+		'%SyntaxError%': $SyntaxError,
+		'%ThrowTypeError%': ThrowTypeError,
+		'%TypedArray%': TypedArray,
+		'%TypeError%': $TypeError,
+		'%Uint8Array%': typeof Uint8Array === 'undefined' ? undefined$1 : Uint8Array,
+		'%Uint8ClampedArray%': typeof Uint8ClampedArray === 'undefined' ? undefined$1 : Uint8ClampedArray,
+		'%Uint16Array%': typeof Uint16Array === 'undefined' ? undefined$1 : Uint16Array,
+		'%Uint32Array%': typeof Uint32Array === 'undefined' ? undefined$1 : Uint32Array,
+		'%URIError%': $URIError,
+		'%WeakMap%': typeof WeakMap === 'undefined' ? undefined$1 : WeakMap,
+		'%WeakRef%': typeof WeakRef === 'undefined' ? undefined$1 : WeakRef,
+		'%WeakSet%': typeof WeakSet === 'undefined' ? undefined$1 : WeakSet,
+
+		'%Function.prototype.call%': $call,
+		'%Function.prototype.apply%': $apply,
+		'%Object.defineProperty%': $defineProperty,
+		'%Object.getPrototypeOf%': $ObjectGPO,
+		'%Math.abs%': abs,
+		'%Math.floor%': floor,
+		'%Math.max%': max,
+		'%Math.min%': min,
+		'%Math.pow%': pow,
+		'%Math.round%': round,
+		'%Math.sign%': sign,
+		'%Reflect.getPrototypeOf%': $ReflectGPO
+	};
+
+	if (getProto) {
+		try {
+			null.error; // eslint-disable-line no-unused-expressions
+		} catch (e) {
+			// https://github.com/tc39/proposal-shadowrealm/pull/384#issuecomment-1364264229
+			var errorProto = getProto(getProto(e));
+			INTRINSICS['%Error.prototype%'] = errorProto;
+		}
+	}
+
+	var doEval = function doEval(name) {
+		var value;
+		if (name === '%AsyncFunction%') {
+			value = getEvalledConstructor('async function () {}');
+		} else if (name === '%GeneratorFunction%') {
+			value = getEvalledConstructor('function* () {}');
+		} else if (name === '%AsyncGeneratorFunction%') {
+			value = getEvalledConstructor('async function* () {}');
+		} else if (name === '%AsyncGenerator%') {
+			var fn = doEval('%AsyncGeneratorFunction%');
+			if (fn) {
+				value = fn.prototype;
+			}
+		} else if (name === '%AsyncIteratorPrototype%') {
+			var gen = doEval('%AsyncGenerator%');
+			if (gen && getProto) {
+				value = getProto(gen.prototype);
+			}
+		}
+
+		INTRINSICS[name] = value;
+
+		return value;
+	};
+
+	var LEGACY_ALIASES = {
+		__proto__: null,
+		'%ArrayBufferPrototype%': ['ArrayBuffer', 'prototype'],
+		'%ArrayPrototype%': ['Array', 'prototype'],
+		'%ArrayProto_entries%': ['Array', 'prototype', 'entries'],
+		'%ArrayProto_forEach%': ['Array', 'prototype', 'forEach'],
+		'%ArrayProto_keys%': ['Array', 'prototype', 'keys'],
+		'%ArrayProto_values%': ['Array', 'prototype', 'values'],
+		'%AsyncFunctionPrototype%': ['AsyncFunction', 'prototype'],
+		'%AsyncGenerator%': ['AsyncGeneratorFunction', 'prototype'],
+		'%AsyncGeneratorPrototype%': ['AsyncGeneratorFunction', 'prototype', 'prototype'],
+		'%BooleanPrototype%': ['Boolean', 'prototype'],
+		'%DataViewPrototype%': ['DataView', 'prototype'],
+		'%DatePrototype%': ['Date', 'prototype'],
+		'%ErrorPrototype%': ['Error', 'prototype'],
+		'%EvalErrorPrototype%': ['EvalError', 'prototype'],
+		'%Float32ArrayPrototype%': ['Float32Array', 'prototype'],
+		'%Float64ArrayPrototype%': ['Float64Array', 'prototype'],
+		'%FunctionPrototype%': ['Function', 'prototype'],
+		'%Generator%': ['GeneratorFunction', 'prototype'],
+		'%GeneratorPrototype%': ['GeneratorFunction', 'prototype', 'prototype'],
+		'%Int8ArrayPrototype%': ['Int8Array', 'prototype'],
+		'%Int16ArrayPrototype%': ['Int16Array', 'prototype'],
+		'%Int32ArrayPrototype%': ['Int32Array', 'prototype'],
+		'%JSONParse%': ['JSON', 'parse'],
+		'%JSONStringify%': ['JSON', 'stringify'],
+		'%MapPrototype%': ['Map', 'prototype'],
+		'%NumberPrototype%': ['Number', 'prototype'],
+		'%ObjectPrototype%': ['Object', 'prototype'],
+		'%ObjProto_toString%': ['Object', 'prototype', 'toString'],
+		'%ObjProto_valueOf%': ['Object', 'prototype', 'valueOf'],
+		'%PromisePrototype%': ['Promise', 'prototype'],
+		'%PromiseProto_then%': ['Promise', 'prototype', 'then'],
+		'%Promise_all%': ['Promise', 'all'],
+		'%Promise_reject%': ['Promise', 'reject'],
+		'%Promise_resolve%': ['Promise', 'resolve'],
+		'%RangeErrorPrototype%': ['RangeError', 'prototype'],
+		'%ReferenceErrorPrototype%': ['ReferenceError', 'prototype'],
+		'%RegExpPrototype%': ['RegExp', 'prototype'],
+		'%SetPrototype%': ['Set', 'prototype'],
+		'%SharedArrayBufferPrototype%': ['SharedArrayBuffer', 'prototype'],
+		'%StringPrototype%': ['String', 'prototype'],
+		'%SymbolPrototype%': ['Symbol', 'prototype'],
+		'%SyntaxErrorPrototype%': ['SyntaxError', 'prototype'],
+		'%TypedArrayPrototype%': ['TypedArray', 'prototype'],
+		'%TypeErrorPrototype%': ['TypeError', 'prototype'],
+		'%Uint8ArrayPrototype%': ['Uint8Array', 'prototype'],
+		'%Uint8ClampedArrayPrototype%': ['Uint8ClampedArray', 'prototype'],
+		'%Uint16ArrayPrototype%': ['Uint16Array', 'prototype'],
+		'%Uint32ArrayPrototype%': ['Uint32Array', 'prototype'],
+		'%URIErrorPrototype%': ['URIError', 'prototype'],
+		'%WeakMapPrototype%': ['WeakMap', 'prototype'],
+		'%WeakSetPrototype%': ['WeakSet', 'prototype']
+	};
+
+	var bind = requireFunctionBind();
+	var hasOwn = /*@__PURE__*/ requireHasown();
+	var $concat = bind.call($call, Array.prototype.concat);
+	var $spliceApply = bind.call($apply, Array.prototype.splice);
+	var $replace = bind.call($call, String.prototype.replace);
+	var $strSlice = bind.call($call, String.prototype.slice);
+	var $exec = bind.call($call, RegExp.prototype.exec);
+
+	/* adapted from https://github.com/lodash/lodash/blob/4.17.15/dist/lodash.js#L6735-L6744 */
+	var rePropName = /[^%.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|%$))/g;
+	var reEscapeChar = /\\(\\)?/g; /** Used to match backslashes in property paths. */
+	var stringToPath = function stringToPath(string) {
+		var first = $strSlice(string, 0, 1);
+		var last = $strSlice(string, -1);
+		if (first === '%' && last !== '%') {
+			throw new $SyntaxError('invalid intrinsic syntax, expected closing `%`');
+		} else if (last === '%' && first !== '%') {
+			throw new $SyntaxError('invalid intrinsic syntax, expected opening `%`');
+		}
+		var result = [];
+		$replace(string, rePropName, function (match, number, quote, subString) {
+			result[result.length] = quote ? $replace(subString, reEscapeChar, '$1') : number || match;
+		});
+		return result;
+	};
+	/* end adaptation */
+
+	var getBaseIntrinsic = function getBaseIntrinsic(name, allowMissing) {
+		var intrinsicName = name;
+		var alias;
+		if (hasOwn(LEGACY_ALIASES, intrinsicName)) {
+			alias = LEGACY_ALIASES[intrinsicName];
+			intrinsicName = '%' + alias[0] + '%';
+		}
+
+		if (hasOwn(INTRINSICS, intrinsicName)) {
+			var value = INTRINSICS[intrinsicName];
+			if (value === needsEval) {
+				value = doEval(intrinsicName);
+			}
+			if (typeof value === 'undefined' && !allowMissing) {
+				throw new $TypeError('intrinsic ' + name + ' exists, but is not available. Please file an issue!');
+			}
+
+			return {
+				alias: alias,
+				name: intrinsicName,
+				value: value
+			};
+		}
+
+		throw new $SyntaxError('intrinsic ' + name + ' does not exist!');
+	};
+
+	getIntrinsic = function GetIntrinsic(name, allowMissing) {
+		if (typeof name !== 'string' || name.length === 0) {
+			throw new $TypeError('intrinsic name must be a non-empty string');
+		}
+		if (arguments.length > 1 && typeof allowMissing !== 'boolean') {
+			throw new $TypeError('"allowMissing" argument must be a boolean');
+		}
+
+		if ($exec(/^%?[^%]*%?$/, name) === null) {
+			throw new $SyntaxError('`%` may not be present anywhere but at the beginning and end of the intrinsic name');
+		}
+		var parts = stringToPath(name);
+		var intrinsicBaseName = parts.length > 0 ? parts[0] : '';
+
+		var intrinsic = getBaseIntrinsic('%' + intrinsicBaseName + '%', allowMissing);
+		var intrinsicRealName = intrinsic.name;
+		var value = intrinsic.value;
+		var skipFurtherCaching = false;
+
+		var alias = intrinsic.alias;
+		if (alias) {
+			intrinsicBaseName = alias[0];
+			$spliceApply(parts, $concat([0, 1], alias));
+		}
+
+		for (var i = 1, isOwn = true; i < parts.length; i += 1) {
+			var part = parts[i];
+			var first = $strSlice(part, 0, 1);
+			var last = $strSlice(part, -1);
+			if (
+				(
+					(first === '"' || first === "'" || first === '`')
+					|| (last === '"' || last === "'" || last === '`')
+				)
+				&& first !== last
+			) {
+				throw new $SyntaxError('property names with quotes must have matching quotes');
+			}
+			if (part === 'constructor' || !isOwn) {
+				skipFurtherCaching = true;
+			}
+
+			intrinsicBaseName += '.' + part;
+			intrinsicRealName = '%' + intrinsicBaseName + '%';
+
+			if (hasOwn(INTRINSICS, intrinsicRealName)) {
+				value = INTRINSICS[intrinsicRealName];
+			} else if (value != null) {
+				if (!(part in value)) {
+					if (!allowMissing) {
+						throw new $TypeError('base intrinsic for ' + name + ' exists, but the property is not available.');
+					}
+					return undefined;
+				}
+				if ($gOPD && (i + 1) >= parts.length) {
+					var desc = $gOPD(value, part);
+					isOwn = !!desc;
+
+					// By convention, when a data property is converted to an accessor
+					// property to emulate a data property that does not suffer from
+					// the override mistake, that accessor's getter is marked with
+					// an `originalValue` property. Here, when we detect this, we
+					// uphold the illusion by pretending to see that original data
+					// property, i.e., returning the value rather than the getter
+					// itself.
+					if (isOwn && 'get' in desc && !('originalValue' in desc.get)) {
+						value = desc.get;
+					} else {
+						value = value[part];
+					}
+				} else {
+					isOwn = hasOwn(value, part);
+					value = value[part];
+				}
+
+				if (isOwn && !skipFurtherCaching) {
+					INTRINSICS[intrinsicRealName] = value;
+				}
+			}
+		}
+		return value;
+	};
+	return getIntrinsic;
+}
+
+var shams;
+var hasRequiredShams;
+
+function requireShams () {
+	if (hasRequiredShams) return shams;
+	hasRequiredShams = 1;
+
+	var hasSymbols = requireShams$1();
+
+	/** @type {import('.')} */
+	shams = function hasToStringTagShams() {
+		return hasSymbols() && !!Symbol.toStringTag;
+	};
+	return shams;
+}
+
+var esSetTostringtag;
+var hasRequiredEsSetTostringtag;
+
+function requireEsSetTostringtag () {
+	if (hasRequiredEsSetTostringtag) return esSetTostringtag;
+	hasRequiredEsSetTostringtag = 1;
+
+	var GetIntrinsic = /*@__PURE__*/ requireGetIntrinsic();
+
+	var $defineProperty = GetIntrinsic('%Object.defineProperty%', true);
+
+	var hasToStringTag = requireShams()();
+	var hasOwn = /*@__PURE__*/ requireHasown();
+	var $TypeError = /*@__PURE__*/ requireType();
+
+	var toStringTag = hasToStringTag ? Symbol.toStringTag : null;
+
+	/** @type {import('.')} */
+	esSetTostringtag = function setToStringTag(object, value) {
+		var overrideIfSet = arguments.length > 2 && !!arguments[2] && arguments[2].force;
+		var nonConfigurable = arguments.length > 2 && !!arguments[2] && arguments[2].nonConfigurable;
+		if (
+			(typeof overrideIfSet !== 'undefined' && typeof overrideIfSet !== 'boolean')
+			|| (typeof nonConfigurable !== 'undefined' && typeof nonConfigurable !== 'boolean')
+		) {
+			throw new $TypeError('if provided, the `overrideIfSet` and `nonConfigurable` options must be booleans');
+		}
+		if (toStringTag && (overrideIfSet || !hasOwn(object, toStringTag))) {
+			if ($defineProperty) {
+				$defineProperty(object, toStringTag, {
+					configurable: !nonConfigurable,
+					enumerable: false,
+					value: value,
+					writable: false
+				});
+			} else {
+				object[toStringTag] = value; // eslint-disable-line no-param-reassign
+			}
+		}
+	};
+	return esSetTostringtag;
+}
+
 var populate;
 var hasRequiredPopulate;
 
 function requirePopulate () {
 	if (hasRequiredPopulate) return populate;
 	hasRequiredPopulate = 1;
-	// populates missing values
-	populate = function(dst, src) {
 
-	  Object.keys(src).forEach(function(prop)
-	  {
-	    dst[prop] = dst[prop] || src[prop];
+	// populates missing values
+	populate = function (dst, src) {
+	  Object.keys(src).forEach(function (prop) {
+	    dst[prop] = dst[prop] || src[prop]; // eslint-disable-line no-param-reassign
 	  });
 
 	  return dst;
@@ -42999,23 +44072,21 @@ var hasRequiredForm_data;
 function requireForm_data () {
 	if (hasRequiredForm_data) return form_data;
 	hasRequiredForm_data = 1;
+
 	var CombinedStream = requireCombined_stream();
 	var util = require$$0$3;
 	var path = require$$1$4;
 	var http = require$$2$1;
-	var https = require$$4$1;
+	var https = require$$3$1;
 	var parseUrl = require$$0$a.parse;
 	var fs = require$$1;
 	var Stream = require$$0$6.Stream;
+	var crypto = require$$0$2;
 	var mime = requireMimeTypes();
 	var asynckit = requireAsynckit();
+	var setToStringTag = /*@__PURE__*/ requireEsSetTostringtag();
+	var hasOwn = /*@__PURE__*/ requireHasown();
 	var populate = requirePopulate();
-
-	// Public API
-	form_data = FormData;
-
-	// make it a Stream
-	util.inherits(FormData, CombinedStream);
 
 	/**
 	 * Create readable "multipart/form-data" streams.
@@ -43023,7 +44094,7 @@ function requireForm_data () {
 	 * and file uploads to other web applications.
 	 *
 	 * @constructor
-	 * @param {Object} options - Properties to be added/overriden for FormData and CombinedStream
+	 * @param {object} options - Properties to be added/overriden for FormData and CombinedStream
 	 */
 	function FormData(options) {
 	  if (!(this instanceof FormData)) {
@@ -43036,35 +44107,39 @@ function requireForm_data () {
 
 	  CombinedStream.call(this);
 
-	  options = options || {};
-	  for (var option in options) {
+	  options = options || {}; // eslint-disable-line no-param-reassign
+	  for (var option in options) { // eslint-disable-line no-restricted-syntax
 	    this[option] = options[option];
 	  }
 	}
 
+	// make it a Stream
+	util.inherits(FormData, CombinedStream);
+
 	FormData.LINE_BREAK = '\r\n';
 	FormData.DEFAULT_CONTENT_TYPE = 'application/octet-stream';
 
-	FormData.prototype.append = function(field, value, options) {
-
-	  options = options || {};
+	FormData.prototype.append = function (field, value, options) {
+	  options = options || {}; // eslint-disable-line no-param-reassign
 
 	  // allow filename as single option
-	  if (typeof options == 'string') {
-	    options = {filename: options};
+	  if (typeof options === 'string') {
+	    options = { filename: options }; // eslint-disable-line no-param-reassign
 	  }
 
 	  var append = CombinedStream.prototype.append.bind(this);
 
 	  // all that streamy business can't handle numbers
-	  if (typeof value == 'number') {
-	    value = '' + value;
+	  if (typeof value === 'number' || value == null) {
+	    value = String(value); // eslint-disable-line no-param-reassign
 	  }
 
 	  // https://github.com/felixge/node-form-data/issues/38
 	  if (Array.isArray(value)) {
-	    // Please convert your array into string
-	    // the way web server expects it
+	    /*
+	     * Please convert your array into string
+	     * the way web server expects it
+	     */
 	    this._error(new Error('Arrays are not supported.'));
 	    return;
 	  }
@@ -43080,15 +44155,17 @@ function requireForm_data () {
 	  this._trackLength(header, value, options);
 	};
 
-	FormData.prototype._trackLength = function(header, value, options) {
+	FormData.prototype._trackLength = function (header, value, options) {
 	  var valueLength = 0;
 
-	  // used w/ getLengthSync(), when length is known.
-	  // e.g. for streaming directly from a remote server,
-	  // w/ a known file a size, and not wanting to wait for
-	  // incoming file to finish to get its size.
+	  /*
+	   * used w/ getLengthSync(), when length is known.
+	   * e.g. for streaming directly from a remote server,
+	   * w/ a known file a size, and not wanting to wait for
+	   * incoming file to finish to get its size.
+	   */
 	  if (options.knownLength != null) {
-	    valueLength += +options.knownLength;
+	    valueLength += Number(options.knownLength);
 	  } else if (Buffer.isBuffer(value)) {
 	    valueLength = value.length;
 	  } else if (typeof value === 'string') {
@@ -43098,12 +44175,10 @@ function requireForm_data () {
 	  this._valueLength += valueLength;
 
 	  // @check why add CRLF? does this account for custom/multiple CRLFs?
-	  this._overheadLength +=
-	    Buffer.byteLength(header) +
-	    FormData.LINE_BREAK.length;
+	  this._overheadLength += Buffer.byteLength(header) + FormData.LINE_BREAK.length;
 
 	  // empty or either doesn't have path or not an http response or not a stream
-	  if (!value || ( !value.path && !(value.readable && value.hasOwnProperty('httpVersion')) && !(value instanceof Stream))) {
+	  if (!value || (!value.path && !(value.readable && hasOwn(value, 'httpVersion')) && !(value instanceof Stream))) {
 	    return;
 	  }
 
@@ -43113,10 +44188,8 @@ function requireForm_data () {
 	  }
 	};
 
-	FormData.prototype._lengthRetriever = function(value, callback) {
-
-	  if (value.hasOwnProperty('fd')) {
-
+	FormData.prototype._lengthRetriever = function (value, callback) {
+	  if (hasOwn(value, 'fd')) {
 	    // take read range into a account
 	    // `end` = Infinity –> read file till the end
 	    //
@@ -43125,54 +44198,52 @@ function requireForm_data () {
 	    // Fix it when node fixes it.
 	    // https://github.com/joyent/node/issues/7819
 	    if (value.end != undefined && value.end != Infinity && value.start != undefined) {
-
 	      // when end specified
 	      // no need to calculate range
 	      // inclusive, starts with 0
-	      callback(null, value.end + 1 - (value.start ? value.start : 0));
+	      callback(null, value.end + 1 - (value.start ? value.start : 0)); // eslint-disable-line callback-return
 
-	    // not that fast snoopy
+	      // not that fast snoopy
 	    } else {
 	      // still need to fetch file size from fs
-	      fs.stat(value.path, function(err, stat) {
-
-	        var fileSize;
-
+	      fs.stat(value.path, function (err, stat) {
 	        if (err) {
 	          callback(err);
 	          return;
 	        }
 
 	        // update final size based on the range options
-	        fileSize = stat.size - (value.start ? value.start : 0);
+	        var fileSize = stat.size - (value.start ? value.start : 0);
 	        callback(null, fileSize);
 	      });
 	    }
 
-	  // or http response
-	  } else if (value.hasOwnProperty('httpVersion')) {
-	    callback(null, +value.headers['content-length']);
+	    // or http response
+	  } else if (hasOwn(value, 'httpVersion')) {
+	    callback(null, Number(value.headers['content-length'])); // eslint-disable-line callback-return
 
-	  // or request stream http://github.com/mikeal/request
-	  } else if (value.hasOwnProperty('httpModule')) {
+	    // or request stream http://github.com/mikeal/request
+	  } else if (hasOwn(value, 'httpModule')) {
 	    // wait till response come back
-	    value.on('response', function(response) {
+	    value.on('response', function (response) {
 	      value.pause();
-	      callback(null, +response.headers['content-length']);
+	      callback(null, Number(response.headers['content-length']));
 	    });
 	    value.resume();
 
-	  // something else
+	    // something else
 	  } else {
-	    callback('Unknown stream');
+	    callback('Unknown stream'); // eslint-disable-line callback-return
 	  }
 	};
 
-	FormData.prototype._multiPartHeader = function(field, value, options) {
-	  // custom header specified (as string)?
-	  // it becomes responsible for boundary
-	  // (e.g. to handle extra CRLFs on .NET servers)
-	  if (typeof options.header == 'string') {
+	FormData.prototype._multiPartHeader = function (field, value, options) {
+	  /*
+	   * custom header specified (as string)?
+	   * it becomes responsible for boundary
+	   * (e.g. to handle extra CRLFs on .NET servers)
+	   */
+	  if (typeof options.header === 'string') {
 	    return options.header;
 	  }
 
@@ -43180,7 +44251,7 @@ function requireForm_data () {
 	  var contentType = this._getContentType(value, options);
 
 	  var contents = '';
-	  var headers  = {
+	  var headers = {
 	    // add custom disposition as third element or keep it two elements if not
 	    'Content-Disposition': ['form-data', 'name="' + field + '"'].concat(contentDisposition || []),
 	    // if no content type. allow it to be empty array
@@ -43188,77 +44259,74 @@ function requireForm_data () {
 	  };
 
 	  // allow custom headers.
-	  if (typeof options.header == 'object') {
+	  if (typeof options.header === 'object') {
 	    populate(headers, options.header);
 	  }
 
 	  var header;
-	  for (var prop in headers) {
-	    if (!headers.hasOwnProperty(prop)) continue;
-	    header = headers[prop];
+	  for (var prop in headers) { // eslint-disable-line no-restricted-syntax
+	    if (hasOwn(headers, prop)) {
+	      header = headers[prop];
 
-	    // skip nullish headers.
-	    if (header == null) {
-	      continue;
-	    }
+	      // skip nullish headers.
+	      if (header == null) {
+	        continue; // eslint-disable-line no-restricted-syntax, no-continue
+	      }
 
-	    // convert all headers to arrays.
-	    if (!Array.isArray(header)) {
-	      header = [header];
-	    }
+	      // convert all headers to arrays.
+	      if (!Array.isArray(header)) {
+	        header = [header];
+	      }
 
-	    // add non-empty headers.
-	    if (header.length) {
-	      contents += prop + ': ' + header.join('; ') + FormData.LINE_BREAK;
+	      // add non-empty headers.
+	      if (header.length) {
+	        contents += prop + ': ' + header.join('; ') + FormData.LINE_BREAK;
+	      }
 	    }
 	  }
 
 	  return '--' + this.getBoundary() + FormData.LINE_BREAK + contents + FormData.LINE_BREAK;
 	};
 
-	FormData.prototype._getContentDisposition = function(value, options) {
-
-	  var filename
-	    , contentDisposition
-	    ;
+	FormData.prototype._getContentDisposition = function (value, options) { // eslint-disable-line consistent-return
+	  var filename;
 
 	  if (typeof options.filepath === 'string') {
 	    // custom filepath for relative paths
 	    filename = path.normalize(options.filepath).replace(/\\/g, '/');
-	  } else if (options.filename || value.name || value.path) {
-	    // custom filename take precedence
-	    // formidable and the browser add a name property
-	    // fs- and request- streams have path property
-	    filename = path.basename(options.filename || value.name || value.path);
-	  } else if (value.readable && value.hasOwnProperty('httpVersion')) {
+	  } else if (options.filename || (value && (value.name || value.path))) {
+	    /*
+	     * custom filename take precedence
+	     * formidable and the browser add a name property
+	     * fs- and request- streams have path property
+	     */
+	    filename = path.basename(options.filename || (value && (value.name || value.path)));
+	  } else if (value && value.readable && hasOwn(value, 'httpVersion')) {
 	    // or try http response
 	    filename = path.basename(value.client._httpMessage.path || '');
 	  }
 
 	  if (filename) {
-	    contentDisposition = 'filename="' + filename + '"';
+	    return 'filename="' + filename + '"';
 	  }
-
-	  return contentDisposition;
 	};
 
-	FormData.prototype._getContentType = function(value, options) {
-
+	FormData.prototype._getContentType = function (value, options) {
 	  // use custom content-type above all
 	  var contentType = options.contentType;
 
 	  // or try `name` from formidable, browser
-	  if (!contentType && value.name) {
+	  if (!contentType && value && value.name) {
 	    contentType = mime.lookup(value.name);
 	  }
 
 	  // or try `path` from fs-, request- streams
-	  if (!contentType && value.path) {
+	  if (!contentType && value && value.path) {
 	    contentType = mime.lookup(value.path);
 	  }
 
 	  // or if it's http-reponse
-	  if (!contentType && value.readable && value.hasOwnProperty('httpVersion')) {
+	  if (!contentType && value && value.readable && hasOwn(value, 'httpVersion')) {
 	    contentType = value.headers['content-type'];
 	  }
 
@@ -43268,18 +44336,18 @@ function requireForm_data () {
 	  }
 
 	  // fallback to the default content type if `value` is not simple value
-	  if (!contentType && typeof value == 'object') {
+	  if (!contentType && value && typeof value === 'object') {
 	    contentType = FormData.DEFAULT_CONTENT_TYPE;
 	  }
 
 	  return contentType;
 	};
 
-	FormData.prototype._multiPartFooter = function() {
-	  return function(next) {
+	FormData.prototype._multiPartFooter = function () {
+	  return function (next) {
 	    var footer = FormData.LINE_BREAK;
 
-	    var lastPart = (this._streams.length === 0);
+	    var lastPart = this._streams.length === 0;
 	    if (lastPart) {
 	      footer += this._lastBoundary();
 	    }
@@ -43288,18 +44356,18 @@ function requireForm_data () {
 	  }.bind(this);
 	};
 
-	FormData.prototype._lastBoundary = function() {
+	FormData.prototype._lastBoundary = function () {
 	  return '--' + this.getBoundary() + '--' + FormData.LINE_BREAK;
 	};
 
-	FormData.prototype.getHeaders = function(userHeaders) {
+	FormData.prototype.getHeaders = function (userHeaders) {
 	  var header;
 	  var formHeaders = {
 	    'content-type': 'multipart/form-data; boundary=' + this.getBoundary()
 	  };
 
-	  for (header in userHeaders) {
-	    if (userHeaders.hasOwnProperty(header)) {
+	  for (header in userHeaders) { // eslint-disable-line no-restricted-syntax
+	    if (hasOwn(userHeaders, header)) {
 	      formHeaders[header.toLowerCase()] = userHeaders[header];
 	    }
 	  }
@@ -43307,11 +44375,14 @@ function requireForm_data () {
 	  return formHeaders;
 	};
 
-	FormData.prototype.setBoundary = function(boundary) {
+	FormData.prototype.setBoundary = function (boundary) {
+	  if (typeof boundary !== 'string') {
+	    throw new TypeError('FormData boundary must be a string');
+	  }
 	  this._boundary = boundary;
 	};
 
-	FormData.prototype.getBoundary = function() {
+	FormData.prototype.getBoundary = function () {
 	  if (!this._boundary) {
 	    this._generateBoundary();
 	  }
@@ -43319,60 +44390,55 @@ function requireForm_data () {
 	  return this._boundary;
 	};
 
-	FormData.prototype.getBuffer = function() {
-	  var dataBuffer = new Buffer.alloc( 0 );
+	FormData.prototype.getBuffer = function () {
+	  var dataBuffer = new Buffer.alloc(0); // eslint-disable-line new-cap
 	  var boundary = this.getBoundary();
 
 	  // Create the form content. Add Line breaks to the end of data.
 	  for (var i = 0, len = this._streams.length; i < len; i++) {
 	    if (typeof this._streams[i] !== 'function') {
-
 	      // Add content to the buffer.
-	      if(Buffer.isBuffer(this._streams[i])) {
-	        dataBuffer = Buffer.concat( [dataBuffer, this._streams[i]]);
-	      }else {
-	        dataBuffer = Buffer.concat( [dataBuffer, Buffer.from(this._streams[i])]);
+	      if (Buffer.isBuffer(this._streams[i])) {
+	        dataBuffer = Buffer.concat([dataBuffer, this._streams[i]]);
+	      } else {
+	        dataBuffer = Buffer.concat([dataBuffer, Buffer.from(this._streams[i])]);
 	      }
 
 	      // Add break after content.
-	      if (typeof this._streams[i] !== 'string' || this._streams[i].substring( 2, boundary.length + 2 ) !== boundary) {
-	        dataBuffer = Buffer.concat( [dataBuffer, Buffer.from(FormData.LINE_BREAK)] );
+	      if (typeof this._streams[i] !== 'string' || this._streams[i].substring(2, boundary.length + 2) !== boundary) {
+	        dataBuffer = Buffer.concat([dataBuffer, Buffer.from(FormData.LINE_BREAK)]);
 	      }
 	    }
 	  }
 
 	  // Add the footer and return the Buffer object.
-	  return Buffer.concat( [dataBuffer, Buffer.from(this._lastBoundary())] );
+	  return Buffer.concat([dataBuffer, Buffer.from(this._lastBoundary())]);
 	};
 
-	FormData.prototype._generateBoundary = function() {
+	FormData.prototype._generateBoundary = function () {
 	  // This generates a 50 character boundary similar to those used by Firefox.
-	  // They are optimized for boyer-moore parsing.
-	  var boundary = '--------------------------';
-	  for (var i = 0; i < 24; i++) {
-	    boundary += Math.floor(Math.random() * 10).toString(16);
-	  }
 
-	  this._boundary = boundary;
+	  // They are optimized for boyer-moore parsing.
+	  this._boundary = '--------------------------' + crypto.randomBytes(12).toString('hex');
 	};
 
 	// Note: getLengthSync DOESN'T calculate streams length
-	// As workaround one can calculate file size manually
-	// and add it as knownLength option
-	FormData.prototype.getLengthSync = function() {
+	// As workaround one can calculate file size manually and add it as knownLength option
+	FormData.prototype.getLengthSync = function () {
 	  var knownLength = this._overheadLength + this._valueLength;
 
-	  // Don't get confused, there are 3 "internal" streams for each keyval pair
-	  // so it basically checks if there is any value added to the form
+	  // Don't get confused, there are 3 "internal" streams for each keyval pair so it basically checks if there is any value added to the form
 	  if (this._streams.length) {
 	    knownLength += this._lastBoundary().length;
 	  }
 
 	  // https://github.com/form-data/form-data/issues/40
 	  if (!this.hasKnownLength()) {
-	    // Some async length retrievers are present
-	    // therefore synchronous length calculation is false.
-	    // Please use getLength(callback) to get proper length
+	    /*
+	     * Some async length retrievers are present
+	     * therefore synchronous length calculation is false.
+	     * Please use getLength(callback) to get proper length
+	     */
 	    this._error(new Error('Cannot calculate proper length in synchronous way.'));
 	  }
 
@@ -43382,7 +44448,7 @@ function requireForm_data () {
 	// Public API to check if length of added values is known
 	// https://github.com/form-data/form-data/issues/196
 	// https://github.com/form-data/form-data/issues/262
-	FormData.prototype.hasKnownLength = function() {
+	FormData.prototype.hasKnownLength = function () {
 	  var hasKnownLength = true;
 
 	  if (this._valuesToMeasure.length) {
@@ -43392,7 +44458,7 @@ function requireForm_data () {
 	  return hasKnownLength;
 	};
 
-	FormData.prototype.getLength = function(cb) {
+	FormData.prototype.getLength = function (cb) {
 	  var knownLength = this._overheadLength + this._valueLength;
 
 	  if (this._streams.length) {
@@ -43404,13 +44470,13 @@ function requireForm_data () {
 	    return;
 	  }
 
-	  asynckit.parallel(this._valuesToMeasure, this._lengthRetriever, function(err, values) {
+	  asynckit.parallel(this._valuesToMeasure, this._lengthRetriever, function (err, values) {
 	    if (err) {
 	      cb(err);
 	      return;
 	    }
 
-	    values.forEach(function(length) {
+	    values.forEach(function (length) {
 	      knownLength += length;
 	    });
 
@@ -43418,31 +44484,26 @@ function requireForm_data () {
 	  });
 	};
 
-	FormData.prototype.submit = function(params, cb) {
-	  var request
-	    , options
-	    , defaults = {method: 'post'}
-	    ;
+	FormData.prototype.submit = function (params, cb) {
+	  var request;
+	  var options;
+	  var defaults = { method: 'post' };
 
-	  // parse provided url if it's string
-	  // or treat it as options object
-	  if (typeof params == 'string') {
-
-	    params = parseUrl(params);
+	  // parse provided url if it's string or treat it as options object
+	  if (typeof params === 'string') {
+	    params = parseUrl(params); // eslint-disable-line no-param-reassign
+	    /* eslint sort-keys: 0 */
 	    options = populate({
 	      port: params.port,
 	      path: params.pathname,
 	      host: params.hostname,
 	      protocol: params.protocol
 	    }, defaults);
-
-	  // use custom params
-	  } else {
-
+	  } else { // use custom params
 	    options = populate(params, defaults);
 	    // if no port provided use default one
 	    if (!options.port) {
-	      options.port = options.protocol == 'https:' ? 443 : 80;
+	      options.port = options.protocol === 'https:' ? 443 : 80;
 	    }
 	  }
 
@@ -43450,14 +44511,14 @@ function requireForm_data () {
 	  options.headers = this.getHeaders(params.headers);
 
 	  // https if specified, fallback to http in any other case
-	  if (options.protocol == 'https:') {
+	  if (options.protocol === 'https:') {
 	    request = https.request(options);
 	  } else {
 	    request = http.request(options);
 	  }
 
 	  // get content length and fire away
-	  this.getLength(function(err, length) {
+	  this.getLength(function (err, length) {
 	    if (err && err !== 'Unknown stream') {
 	      this._error(err);
 	      return;
@@ -43476,7 +44537,7 @@ function requireForm_data () {
 	        request.removeListener('error', callback);
 	        request.removeListener('response', onResponse);
 
-	        return cb.call(this, error, responce);
+	        return cb.call(this, error, responce); // eslint-disable-line no-invalid-this
 	      };
 
 	      onResponse = callback.bind(this, null);
@@ -43489,7 +44550,7 @@ function requireForm_data () {
 	  return request;
 	};
 
-	FormData.prototype._error = function(err) {
+	FormData.prototype._error = function (err) {
 	  if (!this.error) {
 	    this.error = err;
 	    this.pause();
@@ -43500,6 +44561,10 @@ function requireForm_data () {
 	FormData.prototype.toString = function () {
 	  return '[object FormData]';
 	};
+	setToStringTag(FormData, 'FormData');
+
+	// Public API
+	form_data = FormData;
 	return form_data;
 }
 
@@ -44863,7 +45928,7 @@ function requireFollowRedirects () {
 	var url = require$$0$a;
 	var URL = url.URL;
 	var http = require$$2$1;
-	var https = require$$4$1;
+	var https = require$$3$1;
 	var Writable = require$$0$6.Writable;
 	var assert = require$$0$4;
 	var debug = requireDebug();
@@ -45549,6 +46614,8 @@ function requireFollowRedirects () {
 	return followRedirects.exports;
 }
 
+/*! Axios v1.12.2 Copyright (c) 2025 Matt Zabriskie and contributors */
+
 var axios_1;
 var hasRequiredAxios;
 
@@ -45557,19 +46624,21 @@ function requireAxios () {
 	hasRequiredAxios = 1;
 
 	const FormData$1 = requireForm_data();
+	const crypto = require$$0$2;
 	const url = require$$0$a;
 	const proxyFromEnv = requireProxyFromEnv();
 	const http = require$$2$1;
-	const https = require$$4$1;
+	const https = require$$3$1;
 	const util = require$$0$3;
 	const followRedirects = requireFollowRedirects();
-	const zlib = require$$3$1;
+	const zlib = require$$3$2;
 	const stream = require$$0$6;
-	const events = require$$4$2;
+	const events = require$$4$1;
 
 	function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
 	const FormData__default = /*#__PURE__*/_interopDefaultLegacy(FormData$1);
+	const crypto__default = /*#__PURE__*/_interopDefaultLegacy(crypto);
 	const url__default = /*#__PURE__*/_interopDefaultLegacy(url);
 	const proxyFromEnv__default = /*#__PURE__*/_interopDefaultLegacy(proxyFromEnv);
 	const http__default = /*#__PURE__*/_interopDefaultLegacy(http);
@@ -45589,6 +46658,7 @@ function requireAxios () {
 
 	const {toString} = Object.prototype;
 	const {getPrototypeOf} = Object;
+	const {iterator, toStringTag} = Symbol;
 
 	const kindOf = (cache => thing => {
 	    const str = toString.call(thing);
@@ -45629,7 +46699,7 @@ function requireAxios () {
 	 */
 	function isBuffer(val) {
 	  return val !== null && !isUndefined(val) && val.constructor !== null && !isUndefined(val.constructor)
-	    && isFunction(val.constructor.isBuffer) && val.constructor.isBuffer(val);
+	    && isFunction$1(val.constructor.isBuffer) && val.constructor.isBuffer(val);
 	}
 
 	/**
@@ -45674,7 +46744,7 @@ function requireAxios () {
 	 * @param {*} val The value to test
 	 * @returns {boolean} True if value is a Function, otherwise false
 	 */
-	const isFunction = typeOfTest('function');
+	const isFunction$1 = typeOfTest('function');
 
 	/**
 	 * Determine if a value is a Number
@@ -45715,7 +46785,28 @@ function requireAxios () {
 	  }
 
 	  const prototype = getPrototypeOf(val);
-	  return (prototype === null || prototype === Object.prototype || Object.getPrototypeOf(prototype) === null) && !(Symbol.toStringTag in val) && !(Symbol.iterator in val);
+	  return (prototype === null || prototype === Object.prototype || Object.getPrototypeOf(prototype) === null) && !(toStringTag in val) && !(iterator in val);
+	};
+
+	/**
+	 * Determine if a value is an empty object (safely handles Buffers)
+	 *
+	 * @param {*} val The value to test
+	 *
+	 * @returns {boolean} True if value is an empty object, otherwise false
+	 */
+	const isEmptyObject = (val) => {
+	  // Early return for non-objects or Buffers to prevent RangeError
+	  if (!isObject(val) || isBuffer(val)) {
+	    return false;
+	  }
+
+	  try {
+	    return Object.keys(val).length === 0 && Object.getPrototypeOf(val) === Object.prototype;
+	  } catch (e) {
+	    // Fallback for any other objects that might cause RangeError with Object.keys()
+	    return false;
+	  }
 	};
 
 	/**
@@ -45761,7 +46852,7 @@ function requireAxios () {
 	 *
 	 * @returns {boolean} True if value is a Stream, otherwise false
 	 */
-	const isStream = (val) => isObject(val) && isFunction(val.pipe);
+	const isStream = (val) => isObject(val) && isFunction$1(val.pipe);
 
 	/**
 	 * Determine if a value is a FormData
@@ -45774,10 +46865,10 @@ function requireAxios () {
 	  let kind;
 	  return thing && (
 	    (typeof FormData === 'function' && thing instanceof FormData) || (
-	      isFunction(thing.append) && (
+	      isFunction$1(thing.append) && (
 	        (kind = kindOf(thing)) === 'formdata' ||
 	        // detect form-data instance
-	        (kind === 'object' && isFunction(thing.toString) && thing.toString() === '[object FormData]')
+	        (kind === 'object' && isFunction$1(thing.toString) && thing.toString() === '[object FormData]')
 	      )
 	    )
 	  )
@@ -45840,6 +46931,11 @@ function requireAxios () {
 	      fn.call(null, obj[i], i, obj);
 	    }
 	  } else {
+	    // Buffer check
+	    if (isBuffer(obj)) {
+	      return;
+	    }
+
 	    // Iterate over object keys
 	    const keys = allOwnKeys ? Object.getOwnPropertyNames(obj) : Object.keys(obj);
 	    const len = keys.length;
@@ -45853,6 +46949,10 @@ function requireAxios () {
 	}
 
 	function findKey(obj, key) {
+	  if (isBuffer(obj)){
+	    return null;
+	  }
+
 	  key = key.toLowerCase();
 	  const keys = Object.keys(obj);
 	  let i = keys.length;
@@ -45893,7 +46993,7 @@ function requireAxios () {
 	 * @returns {Object} Result of all merge properties
 	 */
 	function merge(/* obj1, obj2, obj3, ... */) {
-	  const {caseless} = isContextDefined(this) && this || {};
+	  const {caseless, skipUndefined} = isContextDefined(this) && this || {};
 	  const result = {};
 	  const assignValue = (val, key) => {
 	    const targetKey = caseless && findKey(result, key) || key;
@@ -45903,7 +47003,7 @@ function requireAxios () {
 	      result[targetKey] = merge({}, val);
 	    } else if (isArray(val)) {
 	      result[targetKey] = val.slice();
-	    } else {
+	    } else if (!skipUndefined || !isUndefined(val)) {
 	      result[targetKey] = val;
 	    }
 	  };
@@ -45926,7 +47026,7 @@ function requireAxios () {
 	 */
 	const extend = (a, b, thisArg, {allOwnKeys}= {}) => {
 	  forEach(b, (val, key) => {
-	    if (thisArg && isFunction(val)) {
+	    if (thisArg && isFunction$1(val)) {
 	      a[key] = bind(val, thisArg);
 	    } else {
 	      a[key] = val;
@@ -46066,13 +47166,13 @@ function requireAxios () {
 	 * @returns {void}
 	 */
 	const forEachEntry = (obj, fn) => {
-	  const generator = obj && obj[Symbol.iterator];
+	  const generator = obj && obj[iterator];
 
-	  const iterator = generator.call(obj);
+	  const _iterator = generator.call(obj);
 
 	  let result;
 
-	  while ((result = iterator.next()) && !result.done) {
+	  while ((result = _iterator.next()) && !result.done) {
 	    const pair = result.value;
 	    fn.call(obj, pair[0], pair[1]);
 	  }
@@ -46142,13 +47242,13 @@ function requireAxios () {
 	const freezeMethods = (obj) => {
 	  reduceDescriptors(obj, (descriptor, name) => {
 	    // skip restricted props in strict mode
-	    if (isFunction(obj) && ['arguments', 'caller', 'callee'].indexOf(name) !== -1) {
+	    if (isFunction$1(obj) && ['arguments', 'caller', 'callee'].indexOf(name) !== -1) {
 	      return false;
 	    }
 
 	    const value = obj[name];
 
-	    if (!isFunction(value)) return;
+	    if (!isFunction$1(value)) return;
 
 	    descriptor.enumerable = false;
 
@@ -46185,25 +47285,7 @@ function requireAxios () {
 	  return value != null && Number.isFinite(value = +value) ? value : defaultValue;
 	};
 
-	const ALPHA = 'abcdefghijklmnopqrstuvwxyz';
 
-	const DIGIT = '0123456789';
-
-	const ALPHABET = {
-	  DIGIT,
-	  ALPHA,
-	  ALPHA_DIGIT: ALPHA + ALPHA.toUpperCase() + DIGIT
-	};
-
-	const generateString = (size = 16, alphabet = ALPHABET.ALPHA_DIGIT) => {
-	  let str = '';
-	  const {length} = alphabet;
-	  while (size--) {
-	    str += alphabet[Math.random() * length|0];
-	  }
-
-	  return str;
-	};
 
 	/**
 	 * If the thing is a FormData object, return true, otherwise return false.
@@ -46213,7 +47295,7 @@ function requireAxios () {
 	 * @returns {boolean}
 	 */
 	function isSpecCompliantForm(thing) {
-	  return !!(thing && isFunction(thing.append) && thing[Symbol.toStringTag] === 'FormData' && thing[Symbol.iterator]);
+	  return !!(thing && isFunction$1(thing.append) && thing[toStringTag] === 'FormData' && thing[iterator]);
 	}
 
 	const toJSONObject = (obj) => {
@@ -46224,6 +47306,11 @@ function requireAxios () {
 	    if (isObject(source)) {
 	      if (stack.indexOf(source) >= 0) {
 	        return;
+	      }
+
+	      //Buffer check
+	      if (isBuffer(source)) {
+	        return source;
 	      }
 
 	      if(!('toJSON' in source)) {
@@ -46250,7 +47337,7 @@ function requireAxios () {
 	const isAsyncFn = kindOfTest('AsyncFunction');
 
 	const isThenable = (thing) =>
-	  thing && (isObject(thing) || isFunction(thing)) && isFunction(thing.then) && isFunction(thing.catch);
+	  thing && (isObject(thing) || isFunction$1(thing)) && isFunction$1(thing.then) && isFunction$1(thing.catch);
 
 	// original code
 	// https://github.com/DigitalBrainJS/AxiosPromise/blob/16deab13710ec09779922131f3fa5954320f83ab/lib/utils.js#L11-L34
@@ -46274,13 +47361,17 @@ function requireAxios () {
 	  })(`axios@${Math.random()}`, []) : (cb) => setTimeout(cb);
 	})(
 	  typeof setImmediate === 'function',
-	  isFunction(_global.postMessage)
+	  isFunction$1(_global.postMessage)
 	);
 
 	const asap = typeof queueMicrotask !== 'undefined' ?
 	  queueMicrotask.bind(_global) : ( typeof process !== 'undefined' && process.nextTick || _setImmediate);
 
 	// *********************
+
+
+	const isIterable = (thing) => thing != null && isFunction$1(thing[iterator]);
+
 
 	const utils$1 = {
 	  isArray,
@@ -46293,6 +47384,7 @@ function requireAxios () {
 	  isBoolean,
 	  isObject,
 	  isPlainObject,
+	  isEmptyObject,
 	  isReadableStream,
 	  isRequest,
 	  isResponse,
@@ -46302,7 +47394,7 @@ function requireAxios () {
 	  isFile,
 	  isBlob,
 	  isRegExp,
-	  isFunction,
+	  isFunction: isFunction$1,
 	  isStream,
 	  isURLSearchParams,
 	  isTypedArray,
@@ -46332,14 +47424,13 @@ function requireAxios () {
 	  findKey,
 	  global: _global,
 	  isContextDefined,
-	  ALPHABET,
-	  generateString,
 	  isSpecCompliantForm,
 	  toJSONObject,
 	  isAsyncFn,
 	  isThenable,
 	  setImmediate: _setImmediate,
-	  asap
+	  asap,
+	  isIterable
 	};
 
 	/**
@@ -46429,11 +47520,18 @@ function requireAxios () {
 	    return prop !== 'isAxiosError';
 	  });
 
-	  AxiosError.call(axiosError, error.message, code, config, request, response);
+	  const msg = error && error.message ? error.message : 'Error';
 
-	  axiosError.cause = error;
+	  // Prefer explicit code; otherwise copy the low-level error's code (e.g. ECONNREFUSED)
+	  const errCode = code == null && error ? error.code : code;
+	  AxiosError.call(axiosError, msg, errCode, config, request, response);
 
-	  axiosError.name = error.name;
+	  // Chain the original error on the standard field; non-enumerable to avoid JSON noise
+	  if (error && axiosError.cause == null) {
+	    Object.defineProperty(axiosError, 'cause', { value: error, configurable: true });
+	  }
+
+	  axiosError.name = (error && error.name) || 'Error';
 
 	  customProps && Object.assign(axiosError, customProps);
 
@@ -46553,6 +47651,10 @@ function requireAxios () {
 
 	    if (utils$1.isDate(value)) {
 	      return value.toISOString();
+	    }
+
+	    if (utils$1.isBoolean(value)) {
+	      return value.toString();
 	    }
 
 	    if (!useBlob && utils$1.isBlob(value)) {
@@ -46717,9 +47819,7 @@ function requireAxios () {
 	    replace(/%3A/gi, ':').
 	    replace(/%24/g, '$').
 	    replace(/%2C/gi, ',').
-	    replace(/%20/g, '+').
-	    replace(/%5B/gi, '[').
-	    replace(/%5D/gi, ']');
+	    replace(/%20/g, '+');
 	}
 
 	/**
@@ -46845,6 +47945,29 @@ function requireAxios () {
 
 	const URLSearchParams = url__default["default"].URLSearchParams;
 
+	const ALPHA = 'abcdefghijklmnopqrstuvwxyz';
+
+	const DIGIT = '0123456789';
+
+	const ALPHABET = {
+	  DIGIT,
+	  ALPHA,
+	  ALPHA_DIGIT: ALPHA + ALPHA.toUpperCase() + DIGIT
+	};
+
+	const generateString = (size = 16, alphabet = ALPHABET.ALPHA_DIGIT) => {
+	  let str = '';
+	  const {length} = alphabet;
+	  const randomValues = new Uint32Array(size);
+	  crypto__default["default"].randomFillSync(randomValues);
+	  for (let i = 0; i < size; i++) {
+	    str += alphabet[randomValues[i] % length];
+	  }
+
+	  return str;
+	};
+
+
 	const platform$1 = {
 	  isNode: true,
 	  classes: {
@@ -46852,6 +47975,8 @@ function requireAxios () {
 	    FormData: FormData__default["default"],
 	    Blob: typeof Blob !== 'undefined' && Blob || null
 	  },
+	  ALPHABET,
+	  generateString,
 	  protocols: [ 'http', 'https', 'file', 'data' ]
 	};
 
@@ -46914,7 +48039,7 @@ function requireAxios () {
 	};
 
 	function toURLEncodedForm(data, options) {
-	  return toFormData(data, new platform.classes.URLSearchParams(), Object.assign({
+	  return toFormData(data, new platform.classes.URLSearchParams(), {
 	    visitor: function(value, key, path, helpers) {
 	      if (platform.isNode && utils$1.isBuffer(value)) {
 	        this.append(key, value.toString('base64'));
@@ -46922,8 +48047,9 @@ function requireAxios () {
 	      }
 
 	      return helpers.defaultVisitor.apply(this, arguments);
-	    }
-	  }, options));
+	    },
+	    ...options
+	  });
 	}
 
 	/**
@@ -47119,7 +48245,7 @@ function requireAxios () {
 	      const strictJSONParsing = !silentJSONParsing && JSONRequested;
 
 	      try {
-	        return JSON.parse(data);
+	        return JSON.parse(data, this.parseReviver);
 	      } catch (e) {
 	        if (strictJSONParsing) {
 	          if (e.name === 'SyntaxError') {
@@ -47317,10 +48443,18 @@ function requireAxios () {
 	      setHeaders(header, valueOrRewrite);
 	    } else if(utils$1.isString(header) && (header = header.trim()) && !isValidHeaderName(header)) {
 	      setHeaders(parseHeaders(header), valueOrRewrite);
-	    } else if (utils$1.isHeaders(header)) {
-	      for (const [key, value] of header.entries()) {
-	        setHeader(value, key, rewrite);
+	    } else if (utils$1.isObject(header) && utils$1.isIterable(header)) {
+	      let obj = {}, dest, key;
+	      for (const entry of header) {
+	        if (!utils$1.isArray(entry)) {
+	          throw TypeError('Object iterator must return a key-value pair');
+	        }
+
+	        obj[key = entry[0]] = (dest = obj[key]) ?
+	          (utils$1.isArray(dest) ? [...dest, entry[1]] : [dest, entry[1]]) : entry[1];
 	      }
+
+	      setHeaders(obj, valueOrRewrite);
 	    } else {
 	      header != null && setHeader(valueOrRewrite, header, rewrite);
 	    }
@@ -47460,6 +48594,10 @@ function requireAxios () {
 
 	  toString() {
 	    return Object.entries(this.toJSON()).map(([header, value]) => header + ': ' + value).join('\n');
+	  }
+
+	  getSetCookie() {
+	    return this.get("set-cookie") || [];
 	  }
 
 	  get [Symbol.toStringTag]() {
@@ -47626,14 +48764,15 @@ function requireAxios () {
 	 *
 	 * @returns {string} The combined full path
 	 */
-	function buildFullPath(baseURL, requestedURL) {
-	  if (baseURL && !isAbsoluteURL(requestedURL)) {
+	function buildFullPath(baseURL, requestedURL, allowAbsoluteUrls) {
+	  let isRelativeUrl = !isAbsoluteURL(requestedURL);
+	  if (baseURL && (isRelativeUrl || allowAbsoluteUrls == false)) {
 	    return combineURLs(baseURL, requestedURL);
 	  }
 	  return requestedURL;
 	}
 
-	const VERSION = "1.7.9";
+	const VERSION = "1.12.2";
 
 	function parseProtocol(url) {
 	  const match = /^([-+\w]{1,25})(:?\/\/|:)/.exec(url);
@@ -47843,7 +48982,7 @@ function requireAxios () {
 
 	const readBlob$1 = readBlob;
 
-	const BOUNDARY_ALPHABET = utils$1.ALPHABET.ALPHA_DIGIT + '-_';
+	const BOUNDARY_ALPHABET = platform.ALPHABET.ALPHA_DIGIT + '-_';
 
 	const textEncoder = typeof TextEncoder === 'function' ? new TextEncoder() : new util__default["default"].TextEncoder();
 
@@ -47903,7 +49042,7 @@ function requireAxios () {
 	  const {
 	    tag = 'form-data-boundary',
 	    size = 25,
-	    boundary = tag + '-' + utils$1.generateString(size, BOUNDARY_ALPHABET)
+	    boundary = tag + '-' + platform.generateString(size, BOUNDARY_ALPHABET)
 	  } = options || {};
 
 	  if(!utils$1.isFormData(form)) {
@@ -47915,7 +49054,7 @@ function requireAxios () {
 	  }
 
 	  const boundaryBytes = textEncoder.encode('--' + boundary + CRLF);
-	  const footerBytes = textEncoder.encode('--' + boundary + '--' + CRLF + CRLF);
+	  const footerBytes = textEncoder.encode('--' + boundary + '--' + CRLF);
 	  let contentLength = footerBytes.byteLength;
 
 	  const parts = Array.from(form.entries()).map(([name, value]) => {
@@ -48061,7 +49200,7 @@ function requireAxios () {
 	      clearTimeout(timer);
 	      timer = null;
 	    }
-	    fn.apply(null, args);
+	    fn(...args);
 	  };
 
 	  const throttled = (...args) => {
@@ -48126,6 +49265,80 @@ function requireAxios () {
 
 	const asyncDecorator = (fn) => (...args) => utils$1.asap(() => fn(...args));
 
+	/**
+	 * Estimate decoded byte length of a data:// URL *without* allocating large buffers.
+	 * - For base64: compute exact decoded size using length and padding;
+	 *               handle %XX at the character-count level (no string allocation).
+	 * - For non-base64: use UTF-8 byteLength of the encoded body as a safe upper bound.
+	 *
+	 * @param {string} url
+	 * @returns {number}
+	 */
+	function estimateDataURLDecodedBytes(url) {
+	  if (!url || typeof url !== 'string') return 0;
+	  if (!url.startsWith('data:')) return 0;
+
+	  const comma = url.indexOf(',');
+	  if (comma < 0) return 0;
+
+	  const meta = url.slice(5, comma);
+	  const body = url.slice(comma + 1);
+	  const isBase64 = /;base64/i.test(meta);
+
+	  if (isBase64) {
+	    let effectiveLen = body.length;
+	    const len = body.length; // cache length
+
+	    for (let i = 0; i < len; i++) {
+	      if (body.charCodeAt(i) === 37 /* '%' */ && i + 2 < len) {
+	        const a = body.charCodeAt(i + 1);
+	        const b = body.charCodeAt(i + 2);
+	        const isHex =
+	          ((a >= 48 && a <= 57) || (a >= 65 && a <= 70) || (a >= 97 && a <= 102)) &&
+	          ((b >= 48 && b <= 57) || (b >= 65 && b <= 70) || (b >= 97 && b <= 102));
+
+	        if (isHex) {
+	          effectiveLen -= 2;
+	          i += 2;
+	        }
+	      }
+	    }
+
+	    let pad = 0;
+	    let idx = len - 1;
+
+	    const tailIsPct3D = (j) =>
+	      j >= 2 &&
+	      body.charCodeAt(j - 2) === 37 && // '%'
+	      body.charCodeAt(j - 1) === 51 && // '3'
+	      (body.charCodeAt(j) === 68 || body.charCodeAt(j) === 100); // 'D' or 'd'
+
+	    if (idx >= 0) {
+	      if (body.charCodeAt(idx) === 61 /* '=' */) {
+	        pad++;
+	        idx--;
+	      } else if (tailIsPct3D(idx)) {
+	        pad++;
+	        idx -= 3;
+	      }
+	    }
+
+	    if (pad === 1 && idx >= 0) {
+	      if (body.charCodeAt(idx) === 61 /* '=' */) {
+	        pad++;
+	      } else if (tailIsPct3D(idx)) {
+	        pad++;
+	      }
+	    }
+
+	    const groups = Math.floor(effectiveLen / 4);
+	    const bytes = groups * 3 - (pad || 0);
+	    return bytes > 0 ? bytes : 0;
+	  }
+
+	  return Buffer.byteLength(body, 'utf8');
+	}
+
 	const zlibOptions = {
 	  flush: zlib__default["default"].constants.Z_SYNC_FLUSH,
 	  finishFlush: zlib__default["default"].constants.Z_SYNC_FLUSH
@@ -48146,6 +49359,7 @@ function requireAxios () {
 	  return protocol + ':';
 	});
 
+
 	const flushOnFinish = (stream, [throttled, flush]) => {
 	  stream
 	    .on('end', flush)
@@ -48153,6 +49367,7 @@ function requireAxios () {
 
 	  return throttled;
 	};
+
 
 	/**
 	 * If the proxy or config beforeRedirects functions are defined, call them with the options
@@ -48328,11 +49543,26 @@ function requireAxios () {
 	    }
 
 	    // Parse url
-	    const fullPath = buildFullPath(config.baseURL, config.url);
+	    const fullPath = buildFullPath(config.baseURL, config.url, config.allowAbsoluteUrls);
 	    const parsed = new URL(fullPath, platform.hasBrowserEnv ? platform.origin : undefined);
 	    const protocol = parsed.protocol || supportedProtocols[0];
 
 	    if (protocol === 'data:') {
+	      // Apply the same semantics as HTTP: only enforce if a finite, non-negative cap is set.
+	      if (config.maxContentLength > -1) {
+	        // Use the exact string passed to fromDataURI (config.url); fall back to fullPath if needed.
+	        const dataUrl = String(config.url || fullPath || '');
+	        const estimated = estimateDataURLDecodedBytes(dataUrl);
+
+	        if (estimated > config.maxContentLength) {
+	          return reject(new AxiosError(
+	            'maxContentLength size of ' + config.maxContentLength + ' exceeded',
+	            AxiosError.ERR_BAD_RESPONSE,
+	            config
+	          ));
+	        }
+	      }
+
 	      let convertedData;
 
 	      if (method !== 'GET') {
@@ -48935,7 +50165,7 @@ function requireAxios () {
 	    headers: (a, b , prop) => mergeDeepProperties(headersToObject(a), headersToObject(b),prop, true)
 	  };
 
-	  utils$1.forEach(Object.keys(Object.assign({}, config1, config2)), function computeConfigValue(prop) {
+	  utils$1.forEach(Object.keys({...config1, ...config2}), function computeConfigValue(prop) {
 	    const merge = mergeMap[prop] || mergeDeepProperties;
 	    const configValue = merge(config1[prop], config2[prop], prop);
 	    (utils$1.isUndefined(configValue) && merge !== mergeDirectKeys) || (config[prop] = configValue);
@@ -48947,11 +50177,11 @@ function requireAxios () {
 	const resolveConfig = (config) => {
 	  const newConfig = mergeConfig({}, config);
 
-	  let {data, withXSRFToken, xsrfHeaderName, xsrfCookieName, headers, auth} = newConfig;
+	  let { data, withXSRFToken, xsrfHeaderName, xsrfCookieName, headers, auth } = newConfig;
 
 	  newConfig.headers = headers = AxiosHeaders$1.from(headers);
 
-	  newConfig.url = buildURL(buildFullPath(newConfig.baseURL, newConfig.url), config.params, config.paramsSerializer);
+	  newConfig.url = buildURL(buildFullPath(newConfig.baseURL, newConfig.url, newConfig.allowAbsoluteUrls), config.params, config.paramsSerializer);
 
 	  // HTTP basic authentication
 	  if (auth) {
@@ -48960,17 +50190,21 @@ function requireAxios () {
 	    );
 	  }
 
-	  let contentType;
-
 	  if (utils$1.isFormData(data)) {
 	    if (platform.hasStandardBrowserEnv || platform.hasStandardBrowserWebWorkerEnv) {
-	      headers.setContentType(undefined); // Let the browser set it
-	    } else if ((contentType = headers.getContentType()) !== false) {
-	      // fix semicolon duplication issue for ReactNative FormData implementation
-	      const [type, ...tokens] = contentType ? contentType.split(';').map(token => token.trim()).filter(Boolean) : [];
-	      headers.setContentType([type || 'multipart/form-data', ...tokens].join('; '));
+	      headers.setContentType(undefined); // browser handles it
+	    } else if (utils$1.isFunction(data.getHeaders)) {
+	      // Node.js FormData (like form-data package)
+	      const formHeaders = data.getHeaders();
+	      // Only set safe headers to avoid overwriting security headers
+	      const allowedHeaders = ['content-type', 'content-length'];
+	      Object.entries(formHeaders).forEach(([key, val]) => {
+	        if (allowedHeaders.includes(key.toLowerCase())) {
+	          headers.set(key, val);
+	        }
+	      });
 	    }
-	  }
+	  }  
 
 	  // Add xsrf header
 	  // This is only done if running in a standard browser environment.
@@ -49087,15 +50321,18 @@ function requireAxios () {
 	    };
 
 	    // Handle low level network errors
-	    request.onerror = function handleError() {
-	      // Real errors are hidden from us by the browser
-	      // onerror should only fire if it's a network error
-	      reject(new AxiosError('Network Error', AxiosError.ERR_NETWORK, config, request));
-
-	      // Clean up request
-	      request = null;
+	  request.onerror = function handleError(event) {
+	       // Browsers deliver a ProgressEvent in XHR onerror
+	       // (message may be empty; when present, surface it)
+	       // See https://developer.mozilla.org/docs/Web/API/XMLHttpRequest/error_event
+	       const msg = event && event.message ? event.message : 'Network Error';
+	       const err = new AxiosError(msg, AxiosError.ERR_NETWORK, config, request);
+	       // attach the underlying event for consumers who want details
+	       err.event = event || null;
+	       reject(err);
+	       request = null;
 	    };
-
+	    
 	    // Handle timeout
 	    request.ontimeout = function handleTimeout() {
 	      let timeoutErrorMessage = _config.timeout ? 'timeout of ' + _config.timeout + 'ms exceeded' : 'timeout exceeded';
@@ -49311,14 +50548,18 @@ function requireAxios () {
 	  })
 	};
 
-	const isFetchSupported = typeof fetch === 'function' && typeof Request === 'function' && typeof Response === 'function';
-	const isReadableStreamSupported = isFetchSupported && typeof ReadableStream === 'function';
+	const DEFAULT_CHUNK_SIZE = 64 * 1024;
 
-	// used only inside the fetch adapter
-	const encodeText = isFetchSupported && (typeof TextEncoder === 'function' ?
-	    ((encoder) => (str) => encoder.encode(str))(new TextEncoder()) :
-	    async (str) => new Uint8Array(await new Response(str).arrayBuffer())
-	);
+	const {isFunction} = utils$1;
+
+	const globalFetchAPI = (({Request, Response}) => ({
+	  Request, Response
+	}))(utils$1.global);
+
+	const {
+	  ReadableStream: ReadableStream$1, TextEncoder: TextEncoder$1
+	} = utils$1.global;
+
 
 	const test = (fn, ...args) => {
 	  try {
@@ -49328,211 +50569,268 @@ function requireAxios () {
 	  }
 	};
 
-	const supportsRequestStream = isReadableStreamSupported && test(() => {
-	  let duplexAccessed = false;
+	const factory = (env) => {
+	  env = utils$1.merge.call({
+	    skipUndefined: true
+	  }, globalFetchAPI, env);
 
-	  const hasContentType = new Request(platform.origin, {
-	    body: new ReadableStream(),
-	    method: 'POST',
-	    get duplex() {
-	      duplexAccessed = true;
-	      return 'half';
-	    },
-	  }).headers.has('Content-Type');
+	  const {fetch: envFetch, Request, Response} = env;
+	  const isFetchSupported = envFetch ? isFunction(envFetch) : typeof fetch === 'function';
+	  const isRequestSupported = isFunction(Request);
+	  const isResponseSupported = isFunction(Response);
 
-	  return duplexAccessed && !hasContentType;
-	});
+	  if (!isFetchSupported) {
+	    return false;
+	  }
 
-	const DEFAULT_CHUNK_SIZE = 64 * 1024;
+	  const isReadableStreamSupported = isFetchSupported && isFunction(ReadableStream$1);
 
-	const supportsResponseStream = isReadableStreamSupported &&
-	  test(() => utils$1.isReadableStream(new Response('').body));
+	  const encodeText = isFetchSupported && (typeof TextEncoder$1 === 'function' ?
+	      ((encoder) => (str) => encoder.encode(str))(new TextEncoder$1()) :
+	      async (str) => new Uint8Array(await new Request(str).arrayBuffer())
+	  );
 
+	  const supportsRequestStream = isRequestSupported && isReadableStreamSupported && test(() => {
+	    let duplexAccessed = false;
 
-	const resolvers = {
-	  stream: supportsResponseStream && ((res) => res.body)
-	};
+	    const hasContentType = new Request(platform.origin, {
+	      body: new ReadableStream$1(),
+	      method: 'POST',
+	      get duplex() {
+	        duplexAccessed = true;
+	        return 'half';
+	      },
+	    }).headers.has('Content-Type');
 
-	isFetchSupported && (((res) => {
-	  ['text', 'arrayBuffer', 'blob', 'formData', 'stream'].forEach(type => {
-	    !resolvers[type] && (resolvers[type] = utils$1.isFunction(res[type]) ? (res) => res[type]() :
-	      (_, config) => {
+	    return duplexAccessed && !hasContentType;
+	  });
+
+	  const supportsResponseStream = isResponseSupported && isReadableStreamSupported &&
+	    test(() => utils$1.isReadableStream(new Response('').body));
+
+	  const resolvers = {
+	    stream: supportsResponseStream && ((res) => res.body)
+	  };
+
+	  isFetchSupported && ((() => {
+	    ['text', 'arrayBuffer', 'blob', 'formData', 'stream'].forEach(type => {
+	      !resolvers[type] && (resolvers[type] = (res, config) => {
+	        let method = res && res[type];
+
+	        if (method) {
+	          return method.call(res);
+	        }
+
 	        throw new AxiosError(`Response type '${type}' is not supported`, AxiosError.ERR_NOT_SUPPORT, config);
 	      });
-	  });
-	})(new Response));
-
-	const getBodyLength = async (body) => {
-	  if (body == null) {
-	    return 0;
-	  }
-
-	  if(utils$1.isBlob(body)) {
-	    return body.size;
-	  }
-
-	  if(utils$1.isSpecCompliantForm(body)) {
-	    const _request = new Request(platform.origin, {
-	      method: 'POST',
-	      body,
 	    });
-	    return (await _request.arrayBuffer()).byteLength;
-	  }
+	  })());
 
-	  if(utils$1.isArrayBufferView(body) || utils$1.isArrayBuffer(body)) {
-	    return body.byteLength;
-	  }
+	  const getBodyLength = async (body) => {
+	    if (body == null) {
+	      return 0;
+	    }
 
-	  if(utils$1.isURLSearchParams(body)) {
-	    body = body + '';
-	  }
+	    if (utils$1.isBlob(body)) {
+	      return body.size;
+	    }
 
-	  if(utils$1.isString(body)) {
-	    return (await encodeText(body)).byteLength;
-	  }
-	};
-
-	const resolveBodyLength = async (headers, body) => {
-	  const length = utils$1.toFiniteNumber(headers.getContentLength());
-
-	  return length == null ? getBodyLength(body) : length;
-	};
-
-	const fetchAdapter = isFetchSupported && (async (config) => {
-	  let {
-	    url,
-	    method,
-	    data,
-	    signal,
-	    cancelToken,
-	    timeout,
-	    onDownloadProgress,
-	    onUploadProgress,
-	    responseType,
-	    headers,
-	    withCredentials = 'same-origin',
-	    fetchOptions
-	  } = resolveConfig(config);
-
-	  responseType = responseType ? (responseType + '').toLowerCase() : 'text';
-
-	  let composedSignal = composeSignals$1([signal, cancelToken && cancelToken.toAbortSignal()], timeout);
-
-	  let request;
-
-	  const unsubscribe = composedSignal && composedSignal.unsubscribe && (() => {
-	      composedSignal.unsubscribe();
-	  });
-
-	  let requestContentLength;
-
-	  try {
-	    if (
-	      onUploadProgress && supportsRequestStream && method !== 'get' && method !== 'head' &&
-	      (requestContentLength = await resolveBodyLength(headers, data)) !== 0
-	    ) {
-	      let _request = new Request(url, {
+	    if (utils$1.isSpecCompliantForm(body)) {
+	      const _request = new Request(platform.origin, {
 	        method: 'POST',
-	        body: data,
-	        duplex: "half"
+	        body,
 	      });
-
-	      let contentTypeHeader;
-
-	      if (utils$1.isFormData(data) && (contentTypeHeader = _request.headers.get('content-type'))) {
-	        headers.setContentType(contentTypeHeader);
-	      }
-
-	      if (_request.body) {
-	        const [onProgress, flush] = progressEventDecorator(
-	          requestContentLength,
-	          progressEventReducer(asyncDecorator(onUploadProgress))
-	        );
-
-	        data = trackStream(_request.body, DEFAULT_CHUNK_SIZE, onProgress, flush);
-	      }
+	      return (await _request.arrayBuffer()).byteLength;
 	    }
 
-	    if (!utils$1.isString(withCredentials)) {
-	      withCredentials = withCredentials ? 'include' : 'omit';
+	    if (utils$1.isArrayBufferView(body) || utils$1.isArrayBuffer(body)) {
+	      return body.byteLength;
 	    }
 
-	    // Cloudflare Workers throws when credentials are defined
-	    // see https://github.com/cloudflare/workerd/issues/902
-	    const isCredentialsSupported = "credentials" in Request.prototype;
-	    request = new Request(url, {
-	      ...fetchOptions,
-	      signal: composedSignal,
-	      method: method.toUpperCase(),
-	      headers: headers.normalize().toJSON(),
-	      body: data,
-	      duplex: "half",
-	      credentials: isCredentialsSupported ? withCredentials : undefined
+	    if (utils$1.isURLSearchParams(body)) {
+	      body = body + '';
+	    }
+
+	    if (utils$1.isString(body)) {
+	      return (await encodeText(body)).byteLength;
+	    }
+	  };
+
+	  const resolveBodyLength = async (headers, body) => {
+	    const length = utils$1.toFiniteNumber(headers.getContentLength());
+
+	    return length == null ? getBodyLength(body) : length;
+	  };
+
+	  return async (config) => {
+	    let {
+	      url,
+	      method,
+	      data,
+	      signal,
+	      cancelToken,
+	      timeout,
+	      onDownloadProgress,
+	      onUploadProgress,
+	      responseType,
+	      headers,
+	      withCredentials = 'same-origin',
+	      fetchOptions
+	    } = resolveConfig(config);
+
+	    let _fetch = envFetch || fetch;
+
+	    responseType = responseType ? (responseType + '').toLowerCase() : 'text';
+
+	    let composedSignal = composeSignals$1([signal, cancelToken && cancelToken.toAbortSignal()], timeout);
+
+	    let request = null;
+
+	    const unsubscribe = composedSignal && composedSignal.unsubscribe && (() => {
+	      composedSignal.unsubscribe();
 	    });
 
-	    let response = await fetch(request);
+	    let requestContentLength;
 
-	    const isStreamResponse = supportsResponseStream && (responseType === 'stream' || responseType === 'response');
+	    try {
+	      if (
+	        onUploadProgress && supportsRequestStream && method !== 'get' && method !== 'head' &&
+	        (requestContentLength = await resolveBodyLength(headers, data)) !== 0
+	      ) {
+	        let _request = new Request(url, {
+	          method: 'POST',
+	          body: data,
+	          duplex: "half"
+	        });
 
-	    if (supportsResponseStream && (onDownloadProgress || (isStreamResponse && unsubscribe))) {
-	      const options = {};
+	        let contentTypeHeader;
 
-	      ['status', 'statusText', 'headers'].forEach(prop => {
-	        options[prop] = response[prop];
-	      });
-
-	      const responseContentLength = utils$1.toFiniteNumber(response.headers.get('content-length'));
-
-	      const [onProgress, flush] = onDownloadProgress && progressEventDecorator(
-	        responseContentLength,
-	        progressEventReducer(asyncDecorator(onDownloadProgress), true)
-	      ) || [];
-
-	      response = new Response(
-	        trackStream(response.body, DEFAULT_CHUNK_SIZE, onProgress, () => {
-	          flush && flush();
-	          unsubscribe && unsubscribe();
-	        }),
-	        options
-	      );
-	    }
-
-	    responseType = responseType || 'text';
-
-	    let responseData = await resolvers[utils$1.findKey(resolvers, responseType) || 'text'](response, config);
-
-	    !isStreamResponse && unsubscribe && unsubscribe();
-
-	    return await new Promise((resolve, reject) => {
-	      settle(resolve, reject, {
-	        data: responseData,
-	        headers: AxiosHeaders$1.from(response.headers),
-	        status: response.status,
-	        statusText: response.statusText,
-	        config,
-	        request
-	      });
-	    })
-	  } catch (err) {
-	    unsubscribe && unsubscribe();
-
-	    if (err && err.name === 'TypeError' && /fetch/i.test(err.message)) {
-	      throw Object.assign(
-	        new AxiosError('Network Error', AxiosError.ERR_NETWORK, config, request),
-	        {
-	          cause: err.cause || err
+	        if (utils$1.isFormData(data) && (contentTypeHeader = _request.headers.get('content-type'))) {
+	          headers.setContentType(contentTypeHeader);
 	        }
-	      )
-	    }
 
-	    throw AxiosError.from(err, err && err.code, config, request);
+	        if (_request.body) {
+	          const [onProgress, flush] = progressEventDecorator(
+	            requestContentLength,
+	            progressEventReducer(asyncDecorator(onUploadProgress))
+	          );
+
+	          data = trackStream(_request.body, DEFAULT_CHUNK_SIZE, onProgress, flush);
+	        }
+	      }
+
+	      if (!utils$1.isString(withCredentials)) {
+	        withCredentials = withCredentials ? 'include' : 'omit';
+	      }
+
+	      // Cloudflare Workers throws when credentials are defined
+	      // see https://github.com/cloudflare/workerd/issues/902
+	      const isCredentialsSupported = isRequestSupported && "credentials" in Request.prototype;
+
+	      const resolvedOptions = {
+	        ...fetchOptions,
+	        signal: composedSignal,
+	        method: method.toUpperCase(),
+	        headers: headers.normalize().toJSON(),
+	        body: data,
+	        duplex: "half",
+	        credentials: isCredentialsSupported ? withCredentials : undefined
+	      };
+
+	      request = isRequestSupported && new Request(url, resolvedOptions);
+
+	      let response = await (isRequestSupported ? _fetch(request, fetchOptions) : _fetch(url, resolvedOptions));
+
+	      const isStreamResponse = supportsResponseStream && (responseType === 'stream' || responseType === 'response');
+
+	      if (supportsResponseStream && (onDownloadProgress || (isStreamResponse && unsubscribe))) {
+	        const options = {};
+
+	        ['status', 'statusText', 'headers'].forEach(prop => {
+	          options[prop] = response[prop];
+	        });
+
+	        const responseContentLength = utils$1.toFiniteNumber(response.headers.get('content-length'));
+
+	        const [onProgress, flush] = onDownloadProgress && progressEventDecorator(
+	          responseContentLength,
+	          progressEventReducer(asyncDecorator(onDownloadProgress), true)
+	        ) || [];
+
+	        response = new Response(
+	          trackStream(response.body, DEFAULT_CHUNK_SIZE, onProgress, () => {
+	            flush && flush();
+	            unsubscribe && unsubscribe();
+	          }),
+	          options
+	        );
+	      }
+
+	      responseType = responseType || 'text';
+
+	      let responseData = await resolvers[utils$1.findKey(resolvers, responseType) || 'text'](response, config);
+
+	      !isStreamResponse && unsubscribe && unsubscribe();
+
+	      return await new Promise((resolve, reject) => {
+	        settle(resolve, reject, {
+	          data: responseData,
+	          headers: AxiosHeaders$1.from(response.headers),
+	          status: response.status,
+	          statusText: response.statusText,
+	          config,
+	          request
+	        });
+	      })
+	    } catch (err) {
+	      unsubscribe && unsubscribe();
+
+	      if (err && err.name === 'TypeError' && /Load failed|fetch/i.test(err.message)) {
+	        throw Object.assign(
+	          new AxiosError('Network Error', AxiosError.ERR_NETWORK, config, request),
+	          {
+	            cause: err.cause || err
+	          }
+	        )
+	      }
+
+	      throw AxiosError.from(err, err && err.code, config, request);
+	    }
 	  }
-	});
+	};
+
+	const seedCache = new Map();
+
+	const getFetch = (config) => {
+	  let env = config ? config.env : {};
+	  const {fetch, Request, Response} = env;
+	  const seeds = [
+	    Request, Response, fetch
+	  ];
+
+	  let len = seeds.length, i = len,
+	    seed, target, map = seedCache;
+
+	  while (i--) {
+	    seed = seeds[i];
+	    target = map.get(seed);
+
+	    target === undefined && map.set(seed, target = (i ? new Map() : factory(env)));
+
+	    map = target;
+	  }
+
+	  return target;
+	};
+
+	getFetch();
 
 	const knownAdapters = {
 	  http: httpAdapter,
 	  xhr: xhrAdapter,
-	  fetch: fetchAdapter
+	  fetch: {
+	    get: getFetch,
+	  }
 	};
 
 	utils$1.forEach(knownAdapters, (fn, value) => {
@@ -49551,7 +50849,7 @@ function requireAxios () {
 	const isResolvedHandle = (adapter) => utils$1.isFunction(adapter) || adapter === null || adapter === false;
 
 	const adapters = {
-	  getAdapter: (adapters) => {
+	  getAdapter: (adapters, config) => {
 	    adapters = utils$1.isArray(adapters) ? adapters : [adapters];
 
 	    const {length} = adapters;
@@ -49574,7 +50872,7 @@ function requireAxios () {
 	        }
 	      }
 
-	      if (adapter) {
+	      if (adapter && (utils$1.isFunction(adapter) || (adapter = adapter.get(config)))) {
 	        break;
 	      }
 
@@ -49642,7 +50940,7 @@ function requireAxios () {
 	    config.headers.setContentType('application/x-www-form-urlencoded', false);
 	  }
 
-	  const adapter = adapters.getAdapter(config.adapter || defaults$1.adapter);
+	  const adapter = adapters.getAdapter(config.adapter || defaults$1.adapter, config);
 
 	  return adapter(config).then(function onAdapterResolution(response) {
 	    throwIfCancellationRequested(config);
@@ -49782,7 +51080,7 @@ function requireAxios () {
 	 */
 	class Axios {
 	  constructor(instanceConfig) {
-	    this.defaults = instanceConfig;
+	    this.defaults = instanceConfig || {};
 	    this.interceptors = {
 	      request: new InterceptorManager$1(),
 	      response: new InterceptorManager$1()
@@ -49859,6 +51157,13 @@ function requireAxios () {
 	      }
 	    }
 
+	    // Set config.allowAbsoluteUrls
+	    if (config.allowAbsoluteUrls !== undefined) ; else if (this.defaults.allowAbsoluteUrls !== undefined) {
+	      config.allowAbsoluteUrls = this.defaults.allowAbsoluteUrls;
+	    } else {
+	      config.allowAbsoluteUrls = true;
+	    }
+
 	    validator.assertOptions(config, {
 	      baseUrl: validators.spelling('baseURL'),
 	      withXsrfToken: validators.spelling('withXSRFToken')
@@ -49906,8 +51211,8 @@ function requireAxios () {
 
 	    if (!synchronousRequestInterceptors) {
 	      const chain = [dispatchRequest.bind(this), undefined];
-	      chain.unshift.apply(chain, requestInterceptorChain);
-	      chain.push.apply(chain, responseInterceptorChain);
+	      chain.unshift(...requestInterceptorChain);
+	      chain.push(...responseInterceptorChain);
 	      len = chain.length;
 
 	      promise = Promise.resolve(config);
@@ -49922,8 +51227,6 @@ function requireAxios () {
 	    len = requestInterceptorChain.length;
 
 	    let newConfig = config;
-
-	    i = 0;
 
 	    while (i < len) {
 	      const onFulfilled = requestInterceptorChain[i++];
@@ -49954,7 +51257,7 @@ function requireAxios () {
 
 	  getUri(config) {
 	    config = mergeConfig(this.defaults, config);
-	    const fullPath = buildFullPath(config.baseURL, config.url);
+	    const fullPath = buildFullPath(config.baseURL, config.url, config.allowAbsoluteUrls);
 	    return buildURL(fullPath, config.params, config.paramsSerializer);
 	  }
 	}
@@ -50315,6 +51618,7 @@ function requireApi_gen () {
 	hasRequiredApi_gen = 1;
 	/* eslint-disable */
 	/* tslint:disable */
+	// @ts-nocheck
 	/*
 	 * ---------------------------------------------------------------
 	 * ## THIS FILE WAS GENERATED VIA SWAGGER-TYPESCRIPT-API        ##
@@ -50396,8 +51700,11 @@ function requireApi_gen () {
 	        }
 	    return t;
 	};
+	var __importDefault = (api_gen && api_gen.__importDefault) || function (mod) {
+	    return (mod && mod.__esModule) ? mod : { "default": mod };
+	};
 	Object.defineProperty(api_gen, "__esModule", { value: true });
-	api_gen.Api = api_gen.HttpClient = api_gen.ContentType = api_gen.SupportTicketSeverity = api_gen.IdentityAuthProviderProjectTransferStatus = api_gen.IdentityAuthProviderProjectOwnedBy = api_gen.IdentitySupportedAuthProvider = api_gen.OrgDeletionConditionName = api_gen.UserDeletionConditionName = api_gen.IdentityProviderId = api_gen.MemberRole = api_gen.BillingPaymentMethod = api_gen.BillingSubscriptionType = api_gen.BillingAccountState = api_gen.EndpointPoolerMode = api_gen.EndpointType = api_gen.EndpointState = api_gen.ConsumptionHistoryGranularity = api_gen.OperationStatus = api_gen.OperationAction = undefined;
+	api_gen.Api = api_gen.HttpClient = api_gen.ContentType = api_gen.SupportTicketSeverity = api_gen.NeonAuthOauthProviderType = api_gen.NeonAuthOauthProviderId = api_gen.NeonAuthProviderProjectTransferStatus = api_gen.NeonAuthProviderProjectOwnedBy = api_gen.NeonAuthSupportedAuthProvider = api_gen.OrgDeletionConditionName = api_gen.UserDeletionConditionName = api_gen.IdentityProviderId = api_gen.MemberRole = api_gen.BillingPaymentMethod = api_gen.BillingSubscriptionType = api_gen.BillingAccountState = api_gen.EndpointPoolerMode = api_gen.EndpointType = api_gen.EndpointState = api_gen.ProjectAuditLogLevel = api_gen.ConsumptionHistoryGranularity = api_gen.OperationStatus = api_gen.OperationAction = undefined;
 	/** The action performed by the operation */
 	var OperationAction;
 	(function (OperationAction) {
@@ -50425,6 +51732,7 @@ function requireApi_gen () {
 	    OperationAction["StartReservedCompute"] = "start_reserved_compute";
 	    OperationAction["SyncDbsAndRolesFromCompute"] = "sync_dbs_and_roles_from_compute";
 	    OperationAction["ApplySchemaFromBranch"] = "apply_schema_from_branch";
+	    OperationAction["TimelineMarkInvisible"] = "timeline_mark_invisible";
 	})(OperationAction || (api_gen.OperationAction = OperationAction = {}));
 	/** The status of the operation */
 	var OperationStatus;
@@ -50444,6 +51752,12 @@ function requireApi_gen () {
 	    ConsumptionHistoryGranularity["Daily"] = "daily";
 	    ConsumptionHistoryGranularity["Monthly"] = "monthly";
 	})(ConsumptionHistoryGranularity || (api_gen.ConsumptionHistoryGranularity = ConsumptionHistoryGranularity = {}));
+	var ProjectAuditLogLevel;
+	(function (ProjectAuditLogLevel) {
+	    ProjectAuditLogLevel["Base"] = "base";
+	    ProjectAuditLogLevel["Extended"] = "extended";
+	    ProjectAuditLogLevel["Full"] = "full";
+	})(ProjectAuditLogLevel || (api_gen.ProjectAuditLogLevel = ProjectAuditLogLevel = {}));
 	/** The state of the compute endpoint */
 	var EndpointState;
 	(function (EndpointState) {
@@ -50481,9 +51795,12 @@ function requireApi_gen () {
 	    BillingSubscriptionType["DirectSales"] = "direct_sales";
 	    BillingSubscriptionType["AwsMarketplace"] = "aws_marketplace";
 	    BillingSubscriptionType["FreeV2"] = "free_v2";
+	    BillingSubscriptionType["FreeV3"] = "free_v3";
+	    BillingSubscriptionType["ServerlessV3"] = "serverless_v3";
 	    BillingSubscriptionType["Launch"] = "launch";
 	    BillingSubscriptionType["Scale"] = "scale";
 	    BillingSubscriptionType["Business"] = "business";
+	    BillingSubscriptionType["BusinessV3"] = "business_v3";
 	    BillingSubscriptionType["VercelPgLegacy"] = "vercel_pg_legacy";
 	})(BillingSubscriptionType || (api_gen.BillingSubscriptionType = BillingSubscriptionType = {}));
 	/** Indicates whether and how an account makes payments. */
@@ -50516,7 +51833,6 @@ function requireApi_gen () {
 	    IdentityProviderId["Microsoftv2"] = "microsoftv2";
 	    IdentityProviderId["Vercelmp"] = "vercelmp";
 	    IdentityProviderId["Keycloak"] = "keycloak";
-	    IdentityProviderId["Test"] = "test";
 	})(IdentityProviderId || (api_gen.IdentityProviderId = IdentityProviderId = {}));
 	var UserDeletionConditionName;
 	(function (UserDeletionConditionName) {
@@ -50528,21 +51844,32 @@ function requireApi_gen () {
 	(function (OrgDeletionConditionName) {
 	    OrgDeletionConditionName["ProjectCount"] = "project_count";
 	})(OrgDeletionConditionName || (api_gen.OrgDeletionConditionName = OrgDeletionConditionName = {}));
-	var IdentitySupportedAuthProvider;
-	(function (IdentitySupportedAuthProvider) {
-	    IdentitySupportedAuthProvider["Mock"] = "mock";
-	    IdentitySupportedAuthProvider["Stack"] = "stack";
-	})(IdentitySupportedAuthProvider || (api_gen.IdentitySupportedAuthProvider = IdentitySupportedAuthProvider = {}));
-	var IdentityAuthProviderProjectOwnedBy;
-	(function (IdentityAuthProviderProjectOwnedBy) {
-	    IdentityAuthProviderProjectOwnedBy["User"] = "user";
-	    IdentityAuthProviderProjectOwnedBy["Neon"] = "neon";
-	})(IdentityAuthProviderProjectOwnedBy || (api_gen.IdentityAuthProviderProjectOwnedBy = IdentityAuthProviderProjectOwnedBy = {}));
-	var IdentityAuthProviderProjectTransferStatus;
-	(function (IdentityAuthProviderProjectTransferStatus) {
-	    IdentityAuthProviderProjectTransferStatus["Initiated"] = "initiated";
-	    IdentityAuthProviderProjectTransferStatus["Finished"] = "finished";
-	})(IdentityAuthProviderProjectTransferStatus || (api_gen.IdentityAuthProviderProjectTransferStatus = IdentityAuthProviderProjectTransferStatus = {}));
+	var NeonAuthSupportedAuthProvider;
+	(function (NeonAuthSupportedAuthProvider) {
+	    NeonAuthSupportedAuthProvider["Mock"] = "mock";
+	    NeonAuthSupportedAuthProvider["Stack"] = "stack";
+	})(NeonAuthSupportedAuthProvider || (api_gen.NeonAuthSupportedAuthProvider = NeonAuthSupportedAuthProvider = {}));
+	var NeonAuthProviderProjectOwnedBy;
+	(function (NeonAuthProviderProjectOwnedBy) {
+	    NeonAuthProviderProjectOwnedBy["User"] = "user";
+	    NeonAuthProviderProjectOwnedBy["Neon"] = "neon";
+	})(NeonAuthProviderProjectOwnedBy || (api_gen.NeonAuthProviderProjectOwnedBy = NeonAuthProviderProjectOwnedBy = {}));
+	var NeonAuthProviderProjectTransferStatus;
+	(function (NeonAuthProviderProjectTransferStatus) {
+	    NeonAuthProviderProjectTransferStatus["Initiated"] = "initiated";
+	    NeonAuthProviderProjectTransferStatus["Finished"] = "finished";
+	})(NeonAuthProviderProjectTransferStatus || (api_gen.NeonAuthProviderProjectTransferStatus = NeonAuthProviderProjectTransferStatus = {}));
+	var NeonAuthOauthProviderId;
+	(function (NeonAuthOauthProviderId) {
+	    NeonAuthOauthProviderId["Google"] = "google";
+	    NeonAuthOauthProviderId["Github"] = "github";
+	    NeonAuthOauthProviderId["Microsoft"] = "microsoft";
+	})(NeonAuthOauthProviderId || (api_gen.NeonAuthOauthProviderId = NeonAuthOauthProviderId = {}));
+	var NeonAuthOauthProviderType;
+	(function (NeonAuthOauthProviderType) {
+	    NeonAuthOauthProviderType["Standard"] = "standard";
+	    NeonAuthOauthProviderType["Shared"] = "shared";
+	})(NeonAuthOauthProviderType || (api_gen.NeonAuthOauthProviderType = NeonAuthOauthProviderType = {}));
 	var SupportTicketSeverity;
 	(function (SupportTicketSeverity) {
 	    SupportTicketSeverity["Low"] = "low";
@@ -50550,7 +51877,7 @@ function requireApi_gen () {
 	    SupportTicketSeverity["High"] = "high";
 	    SupportTicketSeverity["Critical"] = "critical";
 	})(SupportTicketSeverity || (api_gen.SupportTicketSeverity = SupportTicketSeverity = {}));
-	var axios_1 = /*@__PURE__*/ requireAxios();
+	var axios_1 = __importDefault(/*@__PURE__*/ requireAxios());
 	var ContentType;
 	(function (ContentType) {
 	    ContentType["Json"] = "application/json";
@@ -50653,7 +51980,7 @@ function requireApi_gen () {
 	         *
 	         * @tags API Key
 	         * @name ListApiKeys
-	         * @summary Get a list of API keys
+	         * @summary List API keys
 	         * @request GET:/api_keys
 	         * @secure
 	         */
@@ -50666,7 +51993,7 @@ function requireApi_gen () {
 	         *
 	         * @tags API Key
 	         * @name CreateApiKey
-	         * @summary Create an API key
+	         * @summary Create API key
 	         * @request POST:/api_keys
 	         * @secure
 	         */
@@ -50679,7 +52006,7 @@ function requireApi_gen () {
 	         *
 	         * @tags API Key
 	         * @name RevokeApiKey
-	         * @summary Revoke an API key
+	         * @summary Revoke API key
 	         * @request DELETE:/api_keys/{key_id}
 	         * @secure
 	         */
@@ -50692,7 +52019,7 @@ function requireApi_gen () {
 	         *
 	         * @tags Operation
 	         * @name GetProjectOperation
-	         * @summary Get operation details
+	         * @summary Retrieve operation details
 	         * @request GET:/projects/{project_id}/operations/{operation_id}
 	         * @secure
 	         */
@@ -50701,11 +52028,11 @@ function requireApi_gen () {
 	            return _this.request(__assign({ path: "/projects/".concat(encodeURIComponent(projectId), "/operations/").concat(encodeURIComponent(operationId)), method: 'GET', secure: true, format: 'json' }, params));
 	        };
 	        /**
-	         * @description Retrieves a list of projects for the Neon account. A project is the top-level object in the Neon object hierarchy. For more information, see [Manage projects](https://neon.tech/docs/manage/projects/).
+	         * @description Retrieves a list of projects for an organization. You may need to specify an org_id parameter depending on your API key type. For more information, see [Manage projects](https://neon.tech/docs/manage/projects/).
 	         *
 	         * @tags Project
 	         * @name ListProjects
-	         * @summary Get a list of projects
+	         * @summary List projects
 	         * @request GET:/projects
 	         * @secure
 	         */
@@ -50714,11 +52041,11 @@ function requireApi_gen () {
 	            return _this.request(__assign({ path: "/projects", method: 'GET', query: query, secure: true, format: 'json' }, params));
 	        };
 	        /**
-	         * @description Creates a Neon project. A project is the top-level object in the Neon object hierarchy. Plan limits define how many projects you can create. For more information, see [Manage projects](https://neon.tech/docs/manage/projects/). You can specify a region and Postgres version in the request body. Neon currently supports PostgreSQL 14, 15, 16, and 17. For supported regions and `region_id` values, see [Regions](https://neon.tech/docs/introduction/regions/).
+	         * @description Creates a Neon project within an organization. You may need to specify an org_id parameter depending on your API key type. Plan limits define how many projects you can create. For more information, see [Manage projects](https://neon.tech/docs/manage/projects/). You can specify a region and Postgres version in the request body. Neon currently supports PostgreSQL 14, 15, 16, and 17. For supported regions and `region_id` values, see [Regions](https://neon.tech/docs/introduction/regions/).
 	         *
 	         * @tags Project
 	         * @name CreateProject
-	         * @summary Create a project
+	         * @summary Create project
 	         * @request POST:/projects
 	         * @secure
 	         */
@@ -50727,11 +52054,11 @@ function requireApi_gen () {
 	            return _this.request(__assign({ path: "/projects", method: 'POST', body: data, secure: true, type: ContentType.Json }, params));
 	        };
 	        /**
-	         * @description Retrieves a list of shared projects for the Neon account. A project is the top-level object in the Neon object hierarchy. For more information, see [Manage projects](https://neon.tech/docs/manage/projects/).
+	         * @description Retrieves a list of projects shared with your Neon account. For more information, see [Manage projects](https://neon.tech/docs/manage/projects/).
 	         *
 	         * @tags Project
 	         * @name ListSharedProjects
-	         * @summary Get a list of shared projects
+	         * @summary List shared projects
 	         * @request GET:/projects/shared
 	         * @secure
 	         */
@@ -50740,11 +52067,11 @@ function requireApi_gen () {
 	            return _this.request(__assign({ path: "/projects/shared", method: 'GET', query: query, secure: true, format: 'json' }, params));
 	        };
 	        /**
-	         * @description Retrieves information about the specified project. A project is the top-level object in the Neon object hierarchy. You can obtain a `project_id` by listing the projects for your Neon account.
+	         * @description Retrieves information about the specified project. You can obtain a `project_id` by listing the projects for an organization.
 	         *
 	         * @tags Project
 	         * @name GetProject
-	         * @summary Get project details
+	         * @summary Retrieve project details
 	         * @request GET:/projects/{project_id}
 	         * @secure
 	         */
@@ -50753,11 +52080,11 @@ function requireApi_gen () {
 	            return _this.request(__assign({ path: "/projects/".concat(encodeURIComponent(projectId)), method: 'GET', secure: true, format: 'json' }, params));
 	        };
 	        /**
-	         * @description Updates the specified project. You can obtain a `project_id` by listing the projects for your Neon account. Neon permits updating the project name only.
+	         * @description Updates the specified project. You can obtain a `project_id` by listing the projects for your Neon account.
 	         *
 	         * @tags Project
 	         * @name UpdateProject
-	         * @summary Update a project
+	         * @summary Update project
 	         * @request PATCH:/projects/{project_id}
 	         * @secure
 	         */
@@ -50770,7 +52097,7 @@ function requireApi_gen () {
 	         *
 	         * @tags Project
 	         * @name DeleteProject
-	         * @summary Delete a project
+	         * @summary Delete project
 	         * @request DELETE:/projects/{project_id}
 	         * @secure
 	         */
@@ -50779,11 +52106,11 @@ function requireApi_gen () {
 	            return _this.request(__assign({ path: "/projects/".concat(encodeURIComponent(projectId)), method: 'DELETE', secure: true, format: 'json' }, params));
 	        };
 	        /**
-	         * @description Retrieves a list of operations for the specified Neon project. You can obtain a `project_id` by listing the projects for your Neon account. The number of operations returned can be large. To paginate the response, issue an initial request with a `limit` value. Then, add the `cursor` value that was returned in the response to the next request.
+	         * @description Retrieves a list of operations for the specified Neon project. You can obtain a `project_id` by listing the projects for your Neon account. The number of operations returned can be large. To paginate the response, issue an initial request with a `limit` value. Then, add the `cursor` value that was returned in the response to the next request. Operations older than 6 months may be deleted from our systems. If you need more history than that, you should store your own history.
 	         *
 	         * @tags Operation
 	         * @name ListProjectOperations
-	         * @summary Get a list of operations
+	         * @summary List operations
 	         * @request GET:/projects/{project_id}/operations
 	         * @secure
 	         */
@@ -50832,11 +52159,50 @@ function requireApi_gen () {
 	            return _this.request(__assign({ path: "/projects/".concat(encodeURIComponent(projectId), "/permissions/").concat(encodeURIComponent(permissionId)), method: 'DELETE', secure: true, format: 'json' }, params));
 	        };
 	        /**
-	         * @description Returns all the available JWKS URLs that can be used for verifying JWTs used as the authentication mechanism for the specified project.
+	         * @description Return available shared preload libraries
+	         *
+	         * @tags Project
+	         * @name GetAvailablePreloadLibraries
+	         * @summary Return available shared preload libraries
+	         * @request GET:/projects/{project_id}/available_preload_libraries
+	         * @secure
+	         */
+	        _this.getAvailablePreloadLibraries = function (projectId, params) {
+	            if (params === undefined) { params = {}; }
+	            return _this.request(__assign({ path: "/projects/".concat(encodeURIComponent(projectId), "/available_preload_libraries"), method: 'GET', secure: true, format: 'json' }, params));
+	        };
+	        /**
+	         * @description Creates a transfer request for the specified project. A transfer request allows the project to be transferred to another account or organization. The request has an expiration time after which it can no longer be used. To accept/claim the transfer request, the recipient user/organization must call the `/projects/{project_id}/transfer_requests/{request_id}` API endpoint, or visit `https://console.neon.tech/app/claim?p={project_id}&tr={request_id}&ru={redirect_url}` in the Neon Console. The `ru` parameter is optional and can be used to redirect the user after accepting the transfer request. This feature is currently in private preview. Get in touch with us to get access.
+	         *
+	         * @tags Project
+	         * @name CreateProjectTransferRequest
+	         * @summary Create a project transfer request
+	         * @request POST:/projects/{project_id}/transfer_requests
+	         * @secure
+	         */
+	        _this.createProjectTransferRequest = function (projectId, data, params) {
+	            if (params === undefined) { params = {}; }
+	            return _this.request(__assign({ path: "/projects/".concat(encodeURIComponent(projectId), "/transfer_requests"), method: 'POST', body: data, secure: true, type: ContentType.Json, format: 'json' }, params));
+	        };
+	        /**
+	         * @description Accepts a transfer request for the specified project, transferring it to the specified organization or user. If org_id is not passed, the project will be transferred to the current user or organization account.
+	         *
+	         * @tags Project
+	         * @name AcceptProjectTransferRequest
+	         * @summary Accept a project transfer request
+	         * @request PUT:/projects/{project_id}/transfer_requests/{request_id}
+	         * @secure
+	         */
+	        _this.acceptProjectTransferRequest = function (projectId, requestId, data, params) {
+	            if (params === undefined) { params = {}; }
+	            return _this.request(__assign({ path: "/projects/".concat(encodeURIComponent(projectId), "/transfer_requests/").concat(encodeURIComponent(requestId)), method: 'PUT', body: data, secure: true, type: ContentType.Json }, params));
+	        };
+	        /**
+	         * @description Returns the JWKS URLs available for verifying JWTs used as the authentication mechanism for the specified project.
 	         *
 	         * @tags Project
 	         * @name GetProjectJwks
-	         * @summary Returns all available JWKS URLs for a project
+	         * @summary List JWKS URLs
 	         * @request GET:/projects/{project_id}/jwks
 	         * @secure
 	         */
@@ -50849,7 +52215,7 @@ function requireApi_gen () {
 	         *
 	         * @tags Project
 	         * @name AddProjectJwks
-	         * @summary Adds a JWKS URL to a project
+	         * @summary Add JWKS URL
 	         * @request POST:/projects/{project_id}/jwks
 	         * @secure
 	         */
@@ -50862,7 +52228,7 @@ function requireApi_gen () {
 	         *
 	         * @tags Project
 	         * @name DeleteProjectJwks
-	         * @summary Delete a JWKS URL
+	         * @summary Delete JWKS URL
 	         * @request DELETE:/projects/{project_id}/jwks/{jwks_id}
 	         * @secure
 	         */
@@ -50871,11 +52237,258 @@ function requireApi_gen () {
 	            return _this.request(__assign({ path: "/projects/".concat(encodeURIComponent(projectId), "/jwks/").concat(encodeURIComponent(jwksId)), method: 'DELETE', secure: true, format: 'json' }, params));
 	        };
 	        /**
+	         * @description Creates a new instance of Neon Data API in the specified branch. You can obtain the `project_id` and `branch_id` by listing the projects and branches for your Neon account.
+	         *
+	         * @tags DataAPI
+	         * @name CreateProjectBranchDataApi
+	         * @summary Create Neon Data API
+	         * @request POST:/projects/{project_id}/branches/{branch_id}/data-api
+	         * @secure
+	         */
+	        _this.createProjectBranchDataApi = function (projectId, branchId, data, params) {
+	            if (params === undefined) { params = {}; }
+	            return _this.request(__assign({ path: "/projects/".concat(encodeURIComponent(projectId), "/branches/").concat(encodeURIComponent(branchId), "/data-api"), method: 'POST', body: data, secure: true, type: ContentType.Json, format: 'json' }, params));
+	        };
+	        /**
+	         * @description Deletes the Neon Data API for the specified branch. You can obtain the `project_id` and `branch_id` by listing the projects and branches for your Neon account.
+	         *
+	         * @tags DataAPI
+	         * @name DeleteProjectBranchDataApi
+	         * @summary Delete Neon Data API
+	         * @request DELETE:/projects/{project_id}/branches/{branch_id}/data-api
+	         * @secure
+	         */
+	        _this.deleteProjectBranchDataApi = function (projectId, branchId, params) {
+	            if (params === undefined) { params = {}; }
+	            return _this.request(__assign({ path: "/projects/".concat(encodeURIComponent(projectId), "/branches/").concat(encodeURIComponent(branchId), "/data-api"), method: 'DELETE', secure: true, format: 'json' }, params));
+	        };
+	        /**
+	         * @description Retrieves the Neon Data API for the specified branch.
+	         *
+	         * @tags DataAPI
+	         * @name GetProjectBranchDataApi
+	         * @summary Get Neon Data API
+	         * @request GET:/projects/{project_id}/branches/{branch_id}/data-api
+	         * @secure
+	         */
+	        _this.getProjectBranchDataApi = function (projectId, branchId, params) {
+	            if (params === undefined) { params = {}; }
+	            return _this.request(__assign({ path: "/projects/".concat(encodeURIComponent(projectId), "/branches/").concat(encodeURIComponent(branchId), "/data-api"), method: 'GET', secure: true, format: 'json' }, params));
+	        };
+	        /**
+	         * @description Creates a project on a third-party authentication provider's platform for use with Neon Auth. Use this endpoint if the frontend integration flow can't be used.
+	         *
+	         * @tags Auth
+	         * @name CreateNeonAuthIntegration
+	         * @summary Create Neon Auth integration
+	         * @request POST:/projects/auth/create
+	         * @secure
+	         */
+	        _this.createNeonAuthIntegration = function (data, params) {
+	            if (params === undefined) { params = {}; }
+	            return _this.request(__assign({ path: "/projects/auth/create", method: 'POST', body: data, secure: true, type: ContentType.Json, format: 'json' }, params));
+	        };
+	        /**
+	         * @description Lists the domains in the redirect_uri whitelist for the specified project.
+	         *
+	         * @tags Auth
+	         * @name ListNeonAuthRedirectUriWhitelistDomains
+	         * @summary List domains in redirect_uri whitelist
+	         * @request GET:/projects/{project_id}/auth/domains
+	         * @secure
+	         */
+	        _this.listNeonAuthRedirectUriWhitelistDomains = function (projectId, params) {
+	            if (params === undefined) { params = {}; }
+	            return _this.request(__assign({ path: "/projects/".concat(encodeURIComponent(projectId), "/auth/domains"), method: 'GET', secure: true, format: 'json' }, params));
+	        };
+	        /**
+	         * @description Adds a domain to the redirect_uri whitelist for the specified project.
+	         *
+	         * @tags Auth
+	         * @name AddNeonAuthDomainToRedirectUriWhitelist
+	         * @summary Add domain to redirect_uri whitelist
+	         * @request POST:/projects/{project_id}/auth/domains
+	         * @secure
+	         */
+	        _this.addNeonAuthDomainToRedirectUriWhitelist = function (projectId, data, params) {
+	            if (params === undefined) { params = {}; }
+	            return _this.request(__assign({ path: "/projects/".concat(encodeURIComponent(projectId), "/auth/domains"), method: 'POST', body: data, secure: true, type: ContentType.Json }, params));
+	        };
+	        /**
+	         * @description Deletes a domain from the redirect_uri whitelist for the specified project.
+	         *
+	         * @tags Auth
+	         * @name DeleteNeonAuthDomainFromRedirectUriWhitelist
+	         * @summary Delete domain from redirect_uri whitelist
+	         * @request DELETE:/projects/{project_id}/auth/domains
+	         * @secure
+	         */
+	        _this.deleteNeonAuthDomainFromRedirectUriWhitelist = function (projectId, data, params) {
+	            if (params === undefined) { params = {}; }
+	            return _this.request(__assign({ path: "/projects/".concat(encodeURIComponent(projectId), "/auth/domains"), method: 'DELETE', body: data, secure: true, type: ContentType.Json }, params));
+	        };
+	        /**
+	         * @description Generates SDK or API Keys for the auth provider. These might be called different things depending on the auth provider you're using, but are generally used for setting up the frontend and backend SDKs.
+	         *
+	         * @tags Auth
+	         * @name CreateNeonAuthProviderSdkKeys
+	         * @summary Create Auth Provider SDK keys
+	         * @request POST:/projects/auth/keys
+	         * @secure
+	         */
+	        _this.createNeonAuthProviderSdkKeys = function (data, params) {
+	            if (params === undefined) { params = {}; }
+	            return _this.request(__assign({ path: "/projects/auth/keys", method: 'POST', body: data, secure: true, type: ContentType.Json, format: 'json' }, params));
+	        };
+	        /**
+	         * @description Creates a new user in Neon Auth. The user will be created in your neon_auth.users_sync table and automatically propagated to your auth project, whether Neon-managed or provider-owned.
+	         *
+	         * @tags Auth
+	         * @name CreateNeonAuthNewUser
+	         * @summary Create new auth user
+	         * @request POST:/projects/auth/user
+	         * @secure
+	         */
+	        _this.createNeonAuthNewUser = function (data, params) {
+	            if (params === undefined) { params = {}; }
+	            return _this.request(__assign({ path: "/projects/auth/user", method: 'POST', body: data, secure: true, type: ContentType.Json, format: 'json' }, params));
+	        };
+	        /**
+	         * @description Deletes the auth user for the specified project.
+	         *
+	         * @tags Auth
+	         * @name DeleteNeonAuthUser
+	         * @summary Delete auth user
+	         * @request DELETE:/projects/{project_id}/auth/users/{auth_user_id}
+	         * @secure
+	         */
+	        _this.deleteNeonAuthUser = function (projectId, authUserId, params) {
+	            if (params === undefined) { params = {}; }
+	            return _this.request(__assign({ path: "/projects/".concat(encodeURIComponent(projectId), "/auth/users/").concat(encodeURIComponent(authUserId)), method: 'DELETE', secure: true }, params));
+	        };
+	        /**
+	         * @description Transfer ownership of your Neon-managed auth project to your own auth provider account.
+	         *
+	         * @tags Auth
+	         * @name TransferNeonAuthProviderProject
+	         * @summary Transfer Neon-managed auth project to your own account
+	         * @request POST:/projects/auth/transfer_ownership
+	         * @secure
+	         */
+	        _this.transferNeonAuthProviderProject = function (data, params) {
+	            if (params === undefined) { params = {}; }
+	            return _this.request(__assign({ path: "/projects/auth/transfer_ownership", method: 'POST', body: data, secure: true, type: ContentType.Json, format: 'json' }, params));
+	        };
+	        /**
+	         * No description
+	         *
+	         * @tags Auth
+	         * @name ListNeonAuthIntegrations
+	         * @summary Lists active integrations with auth providers
+	         * @request GET:/projects/{project_id}/auth/integrations
+	         * @secure
+	         */
+	        _this.listNeonAuthIntegrations = function (projectId, params) {
+	            if (params === undefined) { params = {}; }
+	            return _this.request(__assign({ path: "/projects/".concat(encodeURIComponent(projectId), "/auth/integrations"), method: 'GET', secure: true, format: 'json' }, params));
+	        };
+	        /**
+	         * @description Lists the OAuth providers for the specified project.
+	         *
+	         * @tags Auth
+	         * @name ListNeonAuthOauthProviders
+	         * @summary List OAuth providers
+	         * @request GET:/projects/{project_id}/auth/oauth_providers
+	         * @secure
+	         */
+	        _this.listNeonAuthOauthProviders = function (projectId, params) {
+	            if (params === undefined) { params = {}; }
+	            return _this.request(__assign({ path: "/projects/".concat(encodeURIComponent(projectId), "/auth/oauth_providers"), method: 'GET', secure: true, format: 'json' }, params));
+	        };
+	        /**
+	         * @description Adds a OAuth provider to the specified project.
+	         *
+	         * @tags Auth
+	         * @name AddNeonAuthOauthProvider
+	         * @summary Add a OAuth provider
+	         * @request POST:/projects/{project_id}/auth/oauth_providers
+	         * @secure
+	         */
+	        _this.addNeonAuthOauthProvider = function (projectId, data, params) {
+	            if (params === undefined) { params = {}; }
+	            return _this.request(__assign({ path: "/projects/".concat(encodeURIComponent(projectId), "/auth/oauth_providers"), method: 'POST', body: data, secure: true, type: ContentType.Json, format: 'json' }, params));
+	        };
+	        /**
+	         * @description Updates a OAuth provider for the specified project.
+	         *
+	         * @tags Auth
+	         * @name UpdateNeonAuthOauthProvider
+	         * @summary Update OAuth provider
+	         * @request PATCH:/projects/{project_id}/auth/oauth_providers/{oauth_provider_id}
+	         * @secure
+	         */
+	        _this.updateNeonAuthOauthProvider = function (projectId, oauthProviderId, data, params) {
+	            if (params === undefined) { params = {}; }
+	            return _this.request(__assign({ path: "/projects/".concat(encodeURIComponent(projectId), "/auth/oauth_providers/").concat(encodeURIComponent(oauthProviderId)), method: 'PATCH', body: data, secure: true, type: ContentType.Json, format: 'json' }, params));
+	        };
+	        /**
+	         * @description Deletes a OAuth provider from the specified project.
+	         *
+	         * @tags Auth
+	         * @name DeleteNeonAuthOauthProvider
+	         * @summary Delete OAuth provider
+	         * @request DELETE:/projects/{project_id}/auth/oauth_providers/{oauth_provider_id}
+	         * @secure
+	         */
+	        _this.deleteNeonAuthOauthProvider = function (projectId, oauthProviderId, params) {
+	            if (params === undefined) { params = {}; }
+	            return _this.request(__assign({ path: "/projects/".concat(encodeURIComponent(projectId), "/auth/oauth_providers/").concat(encodeURIComponent(oauthProviderId)), method: 'DELETE', secure: true }, params));
+	        };
+	        /**
+	         * @description Gets the email server configuration for the specified project.
+	         *
+	         * @tags Auth
+	         * @name GetNeonAuthEmailServer
+	         * @summary Get email server configuration
+	         * @request GET:/projects/{project_id}/auth/email_server
+	         * @secure
+	         */
+	        _this.getNeonAuthEmailServer = function (projectId, params) {
+	            if (params === undefined) { params = {}; }
+	            return _this.request(__assign({ path: "/projects/".concat(encodeURIComponent(projectId), "/auth/email_server"), method: 'GET', secure: true, format: 'json' }, params));
+	        };
+	        /**
+	         * @description Updates the email server configuration for the specified project.
+	         *
+	         * @tags Auth
+	         * @name UpdateNeonAuthEmailServer
+	         * @summary Update email server configuration
+	         * @request PATCH:/projects/{project_id}/auth/email_server
+	         * @secure
+	         */
+	        _this.updateNeonAuthEmailServer = function (projectId, data, params) {
+	            if (params === undefined) { params = {}; }
+	            return _this.request(__assign({ path: "/projects/".concat(encodeURIComponent(projectId), "/auth/email_server"), method: 'PATCH', body: data, secure: true, type: ContentType.Json, format: 'json' }, params));
+	        };
+	        /**
+	         * No description
+	         *
+	         * @tags Auth
+	         * @name DeleteNeonAuthIntegration
+	         * @summary Delete integration with auth provider
+	         * @request DELETE:/projects/{project_id}/auth/integration/{auth_provider}
+	         * @secure
+	         */
+	        _this.deleteNeonAuthIntegration = function (projectId, authProvider, params) {
+	            if (params === undefined) { params = {}; }
+	            return _this.request(__assign({ path: "/projects/".concat(encodeURIComponent(projectId), "/auth/integration/").concat(encodeURIComponent(authProvider)), method: 'DELETE', secure: true }, params));
+	        };
+	        /**
 	         * @description Retrieves a connection URI for the specified database. You can obtain a `project_id` by listing the projects for your Neon account. You can obtain the `database_name` by listing the databases for a branch. You can obtain a `role_name` by listing the roles for a branch.
 	         *
 	         * @tags Project
 	         * @name GetConnectionUri
-	         * @summary Get a connection URI
+	         * @summary Retrieve connection URI
 	         * @request GET:/projects/{project_id}/connection_uri
 	         * @secure
 	         */
@@ -50885,11 +52498,11 @@ function requireApi_gen () {
 	            return _this.request(__assign({ path: "/projects/".concat(encodeURIComponent(projectId), "/connection_uri"), method: 'GET', query: query, secure: true, format: 'json' }, params));
 	        };
 	        /**
-	         * @description Creates a branch in the specified project. You can obtain a `project_id` by listing the projects for your Neon account. This method does not require a request body, but you can specify one to create a compute endpoint for the branch or to select a non-default parent branch. The default behavior is to create a branch from the project's default branch with no compute endpoint, and the branch name is auto-generated. There is a maximum of one read-write endpoint per branch. A branch can have multiple read-only endpoints. For related information, see [Manage branches](https://neon.tech/docs/manage/branches/).
+	         * @description Creates a branch in the specified project. You can obtain a `project_id` by listing the projects for your Neon account. This method does not require a request body, but you can specify one to create a compute endpoint for the branch or to select a non-default parent branch. By default, the branch is created from the project's default branch with no compute endpoint, and the branch name is auto-generated. To access the branch, you must add an endpoint object. A `read_write` endpoint allows you to perform read and write operations on the branch. Each branch supports one read-write endpoint and multiple read-only endpoints. For related information, see [Manage branches](https://neon.tech/docs/manage/branches/).
 	         *
 	         * @tags Branch
 	         * @name CreateProjectBranch
-	         * @summary Create a branch
+	         * @summary Create branch
 	         * @request POST:/projects/{project_id}/branches
 	         * @secure
 	         */
@@ -50902,7 +52515,7 @@ function requireApi_gen () {
 	         *
 	         * @tags Branch
 	         * @name ListProjectBranches
-	         * @summary Get a list of branches
+	         * @summary List branches
 	         * @request GET:/projects/{project_id}/branches
 	         * @secure
 	         */
@@ -50916,7 +52529,7 @@ function requireApi_gen () {
 	         *
 	         * @tags Branch
 	         * @name CountProjectBranches
-	         * @summary Get the total number of branches in a project
+	         * @summary Retrieve number of branches
 	         * @request GET:/projects/{project_id}/branches/count
 	         * @secure
 	         */
@@ -50930,7 +52543,7 @@ function requireApi_gen () {
 	         *
 	         * @tags Branch
 	         * @name GetProjectBranch
-	         * @summary Get branch details
+	         * @summary Retrieve branch details
 	         * @request GET:/projects/{project_id}/branches/{branch_id}
 	         * @secure
 	         */
@@ -50943,7 +52556,7 @@ function requireApi_gen () {
 	         *
 	         * @tags Branch
 	         * @name DeleteProjectBranch
-	         * @summary Delete a branch
+	         * @summary Delete branch
 	         * @request DELETE:/projects/{project_id}/branches/{branch_id}
 	         * @secure
 	         */
@@ -50956,7 +52569,7 @@ function requireApi_gen () {
 	         *
 	         * @tags Branch
 	         * @name UpdateProjectBranch
-	         * @summary Update a branch
+	         * @summary Update branch
 	         * @request PATCH:/projects/{project_id}/branches/{branch_id}
 	         * @secure
 	         */
@@ -50969,7 +52582,7 @@ function requireApi_gen () {
 	         *
 	         * @tags Branch
 	         * @name RestoreProjectBranch
-	         * @summary Restore a branch
+	         * @summary Restore branch
 	         * @request POST:/projects/{project_id}/branches/{branch_id}/restore
 	         * @secure
 	         */
@@ -50982,7 +52595,7 @@ function requireApi_gen () {
 	         *
 	         * @tags Branch
 	         * @name GetProjectBranchSchema
-	         * @summary Get the database schema
+	         * @summary Retrieve database schema
 	         * @request GET:/projects/{project_id}/branches/{branch_id}/schema
 	         * @secure
 	         */
@@ -50992,11 +52605,11 @@ function requireApi_gen () {
 	            return _this.request(__assign({ path: "/projects/".concat(encodeURIComponent(projectId), "/branches/").concat(encodeURIComponent(branchId), "/schema"), method: 'GET', query: query, secure: true, format: 'json' }, params));
 	        };
 	        /**
-	         * @description Compares the schema from the specified database with another branch's schema. Hidden from the public spec.
+	         * @description Compares the schema from the specified database with another branch's schema.
 	         *
 	         * @tags Branch
 	         * @name GetProjectBranchSchemaComparison
-	         * @summary Compare the database schema with another branch's schema
+	         * @summary Compare database schema
 	         * @request GET:/projects/{project_id}/branches/{branch_id}/compare_schema
 	         * @secure
 	         */
@@ -51023,7 +52636,7 @@ function requireApi_gen () {
 	         *
 	         * @tags Branch
 	         * @name ListProjectBranchEndpoints
-	         * @summary Get a list of branch endpoints
+	         * @summary List branch endpoints
 	         * @request GET:/projects/{project_id}/branches/{branch_id}/endpoints
 	         * @secure
 	         */
@@ -51036,7 +52649,7 @@ function requireApi_gen () {
 	         *
 	         * @tags Branch
 	         * @name ListProjectBranchDatabases
-	         * @summary Get a list of databases
+	         * @summary List databases
 	         * @request GET:/projects/{project_id}/branches/{branch_id}/databases
 	         * @secure
 	         */
@@ -51049,7 +52662,7 @@ function requireApi_gen () {
 	         *
 	         * @tags Branch
 	         * @name CreateProjectBranchDatabase
-	         * @summary Create a database
+	         * @summary Create database
 	         * @request POST:/projects/{project_id}/branches/{branch_id}/databases
 	         * @secure
 	         */
@@ -51062,7 +52675,7 @@ function requireApi_gen () {
 	         *
 	         * @tags Branch
 	         * @name GetProjectBranchDatabase
-	         * @summary Get database details
+	         * @summary Retrieve database details
 	         * @request GET:/projects/{project_id}/branches/{branch_id}/databases/{database_name}
 	         * @secure
 	         */
@@ -51075,7 +52688,7 @@ function requireApi_gen () {
 	         *
 	         * @tags Branch
 	         * @name UpdateProjectBranchDatabase
-	         * @summary Update a database
+	         * @summary Update database
 	         * @request PATCH:/projects/{project_id}/branches/{branch_id}/databases/{database_name}
 	         * @secure
 	         */
@@ -51088,7 +52701,7 @@ function requireApi_gen () {
 	         *
 	         * @tags Branch
 	         * @name DeleteProjectBranchDatabase
-	         * @summary Delete a database
+	         * @summary Delete database
 	         * @request DELETE:/projects/{project_id}/branches/{branch_id}/databases/{database_name}
 	         * @secure
 	         */
@@ -51101,7 +52714,7 @@ function requireApi_gen () {
 	         *
 	         * @tags Branch
 	         * @name ListProjectBranchRoles
-	         * @summary Get a list of roles
+	         * @summary List roles
 	         * @request GET:/projects/{project_id}/branches/{branch_id}/roles
 	         * @secure
 	         */
@@ -51114,7 +52727,7 @@ function requireApi_gen () {
 	         *
 	         * @tags Branch
 	         * @name CreateProjectBranchRole
-	         * @summary Create a role
+	         * @summary Create role
 	         * @request POST:/projects/{project_id}/branches/{branch_id}/roles
 	         * @secure
 	         */
@@ -51127,7 +52740,7 @@ function requireApi_gen () {
 	         *
 	         * @tags Branch
 	         * @name GetProjectBranchRole
-	         * @summary Get role details
+	         * @summary Retrieve role details
 	         * @request GET:/projects/{project_id}/branches/{branch_id}/roles/{role_name}
 	         * @secure
 	         */
@@ -51140,7 +52753,7 @@ function requireApi_gen () {
 	         *
 	         * @tags Branch
 	         * @name DeleteProjectBranchRole
-	         * @summary Delete a role
+	         * @summary Delete role
 	         * @request DELETE:/projects/{project_id}/branches/{branch_id}/roles/{role_name}
 	         * @secure
 	         */
@@ -51153,7 +52766,7 @@ function requireApi_gen () {
 	         *
 	         * @tags Branch
 	         * @name GetProjectBranchRolePassword
-	         * @summary Get role password
+	         * @summary Retrieve role password
 	         * @request GET:/projects/{project_id}/branches/{branch_id}/roles/{role_name}/reveal_password
 	         * @secure
 	         */
@@ -51166,7 +52779,7 @@ function requireApi_gen () {
 	         *
 	         * @tags Branch
 	         * @name ResetProjectBranchRolePassword
-	         * @summary Reset the role password
+	         * @summary Reset role password
 	         * @request POST:/projects/{project_id}/branches/{branch_id}/roles/{role_name}/reset_password
 	         * @secure
 	         */
@@ -51175,11 +52788,11 @@ function requireApi_gen () {
 	            return _this.request(__assign({ path: "/projects/".concat(encodeURIComponent(projectId), "/branches/").concat(encodeURIComponent(branchId), "/roles/").concat(encodeURIComponent(roleName), "/reset_password"), method: 'POST', secure: true, format: 'json' }, params));
 	        };
 	        /**
-	         * @description Retrieves the list of VPC endpoint restrictions for the specified project. This endpoint is under active development and its semantics may change in the future.
+	         * @description Lists VPC endpoint restrictions for the specified Neon project.
 	         *
 	         * @tags Project
 	         * @name ListProjectVpcEndpoints
-	         * @summary Get the list of VPC endpoint restrictions
+	         * @summary List VPC endpoint restrictions
 	         * @request GET:/projects/{project_id}/vpc_endpoints
 	         * @secure
 	         */
@@ -51188,11 +52801,11 @@ function requireApi_gen () {
 	            return _this.request(__assign({ path: "/projects/".concat(encodeURIComponent(projectId), "/vpc_endpoints"), method: 'GET', secure: true, format: 'json' }, params));
 	        };
 	        /**
-	         * @description Configures the specified VPC endpoint as restriction for the project, or updates the existing restriction. When a VPC endpoint is assigned as a restriction, only connections from this specific VPC are accepted. Note that a VPC endpoint can only used as a restriction on a project after it has been assigned to the parent organization. This endpoint is under active development and its semantics may change in the future.
+	         * @description Sets or updates a VPC endpoint restriction for a Neon project. When a VPC endpoint restriction is set, the project only accepts connections from the specified VPC. A VPC endpoint can be set as a restriction only after it is assigned to the parent organization of the Neon project.
 	         *
 	         * @tags Project
 	         * @name AssignProjectVpcEndpoint
-	         * @summary Assign or update a VPC endpoint restriction
+	         * @summary Set VPC endpoint restriction
 	         * @request POST:/projects/{project_id}/vpc_endpoints/{vpc_endpoint_id}
 	         * @secure
 	         */
@@ -51201,11 +52814,11 @@ function requireApi_gen () {
 	            return _this.request(__assign({ path: "/projects/".concat(encodeURIComponent(projectId), "/vpc_endpoints/").concat(encodeURIComponent(vpcEndpointId)), method: 'POST', body: data, secure: true, type: ContentType.Json }, params));
 	        };
 	        /**
-	         * @description Deletes the specified VPC endpoint restriction from the specified project. This endpoint is under active development and its semantics may change in the future.
+	         * @description Removes the specified VPC endpoint restriction from a Neon project.
 	         *
 	         * @tags Project
 	         * @name DeleteProjectVpcEndpoint
-	         * @summary Delete a VPC endpoint
+	         * @summary Delete VPC endpoint restriction
 	         * @request DELETE:/projects/{project_id}/vpc_endpoints/{vpc_endpoint_id}
 	         * @secure
 	         */
@@ -51218,7 +52831,7 @@ function requireApi_gen () {
 	         *
 	         * @tags Endpoint
 	         * @name CreateProjectEndpoint
-	         * @summary Create a compute endpoint
+	         * @summary Create compute endpoint
 	         * @request POST:/projects/{project_id}/endpoints
 	         * @secure
 	         */
@@ -51231,7 +52844,7 @@ function requireApi_gen () {
 	         *
 	         * @tags Endpoint
 	         * @name ListProjectEndpoints
-	         * @summary Get a list of compute endpoints
+	         * @summary List compute endpoints
 	         * @request GET:/projects/{project_id}/endpoints
 	         * @secure
 	         */
@@ -51244,7 +52857,7 @@ function requireApi_gen () {
 	         *
 	         * @tags Endpoint
 	         * @name GetProjectEndpoint
-	         * @summary Get a compute endpoint
+	         * @summary Retrieve compute endpoint details
 	         * @request GET:/projects/{project_id}/endpoints/{endpoint_id}
 	         * @secure
 	         */
@@ -51257,7 +52870,7 @@ function requireApi_gen () {
 	         *
 	         * @tags Endpoint
 	         * @name DeleteProjectEndpoint
-	         * @summary Delete a compute endpoint
+	         * @summary Delete compute endpoint
 	         * @request DELETE:/projects/{project_id}/endpoints/{endpoint_id}
 	         * @secure
 	         */
@@ -51270,7 +52883,7 @@ function requireApi_gen () {
 	         *
 	         * @tags Endpoint
 	         * @name UpdateProjectEndpoint
-	         * @summary Update a compute endpoint
+	         * @summary Update compute endpoint
 	         * @request PATCH:/projects/{project_id}/endpoints/{endpoint_id}
 	         * @secure
 	         */
@@ -51283,7 +52896,7 @@ function requireApi_gen () {
 	         *
 	         * @tags Endpoint
 	         * @name StartProjectEndpoint
-	         * @summary Start a compute endpoint
+	         * @summary Start compute endpoint
 	         * @request POST:/projects/{project_id}/endpoints/{endpoint_id}/start
 	         * @secure
 	         */
@@ -51296,7 +52909,7 @@ function requireApi_gen () {
 	         *
 	         * @tags Endpoint
 	         * @name SuspendProjectEndpoint
-	         * @summary Suspend a compute endpoint
+	         * @summary Suspend compute endpoint
 	         * @request POST:/projects/{project_id}/endpoints/{endpoint_id}/suspend
 	         * @secure
 	         */
@@ -51309,7 +52922,7 @@ function requireApi_gen () {
 	         *
 	         * @tags Endpoint
 	         * @name RestartProjectEndpoint
-	         * @summary Restart a compute endpoint
+	         * @summary Restart compute endpoint
 	         * @request POST:/projects/{project_id}/endpoints/{endpoint_id}/restart
 	         * @secure
 	         */
@@ -51322,7 +52935,7 @@ function requireApi_gen () {
 	         *
 	         * @tags Consumption
 	         * @name GetConsumptionHistoryPerAccount
-	         * @summary Get account consumption metrics
+	         * @summary Retrieve account consumption metrics
 	         * @request GET:/consumption_history/account
 	         * @secure
 	         */
@@ -51335,7 +52948,7 @@ function requireApi_gen () {
 	         *
 	         * @tags Consumption
 	         * @name GetConsumptionHistoryPerProject
-	         * @summary Get consumption metrics for each project
+	         * @summary Retrieve project consumption metrics
 	         * @request GET:/consumption_history/projects
 	         * @secure
 	         */
@@ -51348,7 +52961,7 @@ function requireApi_gen () {
 	         *
 	         * @tags Organizations
 	         * @name GetOrganization
-	         * @summary Get organization details
+	         * @summary Retrieve organization details
 	         * @request GET:/organizations/{org_id}
 	         * @secure
 	         */
@@ -51361,7 +52974,7 @@ function requireApi_gen () {
 	         *
 	         * @tags Organizations
 	         * @name ListOrgApiKeys
-	         * @summary Get a list of organization API keys
+	         * @summary List organization API keys
 	         * @request GET:/organizations/{org_id}/api_keys
 	         * @secure
 	         */
@@ -51374,7 +52987,7 @@ function requireApi_gen () {
 	         *
 	         * @tags Organizations
 	         * @name CreateOrgApiKey
-	         * @summary Create an organization API key
+	         * @summary Create organization API key
 	         * @request POST:/organizations/{org_id}/api_keys
 	         * @secure
 	         */
@@ -51387,7 +53000,7 @@ function requireApi_gen () {
 	         *
 	         * @tags Organizations
 	         * @name RevokeOrgApiKey
-	         * @summary Revoke an organization API key
+	         * @summary Revoke organization API key
 	         * @request DELETE:/organizations/{org_id}/api_keys/{key_id}
 	         * @secure
 	         */
@@ -51400,7 +53013,7 @@ function requireApi_gen () {
 	         *
 	         * @tags Organizations
 	         * @name GetOrganizationMembers
-	         * @summary Get organization members details
+	         * @summary Retrieve organization members details
 	         * @request GET:/organizations/{org_id}/members
 	         * @secure
 	         */
@@ -51413,7 +53026,7 @@ function requireApi_gen () {
 	         *
 	         * @tags Organizations
 	         * @name GetOrganizationMember
-	         * @summary Get organization member details
+	         * @summary Retrieve organization member details
 	         * @request GET:/organizations/{org_id}/members/{member_id}
 	         * @secure
 	         */
@@ -51426,7 +53039,7 @@ function requireApi_gen () {
 	         *
 	         * @tags Organizations
 	         * @name UpdateOrganizationMember
-	         * @summary Update the role for an organization member
+	         * @summary Update role for organization member
 	         * @request PATCH:/organizations/{org_id}/members/{member_id}
 	         * @secure
 	         */
@@ -51452,7 +53065,7 @@ function requireApi_gen () {
 	         *
 	         * @tags Organizations
 	         * @name GetOrganizationInvitations
-	         * @summary Get organization invitation details
+	         * @summary Retrieve organization invitation details
 	         * @request GET:/organizations/{org_id}/invitations
 	         * @secure
 	         */
@@ -51478,20 +53091,33 @@ function requireApi_gen () {
 	         *
 	         * @tags Organizations
 	         * @name TransferProjectsFromOrgToOrg
-	         * @summary Transfer projects from organization to a specified destination organization
-	         * @request POST:/organizations/{org_id}/projects/transfer
+	         * @summary Transfer projects between organizations
+	         * @request POST:/organizations/{source_org_id}/projects/transfer
 	         * @secure
 	         */
-	        _this.transferProjectsFromOrgToOrg = function (orgId, data, params) {
+	        _this.transferProjectsFromOrgToOrg = function (sourceOrgId, data, params) {
 	            if (params === undefined) { params = {}; }
-	            return _this.request(__assign({ path: "/organizations/".concat(encodeURIComponent(orgId), "/projects/transfer"), method: 'POST', body: data, secure: true, type: ContentType.Json, format: 'json' }, params));
+	            return _this.request(__assign({ path: "/organizations/".concat(encodeURIComponent(sourceOrgId), "/projects/transfer"), method: 'POST', body: data, secure: true, type: ContentType.Json, format: 'json' }, params));
 	        };
 	        /**
-	         * @description Retrieves the list of VPC endpoints for the specified organization. This endpoint is under active development and its semantics may change in the future.
+	         * @description Retrieves the list of VPC endpoints for the specified Neon organization across all regions.
+	         *
+	         * @tags Organizations
+	         * @name ListOrganizationVpcEndpointsAllRegions
+	         * @summary List VPC endpoints across all regions
+	         * @request GET:/organizations/{org_id}/vpc/vpc_endpoints
+	         * @secure
+	         */
+	        _this.listOrganizationVpcEndpointsAllRegions = function (orgId, params) {
+	            if (params === undefined) { params = {}; }
+	            return _this.request(__assign({ path: "/organizations/".concat(encodeURIComponent(orgId), "/vpc/vpc_endpoints"), method: 'GET', secure: true, format: 'json' }, params));
+	        };
+	        /**
+	         * @description Retrieves the list of VPC endpoints for the specified Neon organization.
 	         *
 	         * @tags Organizations
 	         * @name ListOrganizationVpcEndpoints
-	         * @summary Get the list of VPC endpoints
+	         * @summary List VPC endpoints
 	         * @request GET:/organizations/{org_id}/vpc/region/{region_id}/vpc_endpoints
 	         * @secure
 	         */
@@ -51500,11 +53126,11 @@ function requireApi_gen () {
 	            return _this.request(__assign({ path: "/organizations/".concat(encodeURIComponent(orgId), "/vpc/region/").concat(encodeURIComponent(regionId), "/vpc_endpoints"), method: 'GET', secure: true, format: 'json' }, params));
 	        };
 	        /**
-	         * @description Retrieves detailed information about the VPC endpoint. This endpoint is under active development and its semantics may change in the future.
+	         * @description Retrieves the current state and configuration details of a specified VPC endpoint.
 	         *
 	         * @tags Organizations
 	         * @name GetOrganizationVpcEndpointDetails
-	         * @summary Retrieve the state of a VPC endpoint configuration
+	         * @summary Retrieve VPC endpoint details
 	         * @request GET:/organizations/{org_id}/vpc/region/{region_id}/vpc_endpoints/{vpc_endpoint_id}
 	         * @secure
 	         */
@@ -51513,11 +53139,11 @@ function requireApi_gen () {
 	            return _this.request(__assign({ path: "/organizations/".concat(encodeURIComponent(orgId), "/vpc/region/").concat(encodeURIComponent(regionId), "/vpc_endpoints/").concat(encodeURIComponent(vpcEndpointId)), method: 'GET', secure: true, format: 'json' }, params));
 	        };
 	        /**
-	         * @description Assigns the specified VPC endpoint to the specified organization or updates the existing assignment. This endpoint is under active development and its semantics may change in the future.
+	         * @description Assigns a VPC endpoint to a Neon organization or updates its existing assignment.
 	         *
 	         * @tags Organizations
 	         * @name AssignOrganizationVpcEndpoint
-	         * @summary Assign or update a VPC endpoint
+	         * @summary Assign or update VPC endpoint
 	         * @request POST:/organizations/{org_id}/vpc/region/{region_id}/vpc_endpoints/{vpc_endpoint_id}
 	         * @secure
 	         */
@@ -51526,11 +53152,11 @@ function requireApi_gen () {
 	            return _this.request(__assign({ path: "/organizations/".concat(encodeURIComponent(orgId), "/vpc/region/").concat(encodeURIComponent(regionId), "/vpc_endpoints/").concat(encodeURIComponent(vpcEndpointId)), method: 'POST', body: data, secure: true, type: ContentType.Json }, params));
 	        };
 	        /**
-	         * @description Deletes the specified VPC endpoint from the specified organization. This endpoint is under active development and its semantics may change in the future.
+	         * @description Deletes the VPC endpoint from the specified Neon organization. If you delete a VPC endpoint from a Neon organization, that VPC endpoint cannot be added back to the Neon organization.
 	         *
 	         * @tags Organizations
 	         * @name DeleteOrganizationVpcEndpoint
-	         * @summary Delete a VPC endpoint
+	         * @summary Delete VPC endpoint
 	         * @request DELETE:/organizations/{org_id}/vpc/region/{region_id}/vpc_endpoints/{vpc_endpoint_id}
 	         * @secure
 	         */
@@ -51539,11 +53165,11 @@ function requireApi_gen () {
 	            return _this.request(__assign({ path: "/organizations/".concat(encodeURIComponent(orgId), "/vpc/region/").concat(encodeURIComponent(regionId), "/vpc_endpoints/").concat(encodeURIComponent(vpcEndpointId)), method: 'DELETE', secure: true }, params));
 	        };
 	        /**
-	         * @description Retrieves the list of supported Neon regions
+	         * @description Lists supported Neon regions
 	         *
 	         * @tags Region
 	         * @name GetActiveRegions
-	         * @summary Get current active regions
+	         * @summary List supported regions
 	         * @request GET:/regions
 	         * @secure
 	         */
@@ -51556,7 +53182,7 @@ function requireApi_gen () {
 	         *
 	         * @tags Users
 	         * @name GetCurrentUserInfo
-	         * @summary Get current user details
+	         * @summary Retrieve current user details
 	         * @request GET:/users/me
 	         * @secure
 	         */
@@ -51569,7 +53195,7 @@ function requireApi_gen () {
 	         *
 	         * @tags Users, Organizations
 	         * @name GetCurrentUserOrganizations
-	         * @summary Get current user organizations list
+	         * @summary Retrieve current user organizations list
 	         * @request GET:/users/me/organizations
 	         * @secure
 	         */
@@ -51582,13 +53208,26 @@ function requireApi_gen () {
 	         *
 	         * @tags Users
 	         * @name TransferProjectsFromUserToOrg
-	         * @summary Transfer projects from your personal account to a specified destination account
+	         * @summary Transfer projects from personal account to organization
 	         * @request POST:/users/me/projects/transfer
 	         * @secure
 	         */
 	        _this.transferProjectsFromUserToOrg = function (data, params) {
 	            if (params === undefined) { params = {}; }
 	            return _this.request(__assign({ path: "/users/me/projects/transfer", method: 'POST', body: data, secure: true, type: ContentType.Json, format: 'json' }, params));
+	        };
+	        /**
+	         * @description Returns auth information about the passed credentials. It can refer to an API key, Bearer token or OAuth session.
+	         *
+	         * @tags Users
+	         * @name GetAuthDetails
+	         * @summary Get request authentication details
+	         * @request GET:/auth
+	         * @secure
+	         */
+	        _this.getAuthDetails = function (params) {
+	            if (params === undefined) { params = {}; }
+	            return _this.request(__assign({ path: "/auth", method: 'GET', secure: true, format: 'json' }, params));
 	        };
 	        return _this;
 	    }
