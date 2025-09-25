@@ -29,6 +29,11 @@ the output looks like.
 If you would like to contribute to the development of this GitHub Action, see
 [docs/development.md](docs/development.md).
 
+## Releasing
+
+For maintainers looking to release a new version of this action, see
+[docs/release.md](docs/release.md) for detailed release instructions.
+
 ## How to set up the NEON_API_KEY
 
 Using the action requires adding a Neon API key to your GitHub Secrets. There
