@@ -53,7 +53,8 @@ jobs:
   test-action:
     name: GitHub Actions Test
     runs-on: ubuntu-latest
-
+    # Run only on PRs from the same repository as this job depends on secrets
+    if: github.repository == github.event.pull_request.head.repo.full_name
     steps:
       - name: Checkout
         id: checkout
