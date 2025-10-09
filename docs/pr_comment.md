@@ -48,6 +48,6 @@ Index: neondb-schema.sql
 ```
 
 </p>
-</details> 
+</details>
 
 This comment was last updated at 11/20/2024 10:05:59 AM
