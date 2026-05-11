@@ -14,8 +14,10 @@ jobs:
   auto-bundler:
     name: Auto Bundler
     runs-on: ubuntu-latest
-    # Run only on release branches
-    if: startsWith(github.head_ref, 'release/')
+    # Run only on release-branch PRs originating from this repo (not a fork)
+    if: >-
+      startsWith(github.head_ref, 'release/') &&
+      github.event.pull_request.head.repo.full_name == github.repository
     permissions:
       # Needed for checkout and push
       contents: write
