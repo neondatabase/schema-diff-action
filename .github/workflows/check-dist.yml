@@ -17,15 +17,18 @@ on:
     branches:
       - main
 
-permissions:
-  contents: read
+permissions: {}
 
 jobs:
   check-dist:
     name: Check dist/
     runs-on: ubuntu-latest
-    # Run only on release branches
-    if: startsWith(github.head_ref, 'release/')
+    # Run only on release-branch PRs originating from this repo (not a fork)
+    if: >-
+      startsWith(github.head_ref, 'release/') &&
+      github.event.pull_request.head.repo.full_name == github.repository
+    permissions:
+      contents: read
     steps:
       - name: Harden Runner
         uses: step-security/harden-runner@f4a75cfd619ee5ce8d5b864b0d183aff3c69b55a # v2.13.1
@@ -46,7 +49,7 @@ jobs:
 
       - name: Install Dependencies
         id: install
-        run: bun install
+        run: bun install --frozen-lockfile
 
       - name: Build dist/ Directory
         id: build
