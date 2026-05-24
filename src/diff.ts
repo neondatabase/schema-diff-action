@@ -177,7 +177,13 @@ Schema diff between the compare branch ([${compareBranch.name}](${compareBranchU
 - Compare branch: ${compareBranch.name} ([${compareBranch.id}](${compareBranchURL})) ${compareBranch.protected ? '🔒' : ''}
 - Database: ${database}
 
+<details><summary>Diff</summary>
+<p>
+
 ${diffContent}
+
+</p>
+</details> 
 
 This comment was last updated at ${new Date().toUTCString()}
 `
