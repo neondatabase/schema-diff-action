@@ -36,6 +36,20 @@ inputs:
     description:
       The LSN of the downstream branch to compare against. Leave it empty to
       compare against the latest changes in your compare branch
+  exclude_extensions:
+    description:
+      Comma-separated extension names to ignore. Their CREATE EXTENSION and
+      COMMENT ON EXTENSION statements are removed from both schemas before they
+      are compared.
+    required: false
+    default: ''
+  exclude_security_label_providers:
+    description:
+      Comma-separated security label provider names to ignore. Their SECURITY
+      LABEL FOR <provider> statements are removed from both schemas before they
+      are compared. Labels from other providers are kept.
+    required: false
+    default: ''
 outputs:
   diff:
     description: The schema diff SQL patch

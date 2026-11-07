@@ -2,6 +2,7 @@ import * as github from '@actions/github'
 import { type Branch, createApiClient } from '@neondatabase/api-client'
 import { createPatch } from 'diff'
 
+import { filterSchemaSql, SchemaFilterOptions } from './filter.js'
 import { BranchComparisonInput, getBranchURL, PointInTime } from './utils.js'
 import { version } from './version.js'
 
@@ -28,7 +29,8 @@ export async function diff(
   apiKey: string,
   apiHost: string,
   database: string,
-  pointInTime?: PointInTime
+  pointInTime?: PointInTime,
+  filters?: SchemaFilterOptions
 ): Promise<BranchDiff> {
   const client = createApiClient({
     apiKey,
@@ -112,7 +114,12 @@ export async function diff(
     )
   }
 
-  if (compareSchema.data?.sql === baseSchema.data?.sql) {
+  // Filter both schemas before comparing so that excluded metadata never
+  // reaches the patch, the hash or the empty-diff check.
+  const compareSql = filterSchemaSql(compareSchema.data?.sql, filters)
+  const baseSql = filterSchemaSql(baseSchema.data?.sql, filters)
+
+  if (compareSql === baseSql) {
     return {
       sql: '',
       hash: '',
@@ -124,8 +131,8 @@ export async function diff(
 
   const diff = createPatch(
     `${database}-schema.sql`,
-    baseSchema.data?.sql || '',
-    compareSchema.data?.sql || '',
+    baseSql || '',
+    compareSql || '',
     `Branch ${baseBranch.name}`,
     `Branch ${compareBranch.name}`
   )
