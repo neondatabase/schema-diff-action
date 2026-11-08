@@ -9,6 +9,12 @@ import {
   buildBranchSchemaResponse,
   buildGitHubComment
 } from '../__fixtures__/mocks'
+import {
+  ANONYMIZED_DUMP,
+  ANONYMIZER_DUMP,
+  BASE_DUMP,
+  REAL_CHANGE_DUMP
+} from '../__fixtures__/schema-dumps'
 import { diff, summary, SummaryComment, upsertGitHubComment } from '../src/diff'
 import { getBranchURL } from '../src/utils'
 
@@ -518,5 +524,150 @@ describe('upsertGitHubComment function', () => {
       operation: 'noop',
       url: undefined
     })
+  })
+})
+
+describe('diff function with schema filters', () => {
+  const projectId = 'test-project'
+  const apiKey = 'test-api-key'
+  const apiHost = 'https://api.neon.tech'
+  const database = 'neondb'
+  const anonFilters = {
+    excludeExtensions: ['anon'],
+    excludeSecurityLabelProviders: ['anon']
+  }
+
+  // Schemas are requested in order: compare branch first, then base branch.
+  function mockSchemas(compareSql: string, baseSql: string): void {
+    mockClient.listProjectBranches.mockResolvedValueOnce(
+      apiResponse(
+        200,
+        buildListProjectsBranchesResponse(
+          buildBranch('1', 'branch1', '2'),
+          buildBranch('2', 'branch2')
+        )
+      )
+    )
+    mockClient.getProjectBranchSchema
+      .mockResolvedValueOnce(
+        apiResponse(200, buildBranchSchemaResponse(compareSql))
+      )
+      .mockResolvedValueOnce(
+        apiResponse(200, buildBranchSchemaResponse(baseSql))
+      )
+  }
+
+  async function sha256Hex(text: string): Promise<string> {
+    const buffer = await crypto.subtle.digest(
+      'SHA-256',
+      new TextEncoder().encode(text)
+    )
+    return Array.from(new Uint8Array(buffer))
+      .map((b) => b.toString(16).padStart(2, '0'))
+      .join('')
+  }
+
+  beforeEach(() => {
+    vi.clearAllMocks()
+  })
+
+  it('returns an empty diff when only anonymizer metadata differs', async () => {
+    mockSchemas(ANONYMIZER_DUMP, BASE_DUMP)
+
+    const result = await diff(
+      projectId,
+      { compare: { type: 'name', value: 'branch1' } },
+      apiKey,
+      apiHost,
+      database,
+      undefined,
+      anonFilters
+    )
+
+    expect(result.sql).toBe('')
+    expect(result.hash).toBe('')
+  })
+
+  it('reports the anonymizer metadata when no filters are configured', async () => {
+    mockSchemas(ANONYMIZER_DUMP, BASE_DUMP)
+
+    const result = await diff(
+      projectId,
+      { compare: { type: 'name', value: 'branch1' } },
+      apiKey,
+      apiHost,
+      database
+    )
+
+    expect(result.sql).toContain('CREATE EXTENSION IF NOT EXISTS anon')
+    expect(result.sql).toContain('SECURITY LABEL FOR anon')
+    expect(result.hash).toMatch(/^[0-9a-f]{64}$/)
+  })
+
+  it('diffs and hashes the filtered schemas for a real change', async () => {
+    mockSchemas(REAL_CHANGE_DUMP, ANONYMIZED_DUMP)
+
+    const result = await diff(
+      projectId,
+      { compare: { type: 'name', value: 'branch1' } },
+      apiKey,
+      apiHost,
+      database,
+      undefined,
+      anonFilters
+    )
+
+    expect(result.sql).toContain('-    display_name text')
+    expect(result.sql).toContain('+    display_name varchar(255)')
+    expect(result.sql).not.toContain('anon')
+    expect(result.sql).not.toContain('MASKED WITH')
+    expect(result.hash).toBe(await sha256Hex(result.sql))
+  })
+
+  it('keeps unrelated security labels in the patch', async () => {
+    // The base schema has the same anon metadata, so only the sepgsql label
+    // differs and it must still be reported.
+    mockSchemas(ANONYMIZED_DUMP, ANONYMIZER_DUMP)
+
+    const result = await diff(
+      projectId,
+      { compare: { type: 'name', value: 'branch1' } },
+      apiKey,
+      apiHost,
+      database,
+      undefined,
+      anonFilters
+    )
+
+    expect(result.sql).toContain('SECURITY LABEL FOR sepgsql ON TABLE')
+    expect(result.sql).not.toContain('SECURITY LABEL FOR anon')
+  })
+
+  it('produces a summary comment that omits excluded metadata', async () => {
+    mockSchemas(REAL_CHANGE_DUMP, ANONYMIZED_DUMP)
+
+    const result = await diff(
+      projectId,
+      { compare: { type: 'name', value: 'branch1' } },
+      apiKey,
+      apiHost,
+      database,
+      undefined,
+      anonFilters
+    )
+    const markdown = summary(
+      result.sql,
+      result.hash,
+      result.compareBranch,
+      result.baseBranch,
+      result.database,
+      projectId
+    )
+
+    expect(markdown).toContain('varchar(255)')
+    expect(markdown).toContain(
+      DIFF_HASH_COMMENT_TEMPLATE.replace('%s', result.hash)
+    )
+    expect(markdown).not.toContain('anon')
   })
 })

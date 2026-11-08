@@ -164,16 +164,52 @@ these two values can be defined at a time.
 
 Supported parameters:
 
-| Field            | Required/optional | Default value                            |
-| ---------------- | ----------------- | ---------------------------------------- |
-| `project_id`     | required          | n/a                                      |
-| `compare_branch` | required          | n/a                                      |
-| `api_key`        | required          | n/a                                      |
-| `base_branch`    | optional          | empty, will default to the parent branch |
-| `api_host`       | optional          | `https://console.neon.tech/api/v2`       |
-| `database`       | optional          | `neondb`                                 |
-| `lsn`            | optional          | empty, will default to the branch's head |
-| `timestamp`      | optional          | empty, will default to the branch's head |
+| Field                              | Required/optional | Default value                            |
+| ---------------------------------- | ----------------- | ---------------------------------------- |
+| `project_id`                       | required          | n/a                                      |
+| `compare_branch`                   | required          | n/a                                      |
+| `api_key`                          | required          | n/a                                      |
+| `base_branch`                      | optional          | empty, will default to the parent branch |
+| `api_host`                         | optional          | `https://console.neon.tech/api/v2`       |
+| `database`                         | optional          | `neondb`                                 |
+| `lsn`                              | optional          | empty, will default to the branch's head |
+| `timestamp`                        | optional          | empty, will default to the branch's head |
+| `exclude_extensions`               | optional          | empty, nothing is excluded               |
+| `exclude_security_label_providers` | optional          | empty, nothing is excluded               |
+
+### Ignoring extension and security label metadata
+
+Some tools add metadata to a database that is not part of your application
+schema. For example, the
+[PostgreSQL Anonymizer](https://postgresql-anonymizer.readthedocs.io/) extension
+(`anon`) adds a `CREATE EXTENSION`, a `COMMENT ON EXTENSION` and
+`SECURITY LABEL` statements that mask columns. Set these inputs to leave that
+metadata out of the comparison:
+
+- `exclude_extensions` — comma-separated extension names. The action removes
+  `CREATE EXTENSION` and `COMMENT ON EXTENSION` statements for these extensions.
+- `exclude_security_label_providers` — comma-separated security label provider
+  names. The action removes `SECURITY LABEL FOR <provider>` statements for these
+  providers. Labels from other providers are kept.
+
+Filtering is applied to both schemas before they are compared, so the diff, the
+diff digest and the PR comment all reflect the filtered schemas. An empty diff
+is reported when the only differences are excluded metadata. Object headers left
+empty by the filter are removed too.
+
+Names are matched case-insensitively. When neither input is set, the action
+behaves as before.
+
+```yml
+steps:
+  - uses: neondatabase/schema-diff-action@v1
+    with:
+      project_id: ${{ vars.NEON_PROJECT_ID }}
+      compare_branch: preview/pr-${{ github.event.number }}
+      api_key: ${{ secrets.NEON_API_KEY }}
+      exclude_extensions: anon
+      exclude_security_label_providers: anon
+```
 
 ## Outputs
 

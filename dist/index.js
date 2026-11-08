@@ -53815,6 +53815,170 @@ function splitLines(text) {
     return result;
 }
 
+/**
+ * Optional filters applied to PostgreSQL schema dumps before they are compared.
+ *
+ * Each filter removes whole SQL statements, so a removed statement never leaves
+ * a partial hunk behind. Statements are located with a small tokenizer that
+ * understands quoted identifiers, string literals, dollar-quoted bodies and
+ * comments; it is not a general SQL parser.
+ */
+// Whitespace and comments that may precede a statement.
+const LEADING_TRIVIA = /^(?:\s|--[^\n]*|\/\*[\s\S]*?\*\/)*/;
+// An identifier: either double-quoted (with "" escapes) or a bare word.
+const IDENT = `("(?:[^"]|"")*"|[^\\s;]+)`;
+const CREATE_EXTENSION = new RegExp(`^CREATE\\s+EXTENSION\\s+(?:IF\\s+NOT\\s+EXISTS\\s+)?${IDENT}`, 'i');
+const COMMENT_ON_EXTENSION = new RegExp(`^COMMENT\\s+ON\\s+EXTENSION\\s+${IDENT}\\s+IS\\b`, 'i');
+const SECURITY_LABEL_FOR = new RegExp(`^SECURITY\\s+LABEL\\s+FOR\\s+${IDENT}\\s+ON\\b`, 'i');
+/**
+ * Parses a comma-separated input such as `anon, citext`. Empty entries are
+ * ignored, so an unset input yields an empty list.
+ */
+function parseNameList(input) {
+    return (input ?? '')
+        .split(',')
+        .map((name) => name.trim())
+        .filter((name) => name !== '');
+}
+/**
+ * Removes the statements selected by `options` from a schema dump.
+ *
+ * With no filters configured the input is returned unchanged, so callers that
+ * do not use filtering keep their existing output byte for byte. Otherwise the
+ * result is re-rendered from the remaining statements. Two dumps that differ
+ * only in excluded metadata therefore produce identical output.
+ *
+ * Names are matched case-insensitively.
+ */
+function filterSchemaSql(sql, options) {
+    if (sql === undefined || options === undefined)
+        return sql;
+    const extensions = new Set(options.excludeExtensions.map(lower));
+    const providers = new Set(options.excludeSecurityLabelProviders.map(lower));
+    if (extensions.size === 0 && providers.size === 0)
+        return sql;
+    const isExcluded = (body) => {
+        const extension = CREATE_EXTENSION.exec(body) ?? COMMENT_ON_EXTENSION.exec(body);
+        if (extension)
+            return extensions.has(lower(parseIdent(extension[1])));
+        const label = SECURITY_LABEL_FOR.exec(body);
+        return label !== null && providers.has(lower(parseIdent(label[1])));
+    };
+    const sections = groupSections(splitStatements(sql));
+    const rendered = [];
+    for (const section of sections) {
+        const kept = section
+            .filter((statement) => !isExcluded(statement.body))
+            .map((statement) => statement.body);
+        // A section with no remaining statements is dropped entirely, including
+        // its object header.
+        if (kept.length === 0)
+            continue;
+        // The header belongs to the section, not to any one statement, so it is
+        // taken from the first statement even when that statement was removed.
+        const header = section[0].lead.trim();
+        rendered.push([header, ...kept].filter((part) => part !== '').join('\n\n'));
+    }
+    return rendered.length === 0 ? '' : rendered.join('\n\n') + '\n';
+}
+function lower(value) {
+    return value.toLowerCase();
+}
+/** Returns the name of an identifier as written in SQL, unquoted if needed. */
+function parseIdent(raw) {
+    return raw.startsWith('"') ? raw.slice(1, -1).replace(/""/g, '"') : raw;
+}
+function splitStatements(sql) {
+    const pieces = [];
+    let start = 0;
+    let i = 0;
+    while (i < sql.length) {
+        const ch = sql[i];
+        if (ch === '-' && sql[i + 1] === '-') {
+            const end = sql.indexOf('\n', i);
+            i = end === -1 ? sql.length : end + 1;
+        }
+        else if (ch === '/' && sql[i + 1] === '*') {
+            const end = sql.indexOf('*/', i + 2);
+            i = end === -1 ? sql.length : end + 2;
+        }
+        else if (ch === "'" || ch === '"') {
+            i = skipQuoted(sql, i);
+        }
+        else if (ch === '$' && dollarTagAt(sql, i)) {
+            const tag = dollarTagAt(sql, i) ?? '';
+            const end = sql.indexOf(tag, i + tag.length);
+            i = end === -1 ? sql.length : end + tag.length;
+        }
+        else if (ch === ';') {
+            pieces.push(sql.slice(start, i + 1));
+            start = i + 1;
+            i++;
+        }
+        else {
+            i++;
+        }
+    }
+    if (start < sql.length)
+        pieces.push(sql.slice(start));
+    return pieces
+        .map((piece) => {
+        const lead = LEADING_TRIVIA.exec(piece)?.[0] ?? '';
+        return { lead, body: piece.slice(lead.length).trimEnd() };
+    })
+        .filter((statement) => statement.body !== '' && statement.body !== ';');
+}
+/** Returns the index just past a quoted string or identifier starting at `start`. */
+function skipQuoted(sql, start) {
+    const quote = sql[start];
+    // E'...' strings treat backslash as an escape character.
+    const backslashEscapes = quote === "'" &&
+        /[eE]/.test(sql[start - 1] ?? '') &&
+        !/[A-Za-z0-9_$]/.test(sql[start - 2] ?? '');
+    let i = start + 1;
+    while (i < sql.length) {
+        if (backslashEscapes && sql[i] === '\\') {
+            i += 2;
+        }
+        else if (sql[i] === quote) {
+            if (sql[i + 1] === quote) {
+                i += 2;
+            }
+            else {
+                return i + 1;
+            }
+        }
+        else {
+            i++;
+        }
+    }
+    return sql.length;
+}
+/** Returns the dollar-quote tag (for example `$$` or `$body$`) opening at `i`. */
+function dollarTagAt(sql, i) {
+    // A `$` inside an identifier such as `a$b$` does not open a dollar quote.
+    if (i > 0 && /[A-Za-z0-9_$]/.test(sql[i - 1]))
+        return undefined;
+    const match = /^\$(?:[A-Za-z_][A-Za-z0-9_]*)?\$/.exec(sql.slice(i, i + 256));
+    return match?.[0];
+}
+/**
+ * Groups statements into sections. A section begins at a statement that
+ * carries a comment header, which is how pg_dump marks each object.
+ */
+function groupSections(statements) {
+    const sections = [];
+    for (const statement of statements) {
+        if (sections.length === 0 || /--|\/\*/.test(statement.lead)) {
+            sections.push([statement]);
+        }
+        else {
+            sections[sections.length - 1].push(statement);
+        }
+    }
+    return sections;
+}
+
 const lsnRegex = /^[a-fA-F0-9]{1,8}\/[a-fA-F0-9]{1,8}$/;
 const haikuRegex = /^[a-z]+-[a-z]+-[a-z0-9]+$/;
 function getPointInTime(timestamp, lsn) {
@@ -53882,7 +54046,7 @@ const version = '1.0.1';
 
 const DIFF_COMMENT_IDENTIFIER = '<!--- [schema diff GitHub action comment identifier] -->';
 const DIFF_HASH_COMMENT_TEMPLATE = '<!--- [diff digest: %s] -->';
-async function diff(projectId, compareBranchInput, apiKey, apiHost, database, pointInTime) {
+async function diff(projectId, compareBranchInput, apiKey, apiHost, database, pointInTime, filters) {
     const client = distExports.createApiClient({
         apiKey,
         baseURL: apiHost,
@@ -53941,7 +54105,11 @@ async function diff(projectId, compareBranchInput, apiKey, apiHost, database, po
     if (baseSchema.status !== 200) {
         throw new Error(`Failed to get schema for the base branch ${baseInput?.value || baseBranch.name} in project ${projectId}`);
     }
-    if (compareSchema.data?.sql === baseSchema.data?.sql) {
+    // Filter both schemas before comparing so that excluded metadata never
+    // reaches the patch, the hash or the empty-diff check.
+    const compareSql = filterSchemaSql(compareSchema.data?.sql, filters);
+    const baseSql = filterSchemaSql(baseSchema.data?.sql, filters);
+    if (compareSql === baseSql) {
         return {
             sql: '',
             hash: '',
@@ -53950,7 +54118,7 @@ async function diff(projectId, compareBranchInput, apiKey, apiHost, database, po
             database: database
         };
     }
-    const diff = createPatch(`${database}-schema.sql`, baseSchema.data?.sql || '', compareSchema.data?.sql || '', `Branch ${baseBranch.name}`, `Branch ${compareBranch.name}`);
+    const diff = createPatch(`${database}-schema.sql`, baseSql || '', compareSql || '', `Branch ${baseBranch.name}`, `Branch ${compareBranch.name}`);
     const hashBuffer = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(diff));
     const hash = Array.from(new Uint8Array(hashBuffer))
         .map((b) => b.toString(16).padStart(2, '0'))
@@ -54088,6 +54256,13 @@ async function run() {
             trimWhitespace: true
         });
         const lsn = coreExports.getInput('lsn', { trimWhitespace: true });
+        // Optional schema filters, empty by default
+        const filters = {
+            excludeExtensions: parseNameList(coreExports.getInput('exclude_extensions', { trimWhitespace: true })),
+            excludeSecurityLabelProviders: parseNameList(coreExports.getInput('exclude_security_label_providers', {
+                trimWhitespace: true
+            }))
+        };
         // Check if the API host is a valid URL
         if (!urlRegex.test(apiHost)) {
             throw new Error('API host must be a valid URL');
@@ -54100,7 +54275,7 @@ async function run() {
         const pointInTime = getPointInTime(timestamp, lsn);
         const branchInput = getBranchInput(compareBranchIdentifier, baseBranchIdentifier);
         // Get the diff, summary and comment URL
-        const { sql, hash, compareBranch, baseBranch } = await diff(projectId, branchInput, apiKey, apiHost, database, pointInTime);
+        const { sql, hash, compareBranch, baseBranch } = await diff(projectId, branchInput, apiKey, apiHost, database, pointInTime, filters);
         const markdown = summary(sql, hash, compareBranch, baseBranch, database, projectId);
         coreExports.setOutput('diff', sql);
         if (process.env.ENVIRONMENT === 'development') {

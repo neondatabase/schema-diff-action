@@ -1,6 +1,7 @@
 import * as core from '@actions/core'
 
 import { diff, summary, upsertGitHubComment } from './diff.js'
+import { parseNameList } from './filter.js'
 import { getBranchInput, getPointInTime } from './utils.js'
 
 const urlRegex = /https?:\/\/[^\s/$.?#].[^\s]*/i
@@ -40,6 +41,18 @@ export async function run(): Promise<void> {
     })
     const lsn: string = core.getInput('lsn', { trimWhitespace: true })
 
+    // Optional schema filters, empty by default
+    const filters = {
+      excludeExtensions: parseNameList(
+        core.getInput('exclude_extensions', { trimWhitespace: true })
+      ),
+      excludeSecurityLabelProviders: parseNameList(
+        core.getInput('exclude_security_label_providers', {
+          trimWhitespace: true
+        })
+      )
+    }
+
     // Check if the API host is a valid URL
     if (!urlRegex.test(apiHost)) {
       throw new Error('API host must be a valid URL')
@@ -65,7 +78,8 @@ export async function run(): Promise<void> {
       apiKey,
       apiHost,
       database,
-      pointInTime
+      pointInTime,
+      filters
     )
 
     const markdown = summary(
